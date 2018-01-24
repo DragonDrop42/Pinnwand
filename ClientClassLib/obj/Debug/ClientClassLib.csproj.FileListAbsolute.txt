@@ -1,0 +1,106 @@
+U:\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\obj\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ClientClassLib\obj\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ClientClassLib.dll
+E:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ClientClassLib.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+E:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.dll
+E:\IS_Projekt\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ClientClassLib\obj\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ClientClassLib\obj\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ClientClassLib\obj\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ClientClassLib\obj\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ClientClassLib\obj\Debug\ClientClassLib.pdb
+F:\Pinnwand v0.1\ClientClassLib\bin\Debug\ClientClassLib.dll
+F:\Pinnwand v0.1\ClientClassLib\bin\Debug\ClientClassLib.pdb
+F:\Pinnwand v0.1\ClientClassLib\bin\Debug\ServerData.dll
+F:\Pinnwand v0.1\ClientClassLib\bin\Debug\ServerData.pdb
+F:\Pinnwand v0.1\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+F:\Pinnwand v0.1\ClientClassLib\obj\Debug\ClientClassLib.csproj.CoreCompileInputs.cache
+F:\Pinnwand v0.1\ClientClassLib\obj\Debug\ClientClassLib.dll
+F:\Pinnwand v0.1\ClientClassLib\obj\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\ClientClassLib\bin\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\Pinnwand v0.1\ClientClassLib\bin\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\ClientClassLib\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\Pinnwand v0.1\ClientClassLib\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\Pinnwand v0.1\ClientClassLib\obj\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\Pinnwand v0.1\ClientClassLib\obj\Debug\ClientClassLib.pdb
+U:\Pinnwand v0.2\ClientClassLib\bin\Debug\ClientClassLib.dll
+U:\Pinnwand v0.2\ClientClassLib\bin\Debug\ClientClassLib.pdb
+U:\Pinnwand v0.2\ClientClassLib\bin\Debug\ServerData.dll
+U:\Pinnwand v0.2\ClientClassLib\bin\Debug\ServerData.pdb
+U:\Pinnwand v0.2\ClientClassLib\obj\Debug\ClientClassLib.csprojResolveAssemblyReference.cache
+U:\Pinnwand v0.2\ClientClassLib\obj\Debug\ClientClassLib.dll
+U:\Pinnwand v0.2\ClientClassLib\obj\Debug\ClientClassLib.pdb

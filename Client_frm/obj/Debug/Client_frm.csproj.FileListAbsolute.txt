@@ -1,0 +1,286 @@
+E:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\Client_frm.exe.config
+E:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\Client_frm.exe
+E:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\Client_frm.pdb
+E:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+E:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.Form1.resources
+E:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+E:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+E:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.exe
+E:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\Client_frm.exe.config
+U:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_04\Client_frm\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.Form1.resources
+U:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+U:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+U:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_04\Client_frm\obj\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.frm_client.resources
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\bin\Debug\Client_frm.exe.config
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\bin\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\Client_frm\obj\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.frm_client.resources
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\Client_frm.exe.config
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\Client_frm.exe.config
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\Client_frm.exe
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\Client_frm.pdb
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.frm_client.resources
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.exe
+E:\IS_Projekt\Socket_Server_06_beta\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_register.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_client.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_login.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_register.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.exe.config
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\Client_frm\obj\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.exe.config
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_client.resources
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_login.resources
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_register.resources
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_client.resources
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_login.resources
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_register.resources
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.exe.config
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.exe
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ClientClassLib.dll
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ClientClassLib.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.exe
+E:\IS_Projekt\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\Client_frm.exe.config
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_client.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_login.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_register.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\Client_frm\obj\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\Client_frm.exe.config
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\Client_frm.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ClientClassLib.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ClientClassLib.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_client.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_login.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_register.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.exe
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\Client_frm\obj\Debug\Client_frm.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\bin\Debug\Client_frm.exe.config
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\bin\Debug\Client_frm.exe
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\bin\Debug\Client_frm.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\bin\Debug\ClientClassLib.dll
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\bin\Debug\ClientClassLib.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.frm_client.resources
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.frm_Kurswahl.resources
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.frm_login.resources
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.frm_register.resources
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.Properties.Resources.resources
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.csproj.GenerateResource.Cache
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.exe
+C:\Users\admin\Desktop\Pinnwand v0.1\Client_frm\obj\Debug\Client_frm.pdb
