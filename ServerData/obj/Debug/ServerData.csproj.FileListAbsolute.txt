@@ -1,0 +1,143 @@
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Socket_Server\ServerData\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Socket_Server\ServerData\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Socket_Server\ServerData\obj\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Socket_Server\ServerData\obj\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Socket_Server\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server\ServerData\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server\ServerData\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server\ServerData\obj\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server\ServerData\obj\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server\ServerData\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server\ServerData\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server\ServerData\obj\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server\ServerData\obj\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\mori\Desktop\Socket_Server\ServerData\bin\Debug\ServerData.dll
+C:\Users\mori\Desktop\Socket_Server\ServerData\bin\Debug\ServerData.pdb
+C:\Users\mori\Desktop\Socket_Server\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\mori\Desktop\Socket_Server\ServerData\obj\Debug\ServerData.dll
+C:\Users\mori\Desktop\Socket_Server\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_01\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_01\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_01\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_01\ServerData\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_02\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+E:\IS_Projekt\Socket_Server_02\ServerData\obj\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_02\ServerData\obj\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_02\ServerData\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_02\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_02\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_02\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_02\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_02\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_02\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_03\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_03\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_03\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_03\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_03\ServerData\obj\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_04\ServerData\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_04\ServerData\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_04\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+E:\IS_Projekt\Socket_Server_04\ServerData\obj\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_04\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_04\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_04\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_04\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_04\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_04\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_alpha\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_alpha\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_alpha\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_alpha\ServerData\obj\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\ServerData\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\ServerData\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\ServerData\obj\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_alpha\ServerData\obj\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta\ServerData\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta\ServerData\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta\ServerData\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_06_beta\ServerData\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+E:\IS_Projekt\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_06_beta\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2\ServerData\obj\Debug\ServerData.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ServerData\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ServerData\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ServerData\obj\Debug\ServerData.dll
+C:\Users\admin\Desktop\IS_Projekt\Socket_Server_06_beta0.2\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\obj\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\bin\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\bin\Debug\ServerData.pdb
+E:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\obj\Debug\ServerData.dll
+E:\IS_Projekt\Socket_Server_06_beta0.21\ServerData\obj\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ServerData\bin\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ServerData\bin\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ServerData\obj\Debug\ServerData.dll
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ServerData\obj\Debug\ServerData.pdb
+C:\Users\mori\Documents\Programmieren\Visual Studio 2015\Projects\Server_\Socket_Server_06_beta0.21\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.2\ServerData\obj\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ServerData\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ServerData\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ServerData\obj\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.2\ServerData\obj\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ServerData\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ServerData\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ServerData\obj\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.3\ServerData\obj\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ServerData\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ServerData\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ServerData\obj\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.4\ServerData\obj\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ServerData\bin\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ServerData\bin\Debug\ServerData.pdb
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ServerData\obj\Debug\ServerData.dll
+U:\IS_Projekt\Socket_Server_06_beta0.2.5\ServerData\obj\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ServerData\bin\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ServerData\bin\Debug\ServerData.pdb
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ServerData\obj\Debug\ServerData.dll
+C:\Users\queiszermo\Desktop\Socket_Server_06_beta0.2.5\ServerData\obj\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ServerData\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ServerData\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ServerData\obj\Debug\ServerData.dll
+C:\Users\admin\Desktop\Socket_Server_06_beta0.3.0\ServerData\obj\Debug\ServerData.pdb
+F:\Pinnwand v0.1\ServerData\bin\Debug\ServerData.dll
+F:\Pinnwand v0.1\ServerData\bin\Debug\ServerData.pdb
+F:\Pinnwand v0.1\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+F:\Pinnwand v0.1\ServerData\obj\Debug\ServerData.csproj.CoreCompileInputs.cache
+F:\Pinnwand v0.1\ServerData\obj\Debug\ServerData.dll
+F:\Pinnwand v0.1\ServerData\obj\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\ServerData\bin\Debug\ServerData.dll
+C:\Users\admin\Desktop\Pinnwand v0.1\ServerData\bin\Debug\ServerData.pdb
+C:\Users\admin\Desktop\Pinnwand v0.1\ServerData\obj\Debug\ServerData.dll
+C:\Users\admin\Desktop\Pinnwand v0.1\ServerData\obj\Debug\ServerData.pdb
+U:\Pinnwand v0.2\ServerData\bin\Debug\ServerData.dll
+U:\Pinnwand v0.2\ServerData\bin\Debug\ServerData.pdb
+U:\Pinnwand v0.2\ServerData\obj\Debug\ServerData.csprojResolveAssemblyReference.cache
+U:\Pinnwand v0.2\ServerData\obj\Debug\ServerData.dll
+U:\Pinnwand v0.2\ServerData\obj\Debug\ServerData.pdb
