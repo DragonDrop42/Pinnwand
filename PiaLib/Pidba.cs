@@ -371,7 +371,7 @@ namespace PiaLib
                 {
                     if (row["Kl_Name"].ToString() == Name)
                     {
-                        return Math.Abs((int)row["K_ID"]);
+                        return Math.Abs((int)row["Kl_ID"]);
                     }
                 }
                 return 0;
