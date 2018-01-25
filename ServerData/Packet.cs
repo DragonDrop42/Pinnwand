@@ -25,10 +25,8 @@ namespace ServerData
         Default,
         SERVER_Register_ID, //first contact with server
         //Response
-        SERVER_Login_Accepted,
-        SERVER_Login_Failed,
-        SERVER_Registraition_Accepted,
-        SERVER_Registraition_Failed,
+        SERVER_Login,
+        SERVER_Registraition,
         SERVER_Klassenwahl_Response,
 
     }
@@ -60,33 +58,28 @@ namespace ServerData
     {
         public PacketType packetType;   //klassifizierung
         public AuthenticationState_SERVER_Events authState_SERVER;   //LoginState
+        public bool success;
         public DataTableType_SERVER_Events tableType_SERVER;    //dataState
 
         public AuthenticationState_CLIENT_Events authState_CLIENT;   //LoginState
         public DataTableType_CLIENT_Events tableType_CLIENT;
 
-        public ListDictionary auth_keyList;
+        public ListDictionary lst_Dir_Auth;
         public string informationString;
 
-        public List<string> lst_data;
-        public ListDictionary lst_TableDictionary;  //anstatt von DataTable
+        public ListDictionary lst_Dir_DataTable;  //anstatt von DataTable
         public string senderID;
 
-        //DB
-        //public List<string> loginData;
+        //WaitPacket
+        public Packet(AuthenticationState_SERVER_Events authT, DataTableType_SERVER_Events dataT)
+        {
+            authState_SERVER = authT;
+            tableType_SERVER = dataT;
+        }
 
-        //public Packet() { }
-
-        //public Packet(PacketType type, string ID)
-        //{
-        //    lst_data = new List<string>();
-        //    senderID = ID;
-        //    packetType = type;
-        //}
         //Messages++++++++++++++++++++
         public Packet(string _informationString)
         {
-            lst_data = new List<string>();
             informationString = _informationString;
             senderID = "server";
             packetType = PacketType.System_Error;
@@ -98,8 +91,7 @@ namespace ServerData
         {
             authState_CLIENT = type;
             packetType = PacketType.Authentication;
-            lst_data = new List<string>();
-            auth_keyList = authData;   //Informationen wie Passwörter Username...
+            lst_Dir_Auth = authData;   //Informationen wie Passwörter Username...
             senderID = ID;
         }
         //Server
@@ -107,16 +99,16 @@ namespace ServerData
         {
             authState_SERVER = type;
             packetType = PacketType.Authentication;
-            lst_data = new List<string>();
-            auth_keyList = authData;   //Informationen wie Passwörter Username...
+            lst_Dir_Auth = authData;   //Informationen wie Passwörter Username...
             senderID = "server";
         }
 
-        public Packet(AuthenticationState_SERVER_Events type, string error) //Authentication Packet
+        public Packet(AuthenticationState_SERVER_Events type, string error, bool flag) //Authentication Packet
         {
             authState_SERVER = type;
             packetType = PacketType.Authentication;
             informationString = error;
+            success = flag;
             senderID = "server";
         }
 
@@ -125,16 +117,16 @@ namespace ServerData
         {
             tableType_CLIENT = type;
             packetType = PacketType.DataTable;
-
-            lst_data = dataL;  //Tabelle
+            lst_Dir_DataTable = new ListDictionary();
+            lst_Dir_DataTable.Add("lst<string>", dataL);
             senderID = ID;
         }
         public Packet(DataTableType_SERVER_Events type, List<string> dataL) //Tabellen Packet
         {
             tableType_SERVER = type;
             packetType = PacketType.DataTable;
-
-            lst_data = dataL;  //Tabelle
+            lst_Dir_DataTable = new ListDictionary();
+            lst_Dir_DataTable.Add("lst<string>", dataL);
             senderID = "server";
         }
 
@@ -144,7 +136,7 @@ namespace ServerData
             tableType_CLIENT = type;
             packetType = PacketType.DataTable;
 
-            lst_TableDictionary = PacketHandler.ConvertTableToList(table);  //Tabelle
+            lst_Dir_DataTable = PacketHandler.ConvertTableToList(table);  //Tabelle
             senderID = ID;
         }
         public Packet(DataTableType_SERVER_Events type, DataTable table) //Tabellen Packet
@@ -152,7 +144,7 @@ namespace ServerData
             tableType_SERVER = type;
             packetType = PacketType.DataTable;
 
-            lst_TableDictionary = PacketHandler.ConvertTableToList(table);  //Tabelle
+            lst_Dir_DataTable = PacketHandler.ConvertTableToList(table);  //Tabelle
             senderID = "server";
         }
     }

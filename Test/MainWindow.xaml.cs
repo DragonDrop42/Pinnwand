@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Navigation;
 using System.Collections.Specialized;
 using ClientClassLib;
 using ServerData;
@@ -33,11 +32,8 @@ namespace Test
         {
             InitializeComponent();
 
-            CenterWindowOnScreen();
-
-            TCP_connection.DataManagerCallback PacketCallback = new TCP_connection.DataManagerCallback(WPFInvoke);
             TCP_connection.ErrorMessageCallback ErrorCallback = new TCP_connection.ErrorMessageCallback(Fehler_Ausgabe);
-            client = new Client(ErrorCallback,PacketCallback);
+            client = new Client(ErrorCallback);
 
             client.Connect(PacketHandler.GetIPAddress(), 4444);
 
@@ -45,82 +41,98 @@ namespace Test
             LoginFrm.Show();
             LoginFrm.Loaded += LoginFrm_Loaded;
             LoginFrm.GotFocus += LoginFrm_GotFocus;
-           // this.IsEnabled = false;
+            this.IsEnabled = false;
+            this.GotFocus += OnGotFocus;
 
         }
 
-        private void WPFInvoke(Packet p) { Application.Current.Dispatcher.Invoke(new Action(() => { DataManager(p); })); }
-
-        private void DataManager(Packet packet)
+        private void OnGotFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            try
+            Pages.Settings.Kurswahl kurswahl =
+                UIHelper.FindVisualChildByName<Pages.Settings.Kurswahl>(this, "pg_Kurswahl");
+            if (kurswahl != null && !SubscribedEvents.Contains("KurswahlOnInitialized"))
             {
-                switch (packet.packetType)
-                {
-                    //Type Authentication-----------------------------
-                    case PacketType.Authentication:
-                        switch (packet.authState_SERVER)
-                        {
-                            case AuthenticationState_SERVER_Events.SERVER_Register_ID:
-
-                                client.ID = (packet.auth_keyList["id"].ToString());
-                                break;
-
-                            case AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response:
-                                ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
-
-                                List<string> lst_data = (List<string>)packet.auth_keyList["Kl_Name"];
-
-                                foreach (string s in lst_data)
-                                {
-                                    cb.Items.Add(s);    
-                                }
-                                break;
-
-                            case AuthenticationState_SERVER_Events.SERVER_Login_Accepted:
-                                LoginFrm.Close();
-                                this.IsEnabled = true;
-                                break;
-
-                            case AuthenticationState_SERVER_Events.SERVER_Login_Failed:
-                                UIHelper.FindVisualChildByName<TextBlock>(LoginFrm, "lbl_SchülerLoginError").Text = packet.informationString;
-                                break;
-
-                            case AuthenticationState_SERVER_Events.SERVER_Registraition_Accepted:
-                                NavigationService ns = NavigationService.GetNavigationService(LoginFrm);
-                                ns.GoBack();
-                                break;
-                            case AuthenticationState_SERVER_Events.SERVER_Registraition_Failed:
-                                Fehler_Ausgabe(packet.informationString);
-                                break;
-                        }
-                        return;
-                    //------------------------------
-                    case PacketType.DataTable:
-                        switch (packet.tableType_SERVER)
-                        {
-                            case DataTableType_SERVER_Events.SERVER_Kurswahl_Response:
-                                //frm_Kurswahl kurswahl = new frm_Kurswahl(client, packet.lst_TableDictionary);
-                                //kurswahl.Show();
-                                break;
-                        }
-                        break;
-
-                    case PacketType.System_Error:
-                        Fehler_Ausgabe("Server Error: " + packet.informationString);
-                        break;
-
-
-                    default:
-                        Fehler_Ausgabe("Unbekanntes Packet");
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Fehler_Ausgabe(ex.Message);
+                kurswahl.Initialized += KurswahlOnInitialized;
+                SubscribedEvents.Add("KurswahlOnInitialized");
             }
         }
+
+        private void KurswahlOnInitialized(object sender, EventArgs eventArgs)
+        {
+            Pages.Settings.Kurswahl kw = (Pages.Settings.Kurswahl)sender;
+            client.Kurswahl();
+        }
+
+        //private void WPFInvoke(Packet p) { Application.Current.Dispatcher.Invoke(new Action(() => { DataManager(p); })); }
+
+        //private void DataManager(Packet packet)
+        //{
+        //    try
+        //    {
+        //        switch (packet.packetType)
+        //        {
+        //            //Type Authentication-----------------------------
+        //            case PacketType.Authentication:
+        //                switch (packet.authState_SERVER)
+        //                {
+        //                    case AuthenticationState_SERVER_Events.SERVER_Register_ID:
+
+        //                        client.ID = (packet.auth_keyList["id"].ToString());
+        //                        break;
+
+        //                    case AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response:
+        //                        ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
+
+        //                        List<string> lst_data = (List<string>)packet.auth_keyList["Kl_Name"];
+        //                        cb.Items.Clear();
+                                
+        //                        foreach (string s in lst_data)
+        //                        {
+        //                            cb.Items.Add(s);    
+        //                        }
+        //                        break;
+
+        //                    case AuthenticationState_SERVER_Events.SERVER_Login_Failed:
+        //                        break;
+
+        //                    case AuthenticationState_SERVER_Events.SERVER_Registraition_Accepted:
+        //                        Pages.Login.Schüler_Register sr =
+        //                            UIHelper.FindVisualChildByName<Pages.Login.Schüler_Register>(LoginFrm,
+        //                                "pg_Schüler_Regi");
+        //                        sr.lbl_Schüler_Registrations_Error.Text = "Erfolgreich Registriert";
+        //                        sr.IsEnabled = false;
+        //                        break;
+        //                    case AuthenticationState_SERVER_Events.SERVER_Registraition_Failed:
+        //                        UIHelper.FindVisualChildByName<TextBlock>(LoginFrm, "lbl_Schüler_Registrations_Error").Text = packet.informationString;
+        //                        break;
+        //                }
+        //                return;
+        //            //------------------------------
+        //            case PacketType.DataTable:
+        //                switch (packet.tableType_SERVER)
+        //                {
+        //                    case DataTableType_SERVER_Events.SERVER_Kurswahl_Response:
+        //                        //frm_Kurswahl kurswahl = new frm_Kurswahl(client, packet.lst_TableDictionary);
+        //                        //kurswahl.Show();
+        //                        break;
+        //                }
+        //                break;
+
+        //            case PacketType.System_Error:
+        //                Fehler_Ausgabe("Server Error: " + packet.informationString);
+        //                break;
+
+
+        //            default:
+        //                Fehler_Ausgabe("Unbekanntes Packet");
+        //                break;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Fehler_Ausgabe(ex.Message);
+        //    }
+        //}
 
         private void Fehler_Ausgabe(string s)
         {
@@ -204,7 +216,17 @@ namespace Test
             Pages.Login.Schüler_Login schüler_login = UIHelper.FindVisualParent<Pages.Login.Schüler_Login>((Button)sender);
             try
             {
-                client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
+                PacketResponseArgs login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
+                if (login.flag)
+                {
+                    LoginFrm.Close();
+                    this.IsEnabled = true;
+                }
+                else
+                {
+                    schüler_login.lbl_SchülerLoginError.Text = login.packet.informationString;
+
+                }
             }
             catch (Exception ex)
             {
@@ -215,17 +237,6 @@ namespace Test
         private void Reload()
         {
             //TODO: Content wird von server geladen
-        }
-
-
-        private void CenterWindowOnScreen()
-        {
-            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double windowWidth = this.Width;
-            double windowHeight = this.Height;
-            this.Left = (screenWidth / 2) - (windowWidth / 2);
-            this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
     }
 }

@@ -24,23 +24,27 @@ namespace Test
         public Kursliste()
         {
             InitializeComponent();
-            Link kurs = new Link();
-            
-            kurs.DisplayName = "LKMathe";
-            //kurs.Source = new Uri("/Pages/Home.xaml?Kurs=LKMathe");
-
-            mt_Kurse.Links.Add(kurs);
         }
 
         public void KursUpdate(List<string> Kurslist)
         {
+            mt_Kurse.Links.Clear();
+
             foreach (string kurs in Kurslist)
-            {
-                Link Kurs = new Link();
-                Kurs.DisplayName = kurs;
-                //Kurs.Source = new Uri("")
-                mt_Kurse.Links.Add(Kurs);
-            }
+                mt_Kurse.Links.Add(
+                    new Link
+                    {
+                        DisplayName = kurs,
+                        Source = new Uri("/Pages/KursÜbersicht.xaml?Kurs=" + kurs)
+                    });
+
+            if (Kurslist.Count == 0)
+                mt_Kurse.Links.Add(
+                    new Link
+                    {
+                        DisplayName = "Kurse hinzufügen",
+                        Source = new Uri("/Pages/Settings/Kurswahl.xaml")
+                    });
         }
     }
 }

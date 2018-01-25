@@ -143,34 +143,34 @@ namespace Server
                 case AuthenticationState_CLIENT_Events.USER_Login_Request:
                     //DB-----   Try Login
 
-                    ClientHandler.Ausgabe("Auth", ("Email: " + p.auth_keyList["email"].ToString() + " Passwort: " + p.auth_keyList["passwort"]) + " try to login");
+                    ClientHandler.Ausgabe("Auth", ("Email: " + p.lst_Dir_Auth["email"].ToString() + " Passwort: " + p.lst_Dir_Auth["passwort"]) + " try to login");
 
-                    DatenbankArgs args = db_Manager.Schüler.login(p.auth_keyList["email"].ToString(), p.auth_keyList["passwort"].ToString());
+                    DatenbankArgs args = db_Manager.Schüler.login(p.lst_Dir_Auth["email"].ToString(), p.lst_Dir_Auth["passwort"].ToString());
                     if (args.Success)
                     {
-                        ClientHandler.Ausgabe("Auth", (p.auth_keyList["email"] + " wurde erfolgreich eingeloggt"));
-                        client.email = p.auth_keyList["email"].ToString();  //email als Erkennungsmerkmal setzen
+                        ClientHandler.Ausgabe("Auth", (p.lst_Dir_Auth["email"] + " wurde erfolgreich eingeloggt"));
+                        client.email = p.lst_Dir_Auth["email"].ToString();  //email als Erkennungsmerkmal setzen
 
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Login_Accepted, "");
+                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Login, "", true);
                     }
                     else
                     {
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Login_Failed, args.Error);
+                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Login, args.Error, false);
                     }
                     //------
                     break;
                 case AuthenticationState_CLIENT_Events.USER_Registration_Request: //Register user
 
-                    args = db_Manager.Schüler.add(p.auth_keyList["name"].ToString(), p.auth_keyList["vname"].ToString(), p.auth_keyList["phone"].ToString(), p.auth_keyList["email"].ToString(), p.auth_keyList["klasse"].ToString(), p.auth_keyList["passwort"].ToString());
+                    args = db_Manager.Schüler.add(p.lst_Dir_Auth["name"].ToString(), p.lst_Dir_Auth["vname"].ToString(), p.lst_Dir_Auth["phone"].ToString(), p.lst_Dir_Auth["email"].ToString(), p.lst_Dir_Auth["klasse"].ToString(), p.lst_Dir_Auth["passwort"].ToString());
                     if (args.Success)
                     {
                         //client.email = p.auth_keyList["email"].ToString();  //email als Erkennungsmerkmal setzen
-                        ClientHandler.Ausgabe("Auth", (p.auth_keyList["email"] + " wurde erfolgreich registriert"));
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Registraition_Accepted, "");
+                        ClientHandler.Ausgabe("Auth", (p.lst_Dir_Auth["email"] + " wurde erfolgreich registriert"));
+                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Registraition, "", true);
                     }
                     else
                     {
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Registraition_Failed, args.Error);
+                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Registraition, args.Error, false);
                     }
                     break;
                 default:
