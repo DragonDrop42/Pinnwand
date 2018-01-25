@@ -1,3 +1,16 @@
+<<<<<<< HEAD
 .idea
 */bin
 */obj
+=======
+*/bin/
+.idea
+*\obj
+*.com
+*.class
+*.dll
+*.pdb
+*.exe
+*.o
+*.so
+>>>>>>> 1b0266aa7628fd190a19da6a26cbac36c9143db0
