@@ -93,52 +93,35 @@ namespace ClientClassLib
         #endregion
 
 
-        private PacketResponseArgs WaitForPacketResponse(Packet waitPacket)
-        {
-            Thread timerT = new Thread(delegate()
-            {
-                Thread.Sleep(2000); //2sec warten
-                waitHandle.Set();
-            });
-            timerT.Start();
-
-            waitHandle.WaitOne();
+        private Packet WaitForPacketResponse(Packet waitPacket)
+        { 
+            waitHandle.WaitOne(2000);   //2sec. Timeout
             waitHandle.Reset();
 
             foreach (Packet p in lst_PacketResponse)
             {
-                if (p.authState_SERVER == waitPacket.authState_SERVER || p.tableType_SERVER == waitPacket.tableType_SERVER)
+                if (p.packetType == waitPacket.packetType)
                 {
                     lst_PacketResponse.Remove(p);
-                    PacketResponseArgs args;
-                    if (p.success)
-                    {
-                        args = new PacketResponseArgs(true, p);
-                        return args;
-                    }
-                    else
-                    {
-                        args = new PacketResponseArgs(false, p);
-                        return args;
-                    }
+                    return p;
                 }
             }
-            return new PacketResponseArgs(false, "Zeitüberschreitung der Anfrage");
+            return new Packet("Zeitüberschreitung oder Packet nicht gefunden");
         }
 
 
-        //PacketManager9++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //PacketManager++++++++++++++++++++++++++++++++++++++++++++++++++++
         private void PacketManager(Packet packet)
         {
             //kein Client Event
-            if (packet.authState_SERVER == AuthenticationState_SERVER_Events.SERVER_Register_ID)
+            if (packet.packetType == PacketType.Register_ID)
             {
-                ID = (packet.lst_Dir_Auth["id"].ToString());
+                ID = (packet.Data["id"].ToString());
                 return;
             }
             else if (packet.packetType == PacketType.System_Error)
             {
-                errorCallback(packet.informationString);
+                errorCallback(packet.MessageString);
                 return;
             }
             //----------------
@@ -154,7 +137,7 @@ namespace ClientClassLib
         //---------------------------------------------------------
         #region Login/Register
         //Register+++++++++++++++++++++++++++++++++++++++++++++++++++++++   
-        public PacketResponseArgs Register_User(string name, string vname, string phone, string klasse, string email, string passwort)
+        public Packet Register_User(string name, string vname, string phone, string klasse, string email, string passwort)
         {
             //check
             if (name == "" || vname == "" || email == "" || passwort == "" || klasse == "")
@@ -166,13 +149,13 @@ namespace ClientClassLib
                 //Packet senden
                 SendRegisterPacket(name, vname, phone, klasse, email, passwort);
                 //Auf Antwort warten
-                return WaitForPacketResponse(new Packet(AuthenticationState_SERVER_Events.SERVER_Registraition, null)); 
+                return WaitForPacketResponse(new Packet(PacketType.Registraition)); 
             }
             return null;
         }
 
         //Login+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public PacketResponseArgs Login(string email, string passwort)
+        public Packet Login(string email, string passwort)
         {
             //check
             if (email == "" || passwort == "")
@@ -184,31 +167,29 @@ namespace ClientClassLib
                 //Packet senden
                 SendLoginPacket(email, passwort);
                 //auf response warten
-                return WaitForPacketResponse(new Packet(AuthenticationState_SERVER_Events.SERVER_Login, DataTableType_SERVER_Events.Default));
+                return WaitForPacketResponse(new Packet(PacketType.Login));
             }
             return null;
         }
         //Get Klassen
-        public PacketResponseArgs GetKlassen()
+        public Packet GetKlassen()
         {
             SendKlassenPacket();
-            return WaitForPacketResponse(new Packet(AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response, DataTableType_SERVER_Events.Default));
+            return WaitForPacketResponse(new Packet(PacketType.Klassenwahl));
         }
         //Kurswahl+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public PacketResponseArgs Kurswahl()
+        public Packet Kurswahl()
         {
             SendKurswahlPacket();
-            return WaitForPacketResponse(new Packet(AuthenticationState_SERVER_Events.Default, DataTableType_SERVER_Events.SERVER_Kurswahl_Response));
+            return WaitForPacketResponse(new Packet(PacketType.Kurswahl));
         }
         //-----------------------------------------------------------
         private bool check_email(string email)
         {
             //check
-            if (email.Contains('@') == false)
+            if (email.Contains('@') == false)// || (email.Contains(".com")||email.Contains(".net")||email.Contains(".de")) == false)
             {
-                //errorCallback("Die eingetragene email ist fehlerhaft!");
                 throw new Exception("Die eingetragene email ist fehlerhaft!");
-                return false;
             }
 
             return true;
@@ -219,8 +200,8 @@ namespace ClientClassLib
             {
                 //errorCallback("Passwort ist zu kurz (>5)");
                 throw new Exception("Passwort ist zu kurz (>5)");
-                return null;
             }
+
             //passwort verschlüsslung
             string salt = "492";
             System.Security.Cryptography.SHA1 sha = System.Security.Cryptography.SHA1.Create();
@@ -246,7 +227,7 @@ namespace ClientClassLib
                 {"email", email},
                 {"passwort", passwort}
             };
-            Packet register = new Packet(AuthenticationState_CLIENT_Events.USER_Registration_Request, id, data);
+            Packet register = new Packet(PacketType.Registraition, data, id);
             SendPacket(register);
         }
 
@@ -257,25 +238,22 @@ namespace ClientClassLib
                 {"email", email},
                 {"passwort", passwort}
             };
-            Packet login = new Packet(AuthenticationState_CLIENT_Events.USER_Login_Request, id, data);
+            Packet login = new Packet(PacketType.Login, data, id);
             SendPacket(login);
         }
 
         private void SendKlassenPacket()
         {
-            Packet klassen = new Packet(AuthenticationState_CLIENT_Events.USER_Klassenwahl_Request, id, null);
+            Packet klassen = new Packet(PacketType.Klassenwahl, id);
             SendPacket(klassen);
         }
 
         private void SendKurswahlPacket()
         {
-            Packet kurswahl = new Packet(DataTableType_CLIENT_Events.USER_Kurswahl_Request, id, new List<string>());
+            Packet kurswahl = new Packet(PacketType.Kurswahl, id);
             SendPacket(kurswahl);
         }
-
         #endregion
-
-
 
         //Property Set new ID
         public string ID
@@ -287,21 +265,4 @@ namespace ClientClassLib
         }
     }
 
-    public class PacketResponseArgs
-    {
-        public Packet packet;
-        public bool flag;
-        public string error;
-        public PacketResponseArgs(bool _flag, Packet p)
-        {
-            packet = p;
-            flag = _flag;
-        }
-
-        public PacketResponseArgs(bool _flag, string _error)
-        {
-            flag = _flag;
-            error = _error;
-        }
-    }
 }

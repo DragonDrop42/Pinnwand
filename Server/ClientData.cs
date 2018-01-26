@@ -38,7 +38,7 @@ namespace Server
             ListDictionary list = new ListDictionary();
             list.Add("id", id);
 
-            Packet p = new Packet(AuthenticationState_SERVER_Events.SERVER_Register_ID, list);
+            Packet p = new Packet(PacketType.Register_ID, list, "server");
             ClientHandler.SendSinglePacket(this, p);
         }
     }

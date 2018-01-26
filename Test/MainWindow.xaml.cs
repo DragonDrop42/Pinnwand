@@ -187,7 +187,16 @@ namespace Test
                 string Email = schüler_regi.txt_Email.Text;
                 string Passwort = schüler_regi.txt_Passwort.Password;
                 string Klasse = Convert.ToString(schüler_regi.cbB_Klasse.SelectedValue);
-                client.Register_User(Name, Vname, Phone,Klasse, Email, Passwort);
+
+                Packet register = client.Register_User(Name, Vname, Phone,Klasse, Email, Passwort);
+                if (register.Success)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(register.MessageString);
+                }
             }
             catch (Exception ex)
             {
@@ -216,16 +225,15 @@ namespace Test
             Pages.Login.Schüler_Login schüler_login = UIHelper.FindVisualParent<Pages.Login.Schüler_Login>((Button)sender);
             try
             {
-                PacketResponseArgs login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
-                if (login.flag)
+                Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
+                if (login.Success)
                 {
                     LoginFrm.Close();
                     this.IsEnabled = true;
                 }
                 else
                 {
-                    schüler_login.lbl_SchülerLoginError.Text = login.packet.informationString;
-
+                    throw new Exception(login.MessageString);
                 }
             }
             catch (Exception ex)
