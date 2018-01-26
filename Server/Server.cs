@@ -97,8 +97,8 @@ namespace Server
             }
             tableKlassen = args.Data;
 
-            Packet response = new Packet(AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response, PacketHandler.ConvertTableToList(tableKlassen));
-            ClientHandler.SendSinglePacket(client, response);
+            //Packet response = new Packet(AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response, PacketHandler.ConvertTableToList(args.Data)[0],args.Error,args.Success);
+            //ClientHandler.SendSinglePacket(client, response);
 
         }
 
@@ -106,27 +106,16 @@ namespace Server
         {
             //idAbfragen
             //kurse abfragen
-            DataTable tableSchueler;
             DatenbankArgs args = db_Manager.Schüler.getby(client.email, "S_Email");
-            if (args.Success == false)
+            if (args.Success)
             {
-                return;
+                int id = (int) args.Data.Rows[0][0];
+
+                ClientHandler.Ausgabe("Kurswahl", ("Schueler ID: " + args.Data.Rows[0][0]));
+                args = db_Manager.Schüler.getKurse(id);
             }
-            tableSchueler = args.Data;
 
-            int id = (int)tableSchueler.Rows[0][0];
-
-            ClientHandler.Ausgabe("Kurswahl", ("Schueler ID: " + tableSchueler.Rows[0][0]));
-
-            DataTable tableKurse;
-            args = db_Manager.Schüler.getKurse(1);
-            if (args.Success == false)
-            {
-                return;
-            }
-            tableKurse = args.Data;
-
-            Packet response = new Packet(DataTableType_SERVER_Events.SERVER_Kurswahl_Response, tableKurse);
+            Packet response = new Packet(DataTableType_SERVER_Events.SERVER_Kurswahl_Response, args.Data, args.Error, args.Success);
             ClientHandler.SendSinglePacket(client, response);
         }
         

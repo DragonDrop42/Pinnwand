@@ -93,37 +93,36 @@ namespace ClientClassLib
         #endregion
 
 
-        private PacketResponseArgs WaitForPacketResponse(Packet waitPacket)
+        private Packet WaitForPacketResponse(Packet waitPacket)
         {
+            Stopwatch sw = new Stopwatch();
             Thread timerT = new Thread(delegate()
             {
-                Thread.Sleep(2000); //2sec warten
+                sw.Start();
+                while (sw.Elapsed < TimeSpan.FromSeconds(2) && sw.IsRunning)
+                {
+                    Thread.Sleep(10);
+                }
+
                 waitHandle.Set();
             });
             timerT.Start();
 
             waitHandle.WaitOne();
+            sw.Stop();
             waitHandle.Reset();
 
             foreach (Packet p in lst_PacketResponse)
             {
-                if (p.authState_SERVER == waitPacket.authState_SERVER || p.tableType_SERVER == waitPacket.tableType_SERVER)
+                if (p.authState_SERVER == waitPacket.authState_SERVER ||
+                    p.tableType_SERVER == waitPacket.tableType_SERVER)
                 {
                     lst_PacketResponse.Remove(p);
-                    PacketResponseArgs args;
-                    if (p.success)
-                    {
-                        args = new PacketResponseArgs(true, p);
-                        return args;
-                    }
-                    else
-                    {
-                        args = new PacketResponseArgs(false, p);
-                        return args;
-                    }
+                    return p;
                 }
             }
-            return new PacketResponseArgs(false, "Zeitüberschreitung der Anfrage");
+
+            return new Packet("Zeitüberschreitung");
         }
 
 
@@ -154,7 +153,7 @@ namespace ClientClassLib
         //---------------------------------------------------------
         #region Login/Register
         //Register+++++++++++++++++++++++++++++++++++++++++++++++++++++++   
-        public PacketResponseArgs Register_User(string name, string vname, string phone, string klasse, string email, string passwort)
+        public Packet Register_User(string name, string vname, string phone, string klasse, string email, string passwort)
         {
             //check
             if (name == "" || vname == "" || email == "" || passwort == "" || klasse == "")
@@ -172,7 +171,7 @@ namespace ClientClassLib
         }
 
         //Login+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public PacketResponseArgs Login(string email, string passwort)
+        public Packet Login(string email, string passwort)
         {
             //check
             if (email == "" || passwort == "")
@@ -189,13 +188,13 @@ namespace ClientClassLib
             return null;
         }
         //Get Klassen
-        public PacketResponseArgs GetKlassen()
+        public Packet GetKlassen()
         {
             SendKlassenPacket();
             return WaitForPacketResponse(new Packet(AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response, DataTableType_SERVER_Events.Default));
         }
         //Kurswahl+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public PacketResponseArgs Kurswahl()
+        public Packet Kurswahl()
         {
             SendKurswahlPacket();
             return WaitForPacketResponse(new Packet(AuthenticationState_SERVER_Events.Default, DataTableType_SERVER_Events.SERVER_Kurswahl_Response));
@@ -287,21 +286,4 @@ namespace ClientClassLib
         }
     }
 
-    public class PacketResponseArgs
-    {
-        public Packet packet;
-        public bool flag;
-        public string error;
-        public PacketResponseArgs(bool _flag, Packet p)
-        {
-            packet = p;
-            flag = _flag;
-        }
-
-        public PacketResponseArgs(bool _flag, string _error)
-        {
-            flag = _flag;
-            error = _error;
-        }
-    }
 }

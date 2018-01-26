@@ -199,7 +199,23 @@ namespace Test
         {
             if (e.Source.ToString() == "Pages/Login/Schüler_Register.xaml")
             {
-                client.GetKlassen();
+                Packet klassen = client.GetKlassen();
+                if (klassen.success)
+                {
+                    ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
+
+                    List<string> lst_data = (List<string>) klassen.lst_Dir_Auth["Kl_Name"];
+                    cb.Items.Clear();
+
+                    foreach (string s in lst_data)
+                    {
+                        cb.Items.Add(s);
+                    }
+                }
+                else
+                {
+                    
+                }
             }
         }
 
@@ -216,15 +232,15 @@ namespace Test
             Pages.Login.Schüler_Login schüler_login = UIHelper.FindVisualParent<Pages.Login.Schüler_Login>((Button)sender);
             try
             {
-                PacketResponseArgs login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
-                if (login.flag)
+                Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
+                if (login.success)
                 {
                     LoginFrm.Close();
                     this.IsEnabled = true;
                 }
                 else
                 {
-                    schüler_login.lbl_SchülerLoginError.Text = login.packet.informationString;
+                    schüler_login.lbl_SchülerLoginError.Text = login.informationString;
 
                 }
             }
@@ -232,11 +248,6 @@ namespace Test
             {
                 schüler_login.lbl_SchülerLoginError.Text = ex.Message;
             }
-        }
-
-        private void Reload()
-        {
-            //TODO: Content wird von server geladen
         }
     }
 }
