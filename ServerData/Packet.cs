@@ -121,13 +121,16 @@ namespace ServerData
             lst_Dir_DataTable.Add("lst<string>", dataL);
             senderID = ID;
         }
-        public Packet(DataTableType_SERVER_Events type, List<string> dataL) //Tabellen Packet
+        public Packet(DataTableType_SERVER_Events type, List<string> dataL, string error, bool flag) //Tabellen Packet
         {
             tableType_SERVER = type;
             packetType = PacketType.DataTable;
             lst_Dir_DataTable = new ListDictionary();
             lst_Dir_DataTable.Add("lst<string>", dataL);
             senderID = "server";
+            
+            informationString = error;
+            success = flag;
         }
 
         //Send DataTable+++++++++++++++++
@@ -139,13 +142,16 @@ namespace ServerData
             lst_Dir_DataTable = PacketHandler.ConvertTableToList(table);  //Tabelle
             senderID = ID;
         }
-        public Packet(DataTableType_SERVER_Events type, DataTable table) //Tabellen Packet
+        public Packet(DataTableType_SERVER_Events type, DataTable table, string error, bool flag) //Tabellen Packet
         {
             tableType_SERVER = type;
             packetType = PacketType.DataTable;
 
             lst_Dir_DataTable = PacketHandler.ConvertTableToList(table);  //Tabelle
             senderID = "server";
+
+            informationString = error;
+            success = flag;
         }
     }
 }
