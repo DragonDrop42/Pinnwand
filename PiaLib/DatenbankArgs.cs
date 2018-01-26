@@ -14,21 +14,21 @@ namespace PiaLib
 
         public DatenbankArgs(DataTable Data)
         {
-            this.Success = true;
+            Success = true;
             this.Data = Data;
-            this.Error = "";
+            Error = "";
         }
         public DatenbankArgs(string Error)
         {
-            this.Success = false;
+            Success = false;
             this.Error = Error;
-            this.Data = new DataTable();
+            Data = new DataTable();
         }
         public DatenbankArgs()
         {
-            this.Success = true;
-            this.Error = "";
-            this.Data = new DataTable();
+            Success = true;
+            Error = "";
+            Data = new DataTable();
         }
 
         public string DataDebug

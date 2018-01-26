@@ -19,7 +19,7 @@ namespace ClientClassLib
         static string id;
         List<Packet> lst_PacketResponse = new List<Packet>();
 
-        private readonly EventWaitHandle waitHandle = new System.Threading.AutoResetEvent(false);
+        private readonly EventWaitHandle waitHandle = new AutoResetEvent(false);
 
         TCP_connection.DataManagerCallback packetCallback;
         TCP_connection.ErrorMessageCallback errorCallback;
@@ -99,7 +99,7 @@ namespace ClientClassLib
             Thread timerT = new Thread(delegate()
             {
                 sw.Start();
-                while (sw.Elapsed < TimeSpan.FromSeconds(2) && sw.IsRunning)
+                while (sw.Elapsed < TimeSpan.FromSeconds(3) && sw.IsRunning)
                 {
                     Thread.Sleep(10);
                 }
@@ -132,7 +132,7 @@ namespace ClientClassLib
             //kein Client Event
             if (packet.authState_SERVER == AuthenticationState_SERVER_Events.SERVER_Register_ID)
             {
-                ID = (packet.lst_Dir_Auth["id"].ToString());
+                ID = packet.lst_Dir_Auth["id"].ToString();
                 return;
             }
             else if (packet.packetType == PacketType.System_Error)
@@ -223,9 +223,9 @@ namespace ClientClassLib
             //passwort verschlüsslung
             string salt = "492";
             System.Security.Cryptography.SHA1 sha = System.Security.Cryptography.SHA1.Create();
-            byte[] preHash = System.Text.Encoding.UTF32.GetBytes(pass + salt);
+            byte[] preHash = Encoding.UTF32.GetBytes(pass + salt);
             byte[] hash = sha.ComputeHash(preHash);
-            string password = System.Convert.ToBase64String(hash, 0, hash.Length);  //immer 15 Stellen lang
+            string password = Convert.ToBase64String(hash, 0, hash.Length);  //immer 15 Stellen lang
             //
             //errorCallback(password);
             return password;
