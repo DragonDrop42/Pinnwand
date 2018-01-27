@@ -46,7 +46,7 @@ namespace ServerData
 
                     int byteLenngth = socket.Receive(sizeBuf, 0, sizeBuf.Length, SocketFlags.None, out error);
 
-                    if (error == SocketError.Success && byteLenngth >0)
+                    if (error == SocketError.Success && byteLenngth > 0)
                     {
                         uint size = BitConverter.ToUInt32(sizeBuf, 0);  //bytes to Int
 

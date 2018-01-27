@@ -16,6 +16,8 @@ namespace Server
         //Server+++++++
         static Socket listenerSocket;
         static List<ClientData> lst_clients;
+        static List<string> lst_loggedIn;
+
         static bool run_flag = true;
         //-------------
 
@@ -27,6 +29,7 @@ namespace Server
             listenerSocket = TCP_connection.SocketSetup;    //Setup Socket
             //Liste für Clients
             lst_clients = new List<ClientData>();
+            lst_loggedIn = new List<string>();
 
             //Verbindungsknoten des Servers
             IPEndPoint ipEnd = new IPEndPoint(IP, port);
@@ -51,7 +54,7 @@ namespace Server
                     Socket newClientSocket = listenerSocket.Accept();
 
                     lst_clients.Add(new ClientData(newClientSocket)); //neuen Client zur Liste hinzufügen
-                    Ausgabe("Socketlistener Accepted\nEs sind " + lst_clients.Count() + " Clients online");
+                    Ausgabe("Socketlistener Accepted\nEs sind " + lst_clients.Count() + " Client(s) online");
                 }
                 else
                 {
@@ -75,71 +78,6 @@ namespace Server
         {
             TCP_connection.SendPacket(client.clientSocket, p, new TCP_connection.ExceptionCallback(SocketDisconnectedException));
         }
-
-        #region Data_IN
-        ////Clientdata thread receives data from Clients
-        //public static void Data_IN(object cSocket)  //Client Socket
-        //{
-        //    Socket clientSocket = (Socket)cSocket;  
-
-        //    //Packete werden aufgeteilt und nacheinander gesendet/empfangen
-        //    SocketError error = SocketError.Success;
-
-        //    try
-        //    {
-        //        while (clientSocket.Connected)
-        //        {
-        //            byte[] sizeBuf = new byte[4];
-        //            //clientSocket.Receive(sizeBuf, 0, sizeBuf.Length, 0);
-
-        //            int byteLenngth = clientSocket.Receive(sizeBuf, 0, sizeBuf.Length, SocketFlags.None, out error);
-
-        //            if (error == SocketError.Success && byteLenngth > 0)
-        //            {
-        //                uint size = BitConverter.ToUInt32(sizeBuf, 0);  //bytes to Int
-
-        //                Packet p = TCP_connection.Read_Data_Stream(clientSocket, size); //Read_Data_Stream(clientSocket, size);
-
-        //                if (p != null)
-        //                {
-        //                    Server.DataManager(p);  //an Hauptklasse weiterleiten
-        //                }
-        //            }
-        //            else
-        //            {
-        //                throw new Exception("Clientverbindung getrennt! (Socket disconnected)");
-        //            }
-        //        }
-        //    }
-        //    catch (Exception exp)
-        //    {
-        //        Ausgabe(exp.Message);
-        //        //client löschen
-        //        RemoveClient(GetIDfromSocket(clientSocket));
-        //        return;
-        //    }
-        //}
-        #endregion
-
-
-        //public static void SendSingle(ClientData client, Packet p)
-        //{
-        //    try
-        //    {
-        //        byte[] data = PacketHandler.SerializePacket(p);
-
-        //        client.clientSocket.SendBufferSize = data.Length;
-        //        client.clientSocket.Send(BitConverter.GetBytes(data.Length), 0, 4, 0);  //byte Anzahl senden
-        //        client.clientSocket.Send(data); //byte array senden
-        //    }
-        //    catch
-        //    {
-        //        client.clientSocket.Shutdown(SocketShutdown.Both);
-        //        client.clientSocket.Close();
-        //        RemoveClient(client.id);
-        //        Ausgabe("Fehler beim Senden an Client Socket!");
-        //    }
-        //}
 
         #region getSocketby...
         static int GetClientIndexbyID(string ID)
@@ -192,7 +130,7 @@ namespace Server
                     {
                         Ausgabe("Socket konnte nicht geschlossen werden");
                     }
-
+                    lst_loggedIn.Remove(client.id);
                     lst_clients.Remove(client);
                     Ausgabe("Client wurde entfernt");
                     return;
@@ -253,5 +191,19 @@ namespace Server
                     break;
             }
         }
+
+        public static void ClientLogin(string id)
+        {
+            lst_loggedIn.Add(id);
+        }
+        public static bool checkLoginState(string id)
+        {
+            if (lst_loggedIn.Contains(id))
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

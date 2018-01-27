@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CSharp.OleDb, Version=1.0.2.8, Culture=neutral, PublicKeyToken=872ff9e93c410e95, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSharp.OleDb.1.0.2.8\lib\net45\CSharp.OleDb.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,7 +46,6 @@
     <Compile Include="Pidba.cs" />
     <Compile Include="PinnwandDataSet.cs">
       <DependentUpon>PinnwandDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="PinnwandDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -60,6 +62,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="PinnwandDataSet.xsc">
       <DependentUpon>PinnwandDataSet.xsd</DependentUpon>
     </None>

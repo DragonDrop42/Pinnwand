@@ -47,26 +47,24 @@ namespace Server
                 {
                     return;
                 }
-
-                //Login check------------------------------------------------------------
-                if (client.email == null || p.packetType == PacketType.Authentication)
+                //Anmeldunsfreie Packete+++++++++++++++++++++++++++++++++++++++++++++++
+                if(PublicPacketHandler(p, client))
                 {
-                    CheckAuthState(p, client);
+                    return; //packet ist bbereits bearbeitet
+                }
+
+                //Anmeldungspflicht+++++++++++++++++++++++++++++++++++++++++++++++++++++
+                if(ClientHandler.checkLoginState(client.id))
+                {
+                    ClientHandler.Send_Error_Message_to_Client(client, "Bitte Anmeldung durchführen!");
                     return;
                 }
-                //-----------------------------------------------------------------------
 
-                //Status: LoggedIn = true
+                //Angemeldet: (gesicherter Bereich)
                 switch (p.packetType)
                 {
-                    case PacketType.DataTable:
-                        switch (p.tableType_CLIENT)
-                        {
-                            case DataTableType_CLIENT_Events.USER_Kurswahl_Request:
-                                Kurswahl(client);
-                                break;
-                        }
-
+                    case PacketType.Kurswahl:
+                        Kurswahl(client);
                         break;
 
                     default:
@@ -80,26 +78,73 @@ namespace Server
             }
         }
         #endregion
+          
+        static bool PublicPacketHandler(Packet p, ClientData client)
+        {
+            Packet response = null;
+
+            switch (p.packetType)
+            {
+                case PacketType.Login:
+                    //DB-----   Try Login
+                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
+
+                    DatenbankArgs args = db_Manager.Schüler.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
+                    if (args.Success)
+                    {
+                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich eingeloggt"));
+                        client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
+
+                        ClientHandler.ClientLogin(client.id);   //In liste schreiben
+                    }
+                    else
+                    {
+                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " Login fehlgeschlagen!"));
+                    }
+                    response = new Packet(PacketType.Login, args.Data, args.Success, args.Error);
+                    //------
+                    break;
+
+                case PacketType.Registraition: //Register user
+
+                    args = db_Manager.Schüler.add(p.Data["name"].ToString(), p.Data["vname"].ToString(), p.Data["phone"].ToString(), p.Data["email"].ToString(), p.Data["klasse"].ToString(), p.Data["passwort"].ToString());
+                    if (args.Success)
+                    {
+                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich registriert"));
+                    }
+                    else
+                    {
+                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " Registrierung fehlgeschlagen!"));
+                    }
+                    response = new Packet(PacketType.Registraition, args.Data, args.Success, args.Error);
+                    break;
+
+                case PacketType.Klassenwahl:
+                    Klassenwahl(client);
+                    break;
+            }
+
+            if (response != null)
+            {
+                ClientHandler.SendSinglePacket(client, response);
+                return true;
+            }
+            return false;
+        }
 
         static void Klassenwahl(ClientData client)
         {
             //idAbfragen
             //kurse abfragen
-            DataTable tableKlassen;
             DatenbankArgs args = db_Manager.Schüler.getKlassenNamen();
-
-            Console.WriteLine(args.DataDebug);
 
             if (args.Success == false)
             {
                 ClientHandler.Ausgabe("Klassenwahl", "null");
-                return;
             }
-            tableKlassen = args.Data;
 
-            //Packet response = new Packet(AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response, PacketHandler.ConvertTableToList(args.Data)[0],args.Error,args.Success);
-            //ClientHandler.SendSinglePacket(client, response);
-
+            Packet response = new Packet(PacketType.Klassenwahl, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
         }
 
         static void Kurswahl(ClientData client)
@@ -109,69 +154,14 @@ namespace Server
             DatenbankArgs args = db_Manager.Schüler.getby(client.email, "S_Email");
             if (args.Success)
             {
-                int id = (int) args.Data.Rows[0][0];
+                int id = (int)args.Data.Rows[0][0];
 
                 ClientHandler.Ausgabe("Kurswahl", ("Schueler ID: " + args.Data.Rows[0][0]));
                 args = db_Manager.Schüler.getKurse(id);
             }
 
-            Packet response = new Packet(DataTableType_SERVER_Events.SERVER_Kurswahl_Response, args.Data, args.Error, args.Success);
+            Packet response = new Packet(PacketType.Kurswahl, args.Data, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
-        }
-        
-        static void CheckAuthState(Packet p, ClientData client)
-        {
-            Packet response = null;
-
-            switch (p.authState_CLIENT)
-            {
-                case AuthenticationState_CLIENT_Events.USER_Klassenwahl_Request:
-                    Klassenwahl(client);
-                    break;
-
-                case AuthenticationState_CLIENT_Events.USER_Login_Request:
-                    //DB-----   Try Login
-
-                    ClientHandler.Ausgabe("Auth", ("Email: " + p.lst_Dir_Auth["email"].ToString() + " Passwort: " + p.lst_Dir_Auth["passwort"]) + " try to login");
-
-                    DatenbankArgs args = db_Manager.Schüler.login(p.lst_Dir_Auth["email"].ToString(), p.lst_Dir_Auth["passwort"].ToString());
-                    if (args.Success)
-                    {
-                        ClientHandler.Ausgabe("Auth", (p.lst_Dir_Auth["email"] + " wurde erfolgreich eingeloggt"));
-                        client.email = p.lst_Dir_Auth["email"].ToString();  //email als Erkennungsmerkmal setzen
-
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Login, "", true);
-                    }
-                    else
-                    {
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Login, args.Error, false);
-                    }
-                    //------
-                    break;
-                case AuthenticationState_CLIENT_Events.USER_Registration_Request: //Register user
-
-                    args = db_Manager.Schüler.add(p.lst_Dir_Auth["name"].ToString(), p.lst_Dir_Auth["vname"].ToString(), p.lst_Dir_Auth["phone"].ToString(), p.lst_Dir_Auth["email"].ToString(), p.lst_Dir_Auth["klasse"].ToString(), p.lst_Dir_Auth["passwort"].ToString());
-                    if (args.Success)
-                    {
-                        //client.email = p.auth_keyList["email"].ToString();  //email als Erkennungsmerkmal setzen
-                        ClientHandler.Ausgabe("Auth", (p.lst_Dir_Auth["email"] + " wurde erfolgreich registriert"));
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Registraition, "", true);
-                    }
-                    else
-                    {
-                        response = new Packet(AuthenticationState_SERVER_Events.SERVER_Registraition, args.Error, false);
-                    }
-                    break;
-                default:
-                    response = new Packet("Bitte führe eine Registrierung oder Anmeldung durch!");
-                    break;
-            }
-
-            if (response != null)
-            {
-                ClientHandler.SendSinglePacket(client, response);
-            }
-
         }
     }
 }
