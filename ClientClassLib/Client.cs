@@ -194,13 +194,15 @@ namespace ClientClassLib
         //Get Klassen
         public Packet GetKlassen()
         {
-            SendKlassenPacket();
+            Packet klassen = new Packet(PacketType.Klassenwahl, id);
+            SendPacket(klassen);
             return WaitForPacketResponse(new Packet(PacketType.Klassenwahl));
         }
         //Kurswahl+++++++++++++++++++++++++++++++++++++++++++++++++++++++
         public Packet Kurswahl()
         {
-            SendKurswahlPacket();
+            Packet kurswahl = new Packet(PacketType.Kurswahl, id);
+            SendPacket(kurswahl);
             return WaitForPacketResponse(new Packet(PacketType.Kurswahl));
         }
         //-----------------------------------------------------------
@@ -274,16 +276,14 @@ namespace ClientClassLib
             SendPacket(schüler ? new Packet(PacketType.Schüler_Login, data, id) : new Packet(PacketType.Lehrer_Login, data, id));
         }
 
-        private void SendKlassenPacket()
+        public Packet SendKursUpdatePacket(List<string> Kurse)
         {
-            Packet klassen = new Packet(PacketType.Klassenwahl, id);
-            SendPacket(klassen);
-        }
-
-        private void SendKurswahlPacket()
-        {
-            Packet kurswahl = new Packet(PacketType.Kurswahl, id);
-            SendPacket(kurswahl);
+            ListDictionary data = new ListDictionary
+            {
+                {"K_ID",Kurse}
+            };
+            SendPacket(new Packet(PacketType.KursUpdate,data,id));
+            return WaitForPacketResponse(new Packet(PacketType.KursUpdate));
         }
         #endregion
 

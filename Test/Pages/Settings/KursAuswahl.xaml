@@ -10,9 +10,10 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
                 <TextBlock Text="Kurswahl" Style="{StaticResource Heading2}" />
+                <Button x:Name="cmd_refresh">Kurse Aktualisieren</Button>
                 <ListView x:Name="lv_Kurse" Height="auto" Width="auto">
-                    <CheckBox>Test</CheckBox>
                 </ListView>
+                <Button x:Name="cmd_save">Speichern</Button>
 
             </StackPanel>
         </ScrollViewer>
