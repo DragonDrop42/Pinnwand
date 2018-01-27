@@ -19,7 +19,7 @@ namespace ClientClassLib
         static string id;
         List<Packet> lst_PacketResponse = new List<Packet>();
 
-        private readonly EventWaitHandle waitHandle = new System.Threading.AutoResetEvent(false);
+        private readonly EventWaitHandle waitHandle = new AutoResetEvent(false);
 
         TCP_connection.DataManagerCallback packetCallback;
         TCP_connection.ErrorMessageCallback errorCallback;
@@ -106,6 +106,7 @@ namespace ClientClassLib
                     return p;
                 }
             }
+
             return new Packet("Zeitüberschreitung oder Packet nicht gefunden");
         }
 
@@ -205,9 +206,9 @@ namespace ClientClassLib
             //passwort verschlüsslung
             string salt = "492";
             System.Security.Cryptography.SHA1 sha = System.Security.Cryptography.SHA1.Create();
-            byte[] preHash = System.Text.Encoding.UTF32.GetBytes(pass + salt);
+            byte[] preHash = Encoding.UTF32.GetBytes(pass + salt);
             byte[] hash = sha.ComputeHash(preHash);
-            string password = System.Convert.ToBase64String(hash, 0, hash.Length);  //immer 15 Stellen lang
+            string password = Convert.ToBase64String(hash, 0, hash.Length);  //immer 15 Stellen lang
             //
             //errorCallback(password);
             return password;

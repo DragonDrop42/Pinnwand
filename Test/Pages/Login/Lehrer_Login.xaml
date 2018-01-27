@@ -16,12 +16,12 @@
                 <Label Width="60" HorizontalContentAlignment="Right">Passwort</Label>
                 <PasswordBox x:Name="txt_Passwort" Margin="10,0,0,20" Width="290" HorizontalAlignment="Right"></PasswordBox>
             </StackPanel>
+            <TextBlock x:Name="lbl_LehrerLoginError" Width="300" Height="34" Margin="10,20,0,0" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="cmd_SchülerLogin" Width="140" Margin="0,0,10,0">Login</Button>
-                <Button x:Name="cmd_Abbruch" Width="140">Abbruch</Button>
+                <Button x:Name="cmd_LehrerLogin" Width="140" Margin="0,0,10,0">Login</Button>
+                <Button x:Name="cmd_LeherPasswortReset" Width="140">Passwort Vergessen?</Button>
             </StackPanel>
             <!--Das Label muss per Code erstellt werden (in ein Stackpannel rein) sonst ist die Heigt des Mainframes falsch-->
-            <TextBlock x:Name="lbl_SchülerLoginError" Width="300" Height="34" Margin="10,20,0,0" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>

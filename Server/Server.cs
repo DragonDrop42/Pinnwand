@@ -78,9 +78,7 @@ namespace Server
             }
         }
         #endregion
-
-        
-        
+          
         static bool PublicPacketHandler(Packet p, ClientData client)
         {
             Packet response = null;

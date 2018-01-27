@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using ClientClassLib;
 using ServerData;
 
@@ -41,9 +42,15 @@ namespace Test
             LoginFrm.Show();
             LoginFrm.Loaded += LoginFrm_Loaded;
             LoginFrm.GotFocus += LoginFrm_GotFocus;
-            this.IsEnabled = false;
-            this.GotFocus += OnGotFocus;
+            LoginFrm.Closing += LoginFrmOnClosing;
+            IsEnabled = false;
+            GotFocus += OnGotFocus;
 
+        }
+
+        private void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            Close();
         }
 
         private void OnGotFocus(object sender, RoutedEventArgs routedEventArgs)
@@ -161,11 +168,18 @@ namespace Test
                 SubscribedEvents.Add("cmd_SchülerRegi");
             }
 
-            ModernTab tab_Lehrer = UIHelper.FindVisualChildByName<ModernTab>(LoginFrm, "tab_Lehrer");
-            if (tab_Lehrer != null && !SubscribedEvents.Contains("tab_Lehrer"))
+            Button cmd_LehrerLogin = UIHelper.FindVisualChildByName<Button>(LoginFrm, "cmd_LehrerLogin");
+            if (cmd_LehrerLogin != null && !SubscribedEvents.Contains("cmd_LehrerLogin"))
             {
-                tab_Lehrer.SelectedSourceChanged += tab_Lehrer_SelectedSourceChanged;
-                SubscribedEvents.Add("tab_Lehrer");
+                cmd_LehrerLogin.Click += cmd_LehrerLogin_Click;
+                SubscribedEvents.Add("cmd_LehrerLogin");
+            }
+            
+            Button cmd_LehrerRegi = UIHelper.FindVisualChildByName<Button>(LoginFrm, "cmd_AbsendenRegistrierungLehrer");
+            if (cmd_LehrerRegi != null && !SubscribedEvents.Contains("cmd_LehrerRegi"))
+            {
+                cmd_LehrerRegi.Click += cmd_LehrerRegi_Click;
+                SubscribedEvents.Add("cmd_LehrerRegi");
             }
 
             ModernTab tab_Schüler = UIHelper.FindVisualChildByName<ModernTab>(LoginFrm, "tab_Schüler");
@@ -173,6 +187,52 @@ namespace Test
             {
                 tab_Schüler.SelectedSourceChanged += tab_Schüler_SelectedSourceChanged;
                 SubscribedEvents.Add("tab_Schüler");
+            }
+        }
+
+        private void cmd_LehrerLogin_Click(object sender, RoutedEventArgs e)
+        {
+            Pages.Login.Lehrer_Login lehrer_login =
+                UIHelper.FindVisualParent<Pages.Login.Lehrer_Login>((Button) sender);
+            try
+            {
+                Packet login = client.Login(lehrer_login.txt_Email.Text, lehrer_login.txt_Passwort.Password);
+                if (login.success)
+                {
+                    LoginFrm.Closing -= LoginFrmOnClosing; 
+                    LoginFrm.Close();
+                    IsEnabled = true;
+                }
+                else
+                {
+                    lehrer_login.lbl_LehrerLoginError.Text = login.informationString;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                lehrer_login.lbl_LehrerLoginError.Text = ex.Message;
+            }
+        }
+
+        private void cmd_LehrerRegi_Click(object sender, RoutedEventArgs routedEventArgs)
+        {
+            Pages.Login.Lehrer_Register lehrer_regi = UIHelper.FindVisualParent<Pages.Login.Lehrer_Register>((Button)sender);
+            try
+            {
+                string Name = lehrer_regi.txt_Name.Text;
+                string Vname = lehrer_regi.txt_Vorname.Text;
+                string lehrerCode = lehrer_regi.txt_LehrerCode.Text;
+                string Email = lehrer_regi.txt_Email.Text;
+                string Passwort = lehrer_regi.txt_Passwort.Password;
+                //client.Register_Lehrer(Name, Vname, Phone,Klasse, Email, Passwort);
+                string Anrede = (string)lehrer_regi.cbB_Anrede.SelectedValue;
+                string Titel = (string) lehrer_regi.cbB_Titel.SelectedValue;
+                MessageBox.Show(Vname + Name + Anrede + Email + Passwort + Titel);
+            }
+            catch (Exception ex)
+            {
+                lehrer_regi.lbl_Lehrer_Registrations_Error.Text = ex.Message;
             }
         }
 
@@ -208,15 +268,24 @@ namespace Test
         {
             if (e.Source.ToString() == "Pages/Login/Schüler_Register.xaml")
             {
-                client.GetKlassen();
-            }
-        }
+                Packet klassen = client.GetKlassen();
+                if (klassen.success)
+                {
+                    ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
 
-        void tab_Lehrer_SelectedSourceChanged(object sender, SourceEventArgs e)
-        {
-            if (e.Source.ToString() == "Pages/Login/Lehrer_Register.xaml")
-            {
+                    List<string> lst_data = (List<string>) klassen.lst_Dir_Auth["Kl_Name"];
+                    cb.Items.Clear();
 
+                    foreach (string s in lst_data)
+                    {
+                        cb.Items.Add(s);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Klassen konnten nicht geladen werden:\n" + klassen.informationString);
+                }
             }
         }
 
@@ -227,24 +296,22 @@ namespace Test
             {
                 Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
                 if (login.Success)
+
                 {
+                    LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
-                    this.IsEnabled = true;
+                    IsEnabled = true;
                 }
                 else
                 {
                     throw new Exception(login.MessageString);
+
                 }
             }
             catch (Exception ex)
             {
                 schüler_login.lbl_SchülerLoginError.Text = ex.Message;
             }
-        }
-
-        private void Reload()
-        {
-            //TODO: Content wird von server geladen
         }
     }
 }
