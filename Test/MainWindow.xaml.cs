@@ -128,8 +128,6 @@ namespace Test
         //            case PacketType.System_Error:
         //                Fehler_Ausgabe("Server Error: " + packet.informationString);
         //                break;
-
-
         //            default:
         //                Fehler_Ausgabe("Unbekanntes Packet");
         //                break;
@@ -181,13 +179,14 @@ namespace Test
                 cmd_LehrerRegi.Click += cmd_LehrerRegi_Click;
                 SubscribedEvents.Add("cmd_LehrerRegi");
             }
-
-            ModernTab tab_Schüler = UIHelper.FindVisualChildByName<ModernTab>(LoginFrm, "tab_Schüler");
-            if (tab_Schüler != null && !SubscribedEvents.Contains("tab_Schüler"))
+            
+            ComboBox cbB_Klasse = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
+            if (cbB_Klasse != null && !SubscribedEvents.Contains("cbB_Klasse"))
             {
-                tab_Schüler.SelectedSourceChanged += tab_Schüler_SelectedSourceChanged;
-                SubscribedEvents.Add("tab_Schüler");
+                cbB_Klasse.DropDownOpened += CbB_Klasse_DropDownOpened;
+                SubscribedEvents.Add("cbB_Klasse");
             }
+            
         }
 
         private void cmd_LehrerLogin_Click(object sender, RoutedEventArgs e)
@@ -196,8 +195,8 @@ namespace Test
                 UIHelper.FindVisualParent<Pages.Login.Lehrer_Login>((Button) sender);
             try
             {
-                Packet login = client.Login(lehrer_login.txt_Email.Text, lehrer_login.txt_Passwort.Password);
-                if (login.success)
+                Packet login = client.Login(lehrer_login.txt_Email.Text, lehrer_login.txt_Passwort.Password,false);
+                if (login.Success)
                 {
                     LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
@@ -205,7 +204,7 @@ namespace Test
                 }
                 else
                 {
-                    lehrer_login.lbl_LehrerLoginError.Text = login.informationString;
+                    lehrer_login.lbl_LehrerLoginError.Text = login.MessageString;
 
                 }
             }
@@ -225,10 +224,18 @@ namespace Test
                 string lehrerCode = lehrer_regi.txt_LehrerCode.Text;
                 string Email = lehrer_regi.txt_Email.Text;
                 string Passwort = lehrer_regi.txt_Passwort.Password;
-                //client.Register_Lehrer(Name, Vname, Phone,Klasse, Email, Passwort);
                 string Anrede = (string)lehrer_regi.cbB_Anrede.SelectedValue;
-                string Titel = (string) lehrer_regi.cbB_Titel.SelectedValue;
-                MessageBox.Show(Vname + Name + Anrede + Email + Passwort + Titel);
+                string Titel = (string)lehrer_regi.cbB_Titel.SelectedValue;
+                //MessageBox.Show(Vname + Name + Anrede + Email + Passwort + Titel);
+                Packet register = client.Register_Lehrer(Name, Vname, Anrede, Email, Passwort, Titel);
+                if (register.Success)
+                {
+                    throw new Exception("Registrierung erfolgreich.");
+                }
+                else
+                {
+                    throw new Exception(register.MessageString);
+                }
             }
             catch (Exception ex)
             {
@@ -248,10 +255,10 @@ namespace Test
                 string Passwort = schüler_regi.txt_Passwort.Password;
                 string Klasse = Convert.ToString(schüler_regi.cbB_Klasse.SelectedValue);
 
-                Packet register = client.Register_User(Name, Vname, Phone,Klasse, Email, Passwort);
+                Packet register = client.Register_Schüler(Name, Vname, Phone,Klasse, Email, Passwort);
                 if (register.Success)
                 {
-
+                    throw new Exception("Registrierung erfolgreich.");
                 }
                 else
                 {
@@ -264,16 +271,14 @@ namespace Test
             }
         }
 
-        void tab_Schüler_SelectedSourceChanged(object sender, SourceEventArgs e)
+        void CbB_Klasse_DropDownOpened(object sender, EventArgs e)
         {
-            if (e.Source.ToString() == "Pages/Login/Schüler_Register.xaml")
-            {
                 Packet klassen = client.GetKlassen();
-                if (klassen.success)
+                if (klassen.Success)
                 {
-                    ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
+                    ComboBox cb = (ComboBox) sender;
 
-                    List<string> lst_data = (List<string>) klassen.lst_Dir_Auth["Kl_Name"];
+                    List<string> lst_data = (List<string>) klassen.Data["Kl_Name"];
                     cb.Items.Clear();
 
                     foreach (string s in lst_data)
@@ -284,9 +289,9 @@ namespace Test
                 else
                 {
                     MessageBox.Show(
-                        "Klassen konnten nicht geladen werden:\n" + klassen.informationString);
+                        "Klassen konnten nicht geladen werden:\n" + klassen.MessageString);
                 }
-            }
+            
         }
 
         void cmd_SchülerLogin_Click(object sender, RoutedEventArgs e)
@@ -294,7 +299,7 @@ namespace Test
             Pages.Login.Schüler_Login schüler_login = UIHelper.FindVisualParent<Pages.Login.Schüler_Login>((Button)sender);
             try
             {
-                Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
+                Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password,true);
                 if (login.Success)
 
                 {

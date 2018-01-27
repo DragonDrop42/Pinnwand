@@ -19,8 +19,10 @@ namespace ServerData
 
         //Authentication++++++++++++++++++
         Register_ID,
-        Login,
-        Registraition,
+        Schüler_Login,
+        Schüler_Registraition,
+        Lehrer_Login,
+        Lehrer_Registraition,
         Klassenwahl,
         //--------------------------------
 
@@ -29,7 +31,7 @@ namespace ServerData
         //--------------------------------
 
         //SystemError
-        System_Error
+        SystemError
     }
 
     [Serializable]
@@ -80,7 +82,7 @@ namespace ServerData
         //Messages++++++++++++++++++++
         public Packet(string error)
         {
-            this.packetType = PacketType.System_Error;
+            this.packetType = PacketType.SystemError;
             this.senderID = "server";
             this.MessageString = error;
         }

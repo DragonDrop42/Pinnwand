@@ -117,10 +117,10 @@ namespace ClientClassLib
             //kein Client Event
             if (packet.packetType == PacketType.Register_ID)
             {
-                ID = (packet.Data["id"].ToString());
+                ID = packet.Data["id"].ToString();
                 return;
             }
-            else if (packet.packetType == PacketType.System_Error)
+            else if (packet.packetType == PacketType.SystemError)
             {
                 errorCallback(packet.MessageString);
                 return;
@@ -138,25 +138,43 @@ namespace ClientClassLib
         //---------------------------------------------------------
         #region Login/Register
         //Register+++++++++++++++++++++++++++++++++++++++++++++++++++++++   
-        public Packet Register_User(string name, string vname, string phone, string klasse, string email, string passwort)
+        public Packet Register_Schüler(string name, string vname, string phone, string klasse, string email, string passwort)
         {
             //check
             if (name == "" || vname == "" || email == "" || passwort == "" || klasse == "")
             {
                 throw new Exception("Bitte alle notwendigen Felder ausfüllen!");
             }
-            if (check_email(email) == true && (passwort = check_password(passwort)) != null)
+            if (check_email(email) && (passwort = check_password(passwort)) != null)
             {
                 //Packet senden
-                SendRegisterPacket(name, vname, phone, klasse, email, passwort);
+                SendSchülerRegisterPacket(name, vname, phone, klasse, email, passwort);
                 //Auf Antwort warten
-                return WaitForPacketResponse(new Packet(PacketType.Registraition)); 
+                return WaitForPacketResponse(new Packet(PacketType.Schüler_Registraition)); 
+            }
+            return null;
+        }
+        
+        public Packet Register_Lehrer(string vname, string name, string anrede, string email, string passwort, string titel)
+        {
+            //check
+            if (name == "" || vname == "" || email == "" || passwort == "" || anrede == "")
+            {
+                throw new Exception("Bitte alle notwendigen Felder ausfüllen!");
+            }
+            if (check_email(email) && (passwort = check_password(passwort)) != null)
+            {
+                //Packet senden
+                if (titel == null) titel = "";
+                SendLehrerRegisterPacket(name, vname, anrede, email, passwort, titel);
+                //Auf Antwort warten
+                return WaitForPacketResponse(new Packet(PacketType.Lehrer_Registraition)); 
             }
             return null;
         }
 
         //Login+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public Packet Login(string email, string passwort)
+        public Packet Login(string email, string passwort,bool schüler)
         {
             //check
             if (email == "" || passwort == "")
@@ -166,9 +184,10 @@ namespace ClientClassLib
             if (check_email(email) == true && (passwort = check_password(passwort)) != null)
             {
                 //Packet senden
-                SendLoginPacket(email, passwort);
+                SendLoginPacket(email, passwort,schüler);
                 //auf response warten
-                return WaitForPacketResponse(new Packet(PacketType.Login));
+                return schüler ? WaitForPacketResponse(new Packet(PacketType.Schüler_Login)):
+                    WaitForPacketResponse(new Packet(PacketType.Lehrer_Login));
             }
             return null;
         }
@@ -218,9 +237,9 @@ namespace ClientClassLib
         //=>
         #region Communication (Packets)
 
-        private void SendRegisterPacket(string name, string vname, string phone, string klasse, string email, string passwort)
+        private void SendSchülerRegisterPacket(string name, string vname, string phone, string klasse, string email, string passwort)
         {
-            ListDictionary data = new ListDictionary(){
+            ListDictionary data = new ListDictionary{
                 {"name", name},
                 {"vname", vname},
                 {"phone", phone},
@@ -228,19 +247,31 @@ namespace ClientClassLib
                 {"email", email},
                 {"passwort", passwort}
             };
-            Packet register = new Packet(PacketType.Registraition, data, id);
+            Packet register = new Packet(PacketType.Schüler_Registraition, data, id);
+            SendPacket(register);
+        }
+        private void SendLehrerRegisterPacket(string name, string vname, string anrede, string email, string passwort, string titel)
+        {
+            ListDictionary data = new ListDictionary{
+                {"name", name},
+                {"vname", vname},
+                {"anrede", anrede},
+                {"titel", titel},
+                {"email", email},
+                {"passwort", passwort}
+            };
+            Packet register = new Packet(PacketType.Lehrer_Registraition, data, id);
             SendPacket(register);
         }
 
-        private void SendLoginPacket(string email, string passwort)
+        private void SendLoginPacket(string email, string passwort, bool schüler)
         {
-            ListDictionary data = new ListDictionary()
+            ListDictionary data = new ListDictionary
             {
                 {"email", email},
                 {"passwort", passwort}
             };
-            Packet login = new Packet(PacketType.Login, data, id);
-            SendPacket(login);
+            SendPacket(schüler ? new Packet(PacketType.Schüler_Login, data, id) : new Packet(PacketType.Lehrer_Login, data, id));
         }
 
         private void SendKlassenPacket()
