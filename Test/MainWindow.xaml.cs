@@ -247,7 +247,16 @@ namespace Test
                 string Email = schüler_regi.txt_Email.Text;
                 string Passwort = schüler_regi.txt_Passwort.Password;
                 string Klasse = Convert.ToString(schüler_regi.cbB_Klasse.SelectedValue);
-                client.Register_User(Name, Vname, Phone,Klasse, Email, Passwort);
+
+                Packet register = client.Register_User(Name, Vname, Phone,Klasse, Email, Passwort);
+                if (register.Success)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(register.MessageString);
+                }
             }
             catch (Exception ex)
             {
@@ -286,7 +295,8 @@ namespace Test
             try
             {
                 Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
-                if (login.success)
+                if (login.Success)
+
                 {
                     LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
@@ -294,7 +304,7 @@ namespace Test
                 }
                 else
                 {
-                    schüler_login.lbl_SchülerLoginError.Text = login.informationString;
+                    throw new Exception(login.MessageString);
 
                 }
             }
