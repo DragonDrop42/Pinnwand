@@ -2,7 +2,7 @@
 */bin
 */obj
 */bin/
-.idea
+.vs
 *\obj
 *.com
 *.class

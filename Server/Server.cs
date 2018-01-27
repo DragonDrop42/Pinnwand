@@ -85,7 +85,7 @@ namespace Server
 
             switch (p.packetType)
             {
-                case PacketType.Login:
+                case PacketType.Schüler_Login:
                     //DB-----   Try Login
                     ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
 
@@ -101,11 +101,30 @@ namespace Server
                     {
                         ClientHandler.Ausgabe("Auth", (p.Data["email"] + " Login fehlgeschlagen!"));
                     }
-                    response = new Packet(PacketType.Login, args.Data, args.Success, args.Error);
+                    response = new Packet(PacketType.Schüler_Login, args.Data, args.Success, args.Error);
+                    //------
+                    break;
+                case PacketType.Lehrer_Login:
+                    //DB-----   Try Login
+                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
+
+                    args = db_Manager.Lehrer.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
+                    if (args.Success)
+                    {
+                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich eingeloggt"));
+                        client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
+
+                        ClientHandler.ClientLogin(client.id);   //In liste schreiben
+                    }
+                    else
+                    {
+                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " Login fehlgeschlagen!"));
+                    }
+                    response = new Packet(PacketType.Lehrer_Login, args.Data, args.Success, args.Error);
                     //------
                     break;
 
-                case PacketType.Registraition: //Register user
+                case PacketType.Schüler_Registraition: //Register Schüler
 
                     args = db_Manager.Schüler.add(p.Data["name"].ToString(), p.Data["vname"].ToString(), p.Data["phone"].ToString(), p.Data["email"].ToString(), p.Data["klasse"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
@@ -116,11 +135,25 @@ namespace Server
                     {
                         ClientHandler.Ausgabe("Auth", (p.Data["email"] + " Registrierung fehlgeschlagen!"));
                     }
-                    response = new Packet(PacketType.Registraition, args.Data, args.Success, args.Error);
+                    response = new Packet(PacketType.Schüler_Registraition, args.Data, args.Success, args.Error);
+                    break;
+                    
+                case PacketType.Lehrer_Registraition: //Register Lehrer
+
+                    args = db_Manager.Lehrer.add(p.Data["vname"].ToString(), p.Data["name"].ToString(), p.Data["anrede"].ToString(), p.Data["email"].ToString(), p.Data["passwort"].ToString(), p.Data["titel"].ToString());
+                    if (args.Success)
+                    {
+                        ClientHandler.Ausgabe("Auth", p.Data["email"] + " wurde erfolgreich registriert");
+                    }
+                    else
+                    {
+                        ClientHandler.Ausgabe("Auth", p.Data["email"] + " Registrierung fehlgeschlagen!");
+                    }
+                    response = new Packet(PacketType.Lehrer_Registraition, args.Data, args.Success, args.Error);
                     break;
 
                 case PacketType.Klassenwahl:
-                    Klassenwahl(client);
+                    response = Klassenwahl(client);
                     break;
             }
 
@@ -132,7 +165,7 @@ namespace Server
             return false;
         }
 
-        static void Klassenwahl(ClientData client)
+        static Packet Klassenwahl(ClientData client)
         {
             //idAbfragen
             //kurse abfragen
@@ -143,8 +176,7 @@ namespace Server
                 ClientHandler.Ausgabe("Klassenwahl", "null");
             }
 
-            Packet response = new Packet(PacketType.Klassenwahl, args.Data, args.Success, args.Error);
-            ClientHandler.SendSinglePacket(client, response);
+            return new Packet(PacketType.Klassenwahl, args.Data, args.Success, args.Error);
         }
 
         static void Kurswahl(ClientData client)
