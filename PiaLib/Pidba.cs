@@ -131,11 +131,11 @@ namespace PiaLib
                 }
             }
 
-            public DatenbankArgs getKurse(int Kl_ID)
+            public DatenbankArgs getKurse(int S_ID)
             {
                 try
                 {
-                    return new DatenbankArgs(kta.GetDataByKl_ID(Kl_ID));
+                    return new DatenbankArgs(vta.GetDataBy1(S_ID));
                 }
                 catch (Exception ex)
                 {

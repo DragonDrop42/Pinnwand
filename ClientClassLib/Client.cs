@@ -285,6 +285,12 @@ namespace ClientClassLib
             SendPacket(new Packet(PacketType.KursUpdate,data,id));
             return WaitForPacketResponse(new Packet(PacketType.KursUpdate));
         }
+
+        public Packet SendGetKursePacket()
+        {
+            SendPacket(new Packet(PacketType.GetKurse,id));
+            return WaitForPacketResponse(new Packet(PacketType.GetKurse));
+        }
         #endregion
 
         //Property Set new ID

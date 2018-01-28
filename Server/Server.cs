@@ -65,6 +65,10 @@ namespace Server
                 //Angemeldet: (gesicherter Bereich)
                 switch (p.packetType)
                 {
+                    case PacketType.GetKurse:
+                        GetKurse(client);
+                        break;
+                        
                     case PacketType.Kurswahl:
                         Kurswahl(client);
                         break;
@@ -82,6 +86,23 @@ namespace Server
             {
                 ClientHandler.Ausgabe("PacketManager", exc.Message);
             }
+        }
+
+        private static void GetKurse(ClientData client)
+        {
+            //idAbfragen
+            //kurse abfragen
+            DatenbankArgs args = db_Manager.Schüler.getby(client.email, "S_Email");
+            if (args.Success)
+            {
+                int id = (int)args.Data.Rows[0][0];
+
+                ClientHandler.Ausgabe("GetKurse", ("Schueler ID: " + args.Data.Rows[0][0]));
+                args = db_Manager.Schüler.getKurse(id);
+            }
+
+            Packet response = new Packet(PacketType.GetKurse, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
         }
 
         public static void UpdateKlassen(ClientData client, Packet packet)

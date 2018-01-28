@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using ClientClassLib;
+using FirstFloor.ModernUI.Presentation;
 using ServerData;
 
 namespace Test
@@ -28,6 +29,7 @@ namespace Test
         Client client;
         List<string> SubscribedEvents = new List<string>();
         public Login LoginFrm;
+        private ModernTab Kurse;
 
         public MainWindow()
         {
@@ -45,7 +47,7 @@ namespace Test
             LoginFrm.Closing += LoginFrmOnClosing;
             IsEnabled = false;
             GotFocus += OnGotFocus;
-
+            
         }
 
         private void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -61,20 +63,32 @@ namespace Test
                 cmd_refresh.Click += Cmd_Refresh_Click;
                 SubscribedEvents.Add("cmd_refresh");
             }
+
             Button cmd_save = UIHelper.FindVisualChildByName<Button>(this, "cmd_save");
             if (cmd_save != null && !SubscribedEvents.Contains("cmd_save"))
             {
                 cmd_save.Click += cmd_save_Click;
                 SubscribedEvents.Add("cmd_save");
             }
-        }
+        
+    }
 
-        private void cmd_save_Click(object sender, RoutedEventArgs e)
+    private void cmd_save_Click(object sender, RoutedEventArgs e)
         {
             Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
-            List<string> k = kw.GetChecked();
-            Packet kursUpdate = client.SendKursUpdatePacket(k);
-            MessageBox.Show(kursUpdate.MessageString);
+            try
+            {
+                List<string> k = kw.GetChecked();
+                if (k.Count == 0) throw new Exception("Bitte mindestens einen Kurs auswählen.");
+                Packet kursUpdate = client.SendKursUpdatePacket(k);
+                if (!kursUpdate.Success) throw new Exception(kursUpdate.MessageString);
+                Reload_Kurse();
+                throw new Exception("Erfolgreich gespeichert");
+            }
+            catch (Exception ex)
+            {
+                kw.lbl_Kurswahl_Error.Text = ex.Message;
+            }
         }
 
         private void Cmd_Refresh_Click(object sender, RoutedEventArgs routedEventArgs)
@@ -83,9 +97,14 @@ namespace Test
             try
             {
                 Packet kurse = client.Kurswahl();
-                if (kurse.Success)
+                Packet getKurse = client.SendGetKursePacket();
+                if (kurse.Success && getKurse.Success)
                 {
-                    kw.UpdateKurse(kurse.Data);
+                    kw.UpdateKurse(kurse.Data,getKurse.Data);
+                }
+                else
+                {
+                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
                 }
             }
             catch(Exception ex)
@@ -261,6 +280,7 @@ namespace Test
                     LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
                     IsEnabled = true;
+                    Reload_Kurse();
                 }
                 else
                 {
@@ -271,6 +291,50 @@ namespace Test
             catch (Exception ex)
             {
                 schüler_login.lbl_SchülerLoginError.Text = ex.Message;
+            }
+        }
+
+        void Reload_Kurse()
+        {
+            try
+            {
+                if (Kurse == null)
+                {
+                    Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
+                }
+                Packet GetKurse = client.SendGetKursePacket();
+                if (GetKurse.Success)
+                {
+                    foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);
+
+                    if (((List<string>)GetKurse.Data["K_Name"]).Count != 0)
+                    {
+                        foreach (string Kurs in (List<string>)GetKurse.Data["K_Name"])
+                        {
+                            Kurse.Links.Add(new Link
+                            {
+                                DisplayName = Kurs,
+                                Source = new Uri("Pages/KursUebersicht.xaml?Kurs=" + Kurs, UriKind.Relative)
+                            });
+                        }
+                    }
+                    else
+                    {
+                        Kurse.Links.Add(new Link
+                        {
+                            DisplayName = "Kurse Hinzufügen",
+                            Source = new Uri("Pages/Settings/KursAuswahl.xaml", UriKind.Relative)
+                        });
+                    }
+                }
+                else
+                {
+                    throw new Exception(GetKurse.MessageString);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

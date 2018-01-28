@@ -28,6 +28,7 @@ namespace ServerData
 
         //Datenpackete++++++++++++++++++++
         Kurswahl,
+        GetKurse,
         KursUpdate,
         //--------------------------------
 
