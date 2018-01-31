@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
-        <mui:ModernTab Layout="List" SelectedSource="/Pages/Settings/Appearance.xaml">
+        <mui:ModernTab x:Name="tab_settings" Layout="List" SelectedSource="/Pages/Settings/KursAuswahl.xaml">
             <mui:ModernTab.Links>
-                <mui:Link DisplayName="Aussehen" Source="/Pages/Settings/Appearance.xaml" />
                 <mui:Link DisplayName="Kurse" Source="/Pages/Settings/KursAuswahl.xaml" />
+                <mui:Link DisplayName="Aussehen" Source="/Pages/Settings/Appearance.xaml" />
                 <mui:Link DisplayName="Über" Source="/Pages/Settings/About.xaml" />
                 
             </mui:ModernTab.Links>

@@ -62,7 +62,7 @@
       <DependentUpon>Kursliste.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\KursÜbersicht.xaml.cs">
-      <DependentUpon>KursÜbersicht.xaml</DependentUpon>
+      <DependentUpon>KursUebersicht.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
@@ -91,7 +91,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\KursÜbersicht.xaml">
+    <Page Include="Pages\KursUebersicht.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

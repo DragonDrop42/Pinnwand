@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using ClientClassLib;
+using FirstFloor.ModernUI.Presentation;
 using ServerData;
 
 namespace Test
@@ -28,12 +29,13 @@ namespace Test
         Client client;
         List<string> SubscribedEvents = new List<string>();
         public Login LoginFrm;
+        private ModernTab Kurse;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            TCP_connection.ErrorMessageCallback ErrorCallback = new TCP_connection.ErrorMessageCallback(Fehler_Ausgabe);
+            TCP_connection.ErrorMessageCallback ErrorCallback = Fehler_Ausgabe;
             client = new Client(ErrorCallback);
 
             client.Connect(PacketHandler.GetIPAddress(), 4444);
@@ -45,7 +47,7 @@ namespace Test
             LoginFrm.Closing += LoginFrmOnClosing;
             IsEnabled = false;
             GotFocus += OnGotFocus;
-
+            
         }
 
         private void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -55,89 +57,61 @@ namespace Test
 
         private void OnGotFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            Pages.Settings.Kurswahl kurswahl =
-                UIHelper.FindVisualChildByName<Pages.Settings.Kurswahl>(this, "pg_Kurswahl");
-            if (kurswahl != null && !SubscribedEvents.Contains("KurswahlOnInitialized"))
+            Button cmd_refresh = UIHelper.FindVisualChildByName<Button>(this, "cmd_refresh");
+            if (cmd_refresh != null && !SubscribedEvents.Contains("cmd_refresh"))
             {
-                kurswahl.Initialized += KurswahlOnInitialized;
-                SubscribedEvents.Add("KurswahlOnInitialized");
+                cmd_refresh.Click += Cmd_Refresh_Click;
+                SubscribedEvents.Add("cmd_refresh");
+            }
+
+            Button cmd_save = UIHelper.FindVisualChildByName<Button>(this, "cmd_save");
+            if (cmd_save != null && !SubscribedEvents.Contains("cmd_save"))
+            {
+                cmd_save.Click += cmd_save_Click;
+                SubscribedEvents.Add("cmd_save");
+            }
+        
+    }
+
+    private void cmd_save_Click(object sender, RoutedEventArgs e)
+        {
+            Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
+            try
+            {
+                List<string> k = kw.GetChecked();
+                if (k.Count == 0) throw new Exception("Bitte mindestens einen Kurs auswählen.");
+                Packet kursUpdate = client.SendKursUpdatePacket(k);
+                if (!kursUpdate.Success) throw new Exception(kursUpdate.MessageString);
+                Reload_Kurse();
+                throw new Exception("Erfolgreich gespeichert");
+            }
+            catch (Exception ex)
+            {
+                kw.lbl_Kurswahl_Error.Text = ex.Message;
             }
         }
 
-        private void KurswahlOnInitialized(object sender, EventArgs eventArgs)
+        private void Cmd_Refresh_Click(object sender, RoutedEventArgs routedEventArgs)
         {
-            Pages.Settings.Kurswahl kw = (Pages.Settings.Kurswahl)sender;
-            client.Kurswahl();
+            Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
+            try
+            {
+                Packet kurse = client.Kurswahl();
+                Packet getKurse = client.SendGetKursePacket();
+                if (kurse.Success && getKurse.Success)
+                {
+                    kw.UpdateKurse(kurse.Data,getKurse.Data);
+                }
+                else
+                {
+                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
-        //private void WPFInvoke(Packet p) { Application.Current.Dispatcher.Invoke(new Action(() => { DataManager(p); })); }
-
-        //private void DataManager(Packet packet)
-        //{
-        //    try
-        //    {
-        //        switch (packet.packetType)
-        //        {
-        //            //Type Authentication-----------------------------
-        //            case PacketType.Authentication:
-        //                switch (packet.authState_SERVER)
-        //                {
-        //                    case AuthenticationState_SERVER_Events.SERVER_Register_ID:
-
-        //                        client.ID = (packet.auth_keyList["id"].ToString());
-        //                        break;
-
-        //                    case AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response:
-        //                        ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
-
-        //                        List<string> lst_data = (List<string>)packet.auth_keyList["Kl_Name"];
-        //                        cb.Items.Clear();
-                                
-        //                        foreach (string s in lst_data)
-        //                        {
-        //                            cb.Items.Add(s);    
-        //                        }
-        //                        break;
-
-        //                    case AuthenticationState_SERVER_Events.SERVER_Login_Failed:
-        //                        break;
-
-        //                    case AuthenticationState_SERVER_Events.SERVER_Registraition_Accepted:
-        //                        Pages.Login.Schüler_Register sr =
-        //                            UIHelper.FindVisualChildByName<Pages.Login.Schüler_Register>(LoginFrm,
-        //                                "pg_Schüler_Regi");
-        //                        sr.lbl_Schüler_Registrations_Error.Text = "Erfolgreich Registriert";
-        //                        sr.IsEnabled = false;
-        //                        break;
-        //                    case AuthenticationState_SERVER_Events.SERVER_Registraition_Failed:
-        //                        UIHelper.FindVisualChildByName<TextBlock>(LoginFrm, "lbl_Schüler_Registrations_Error").Text = packet.informationString;
-        //                        break;
-        //                }
-        //                return;
-        //            //------------------------------
-        //            case PacketType.DataTable:
-        //                switch (packet.tableType_SERVER)
-        //                {
-        //                    case DataTableType_SERVER_Events.SERVER_Kurswahl_Response:
-        //                        //frm_Kurswahl kurswahl = new frm_Kurswahl(client, packet.lst_TableDictionary);
-        //                        //kurswahl.Show();
-        //                        break;
-        //                }
-        //                break;
-
-        //            case PacketType.System_Error:
-        //                Fehler_Ausgabe("Server Error: " + packet.informationString);
-        //                break;
-        //            default:
-        //                Fehler_Ausgabe("Unbekanntes Packet");
-        //                break;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Fehler_Ausgabe(ex.Message);
-        //    }
-        //}
 
         private void Fehler_Ausgabe(string s)
         {
@@ -306,6 +280,7 @@ namespace Test
                     LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
                     IsEnabled = true;
+                    Reload_Kurse();
                 }
                 else
                 {
@@ -316,6 +291,50 @@ namespace Test
             catch (Exception ex)
             {
                 schüler_login.lbl_SchülerLoginError.Text = ex.Message;
+            }
+        }
+
+        void Reload_Kurse()
+        {
+            try
+            {
+                if (Kurse == null)
+                {
+                    Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
+                }
+                Packet GetKurse = client.SendGetKursePacket();
+                if (GetKurse.Success)
+                {
+                    foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);
+
+                    if (((List<string>)GetKurse.Data["K_Name"]).Count != 0)
+                    {
+                        foreach (string Kurs in (List<string>)GetKurse.Data["K_Name"])
+                        {
+                            Kurse.Links.Add(new Link
+                            {
+                                DisplayName = Kurs,
+                                Source = new Uri("Pages/KursUebersicht.xaml?Kurs=" + Kurs, UriKind.Relative)
+                            });
+                        }
+                    }
+                    else
+                    {
+                        Kurse.Links.Add(new Link
+                        {
+                            DisplayName = "Kurse Hinzufügen",
+                            Source = new Uri("Pages/Settings/KursAuswahl.xaml", UriKind.Relative)
+                        });
+                    }
+                }
+                else
+                {
+                    throw new Exception(GetKurse.MessageString);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

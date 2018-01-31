@@ -131,11 +131,11 @@ namespace PiaLib
                 }
             }
 
-            public DatenbankArgs getKurse(int Kl_ID)
+            public DatenbankArgs getKurse(int S_ID)
             {
                 try
                 {
-                    return new DatenbankArgs(kta.GetDataByKl_ID(Kl_ID));
+                    return new DatenbankArgs(vta.GetDataBy1(S_ID));
                 }
                 catch (Exception ex)
                 {
@@ -143,14 +143,14 @@ namespace PiaLib
                 }
             }
 
-            public DatenbankArgs updateKurse(int S_ID, List<int> K_IDS)
+            public DatenbankArgs updateKurse(int S_ID, List<string> K_IDS)
             {
                 try
                 {
                     vta.DeleteSchülerKurse(S_ID);
-                    foreach (int K_ID in K_IDS)
+                    foreach (string K_ID in K_IDS)
                     {
-                        vta.Insert(S_ID, K_ID);
+                        vta.Insert(S_ID, Convert.ToInt16(K_ID));
                     }
                     DatenbankArgs data = getKurse(S_ID);
                     if (data.Success)
@@ -309,11 +309,11 @@ namespace PiaLib
             //    return 0;
             //}
 
-            public DatenbankArgs getByKlasse(string Kl_Name)
+            public DatenbankArgs getByKlasse(int Kl_ID)
             {
                 try
                 {
-                    DataTable data = kta.GetDataByKlasse(Kl_Name);
+                    DataTable data = kta.GetDataByKl_ID(Kl_ID);
                     if (data.Rows.Count == 0)
                     {
                         throw new Exception("Keine Kurse vorhanden oder Klasse nicht gefunden!");

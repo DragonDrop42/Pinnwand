@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
         <!-- TODO: set @SelectedSource -->
-        <mui:ModernTab x:Name="mt_Kurse" Layout="List">
+        <mui:ModernTab x:Name="mt_Kurse" Layout="List" SelectedSource="Pages/Home.xaml">
             <mui:ModernTab.Links>
                 <!-- TODO: set @Source -->
                 <mui:Link DisplayName="Alle anzeigen" Source="Pages/Home.xaml" />
