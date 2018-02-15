@@ -4,38 +4,70 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="1000" >
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <!-- Pinnwand und Chat-->
-            <UniformGrid MinWidth="1000" Width="auto" Height="200" VerticalAlignment="Top">
-                <StackPanel Width="200" Height="80" >
-                    <Label HorizontalAlignment="Center" FontSize="17" Margin="0,10,0,5">Klausur Mathe</Label>
-                    <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
+             d:DesignHeight="750" >
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" MinWidth="1000" Width="auto" >
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <!-- Pinnwand und Chat-->
+                        <UniformGrid MinWidth="800" Width="auto" MinHeight="450" VerticalAlignment="Top">
+                            <StackPanel Width="200" Height="80" >
+                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,10,0,5">Klausur Mathe</Label>
+                                <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
+                            </StackPanel>
+                            <StackPanel Width="200" Height="80" >
+                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,10,0,5">Klausur Mathe</Label>
+                                <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
+                            </StackPanel>
+
+                        </UniformGrid>
+
+
+
+                    </StackPanel>
+            
+                    <!-- Kalender einbauen-->
+                    <StackPanel Width="200">
+                
+                    </StackPanel>
                 </StackPanel>
+                <StackPanel Height="300" Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <StackPanel MinWidth="800">
+                        <StackPanel>
+                            <Label Height="250" Margin="0,0,0,20" Background="#FF323232" BorderBrush="#FF00115F">
+                                
+                            </Label>
+                            <TextBox> Eingabe für Chat</TextBox>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Width="200">
+                        
+                    </StackPanel>
+                    
+                </StackPanel>
+            </StackPanel>
+            <!-- Feste Breite da die Namen nicht länger werden als 130px-->
+            <ScrollViewer>
+                <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" MaxWidth="220" MinWidth="220">
+                    <StackPanel Margin="5">
+                        <Label FontSize="17" >Arndt-Christian Wagner</Label>
+                    </StackPanel>
 
-            </UniformGrid>
 
 
+
+                    <!-- Füllen mit den Schülerdaten-->
+                    <!--Schema
+            
+            
+                            -->
+
+                </StackPanel>
+            </ScrollViewer>
 
         </StackPanel>
-        <!-- Feste Breite da die Namen nicht länger werden als 130px-->
-        <ScrollViewer>
-            <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" MaxWidth="220" MinWidth="220">
-                <StackPanel Margin="5">
-                    <Label FontSize="17" >Arndt-Christian Wagner</Label>
-                </StackPanel>
 
 
-
-
-                <!-- Füllen mit den Schülerdaten-->
-                <!--Schema
-            
-            
-                -->
-
-            </StackPanel>
-        </ScrollViewer>
     </StackPanel>
 </UserControl>
