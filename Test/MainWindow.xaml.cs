@@ -44,8 +44,8 @@ namespace Test
             LoginFrm.Show();
             LoginFrm.Loaded += LoginFrm_Loaded;
             LoginFrm.GotFocus += LoginFrm_GotFocus;
-            LoginFrm.Closing += LoginFrmOnClosing;
-            IsEnabled = false;
+            //LoginFrm.Closing += LoginFrmOnClosing;
+            //IsEnabled = false;
             GotFocus += OnGotFocus;
             
         }

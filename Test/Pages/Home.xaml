@@ -9,50 +9,73 @@
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" VerticalAlignment="Top" MinWidth="1000" Width="auto" >
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                        <!-- Pinnwand und Chat-->
-                        <UniformGrid MinWidth="800" Width="auto" MinHeight="450" VerticalAlignment="Top">
-                            <StackPanel Width="200" Height="80" >
-                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,10,0,5">Klausur Mathe</Label>
-                                <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
-                            </StackPanel>
-                            <StackPanel Width="200" Height="80" >
-                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,10,0,5">Klausur Mathe</Label>
-                                <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
-                            </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinWidth="800" Width="auto" MinHeight="450">
+                        <!-- Kalender-->
 
-                        </UniformGrid>
 
 
 
                     </StackPanel>
-            
-                    <!-- Kalender einbauen-->
+
+                    <!-- Daten einfügen-->
                     <StackPanel Width="200">
-                
+                        <StackPanel Width="auto" Height="60" >
+                            <StackPanel.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF292727" Offset="0"/>
+                                    <GradientStop Color="#FF514242" Offset="1"/>
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+                            <Label HorizontalAlignment="Center" FontSize="17" Margin="0,5,0,5">Klausur Mathe</Label>
+                            <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
+                        </StackPanel>
+                        <StackPanel Width="auto" Height="60" >
+                            <StackPanel.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF292727" Offset="0"/>
+                                    <GradientStop Color="#FF514242" Offset="1"/>
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+                            <Label HorizontalAlignment="Center" FontSize="17" Margin="0,5,0,5">Klausur Mathe</Label>
+                            <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
+                        </StackPanel>
+                        <StackPanel Width="auto" Height="60" >
+                            <StackPanel.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF292727" Offset="0"/>
+                                    <GradientStop Color="#FF514242" Offset="1"/>
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+                            <Label HorizontalAlignment="Center" FontSize="17" Margin="0,5,0,5">Klausur Mathe</Label>
+                            <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Height="300" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <StackPanel MinWidth="800">
                         <StackPanel>
-                            <Label Height="250" Margin="0,0,0,20" Background="#FF323232" BorderBrush="#FF00115F">
-                                
+                            <Label x:Name="lbl_chatAusgabe" Height="250" Margin="0,0,0,20" Background="#FF323232" BorderBrush="#FF00115F" >
+
                             </Label>
-                            <TextBox> Eingabe für Chat</TextBox>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="txt_chatEingabe" GotFocus="txt_chatEingabe_GotFocus" Width="710" >Eingabe für Chat</TextBox>
+                                <Button MinWidth="70" Margin="20,0,0,0" x:Name="cmd_senden" Click="cmd_senden_Click">Senden</Button>
+                            </StackPanel>
+
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Width="200">
-                        
+
                     </StackPanel>
-                    
+
                 </StackPanel>
             </StackPanel>
             <!-- Feste Breite da die Namen nicht länger werden als 130px-->
             <ScrollViewer>
                 <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" MaxWidth="220" MinWidth="220">
-                    <StackPanel Margin="5">
-                        <Label FontSize="17" >Arndt-Christian Wagner</Label>
-                    </StackPanel>
+                    <TextBlock Padding="5">
+                        <Label FontSize="17" Width="220" >Arndt-Christian Wagner</Label>
+                    </TextBlock>
 
 
 

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         Title="Pinnwand" IsTitleVisible="True"
-        ContentSource="/Kursliste.xaml" Width="1500" Height="900">
+        ContentSource="/Kursliste.xaml" Width="1500" Height="900" WindowStartupLocation="CenterScreen">
 
     
     <mui:ModernWindow.TitleLinks>
