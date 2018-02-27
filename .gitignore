@@ -2,7 +2,7 @@
 */bin
 */obj
 */bin/
-.idea
+.vs
 *\obj
 *.com
 *.class
@@ -11,3 +11,4 @@
 *.exe
 *.o
 *.so
+*.accdb

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,22 +22,34 @@ namespace Test.Pages.Settings
     /// </summary>
     public partial class Kurswahl : UserControl
     {
+        private ListDictionary Kurse;
+        
         public Kurswahl()
         {
             InitializeComponent();
         }
 
-        public void UpdateKurse(List<string> Kurse)
+        public void UpdateKurse(ListDictionary Kurse,ListDictionary CheckedKurse)
         {
+            this.Kurse = Kurse;
             lv_Kurse.Items.Clear();
-            foreach (string Kurs in Kurse)
+            for (int i = 0; i < ((List<string>)Kurse["K_ID"]).Count; i++)
             {
-                lv_Kurse.Items.Add(new CheckBox {Content = Kurs});
+                lv_Kurse.Items.Add(new CheckBox
+                {
+                    Content = ((List<string>) Kurse["K_Name"])[i],
+                    IsChecked = ((List<string>) CheckedKurse["K_Name"]).Contains(((List<string>) Kurse["K_Name"])[i])
+                });
             }
         }
         public List<string> GetChecked()
         {
-            return (from CheckBox k in lv_Kurse.Items where k.IsEnabled select k.Content.ToString()).ToList();
+            List<string> IDS = new List<string>();
+            for (int i = 0; i < ((List<string>) Kurse["K_ID"]).Count; i++)
+            {
+                IDS.AddRange(from CheckBox hcb in lv_Kurse.Items where (bool) hcb.IsChecked && hcb.Content == ((List<string>) Kurse["K_Name"])[i] select ((List<string>) Kurse["K_ID"])[i]);
+            }
+            return IDS;
         }
     }
 }

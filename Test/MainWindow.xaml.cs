@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using ClientClassLib;
+using FirstFloor.ModernUI.Presentation;
 using ServerData;
 
 namespace Test
@@ -28,12 +29,13 @@ namespace Test
         Client client;
         List<string> SubscribedEvents = new List<string>();
         public Login LoginFrm;
+        private ModernTab Kurse;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            TCP_connection.ErrorMessageCallback ErrorCallback = new TCP_connection.ErrorMessageCallback(Fehler_Ausgabe);
+            TCP_connection.ErrorMessageCallback ErrorCallback = Fehler_Ausgabe;
             client = new Client(ErrorCallback);
 
             client.Connect(PacketHandler.GetIPAddress(), 4444);
@@ -45,7 +47,7 @@ namespace Test
             LoginFrm.Closing += LoginFrmOnClosing;
             IsEnabled = false;
             GotFocus += OnGotFocus;
-
+            
         }
 
         private void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -55,91 +57,61 @@ namespace Test
 
         private void OnGotFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            Pages.Settings.Kurswahl kurswahl =
-                UIHelper.FindVisualChildByName<Pages.Settings.Kurswahl>(this, "pg_Kurswahl");
-            if (kurswahl != null && !SubscribedEvents.Contains("KurswahlOnInitialized"))
+            Button cmd_refresh = UIHelper.FindVisualChildByName<Button>(this, "cmd_refresh");
+            if (cmd_refresh != null && !SubscribedEvents.Contains("cmd_refresh"))
             {
-                kurswahl.Initialized += KurswahlOnInitialized;
-                SubscribedEvents.Add("KurswahlOnInitialized");
+                cmd_refresh.Click += Cmd_Refresh_Click;
+                SubscribedEvents.Add("cmd_refresh");
+            }
+
+            Button cmd_save = UIHelper.FindVisualChildByName<Button>(this, "cmd_save");
+            if (cmd_save != null && !SubscribedEvents.Contains("cmd_save"))
+            {
+                cmd_save.Click += cmd_save_Click;
+                SubscribedEvents.Add("cmd_save");
+            }
+        
+    }
+
+    private void cmd_save_Click(object sender, RoutedEventArgs e)
+        {
+            Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
+            try
+            {
+                List<string> k = kw.GetChecked();
+                if (k.Count == 0) throw new Exception("Bitte mindestens einen Kurs auswählen.");
+                Packet kursUpdate = client.SendKursUpdatePacket(k);
+                if (!kursUpdate.Success) throw new Exception(kursUpdate.MessageString);
+                Reload_Kurse();
+                throw new Exception("Erfolgreich gespeichert");
+            }
+            catch (Exception ex)
+            {
+                kw.lbl_Kurswahl_Error.Text = ex.Message;
             }
         }
 
-        private void KurswahlOnInitialized(object sender, EventArgs eventArgs)
+        private void Cmd_Refresh_Click(object sender, RoutedEventArgs routedEventArgs)
         {
-            Pages.Settings.Kurswahl kw = (Pages.Settings.Kurswahl)sender;
-            client.Kurswahl();
+            Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
+            try
+            {
+                Packet kurse = client.Kurswahl();
+                Packet getKurse = client.SendGetKursePacket();
+                if (kurse.Success && getKurse.Success)
+                {
+                    kw.UpdateKurse(kurse.Data,getKurse.Data);
+                }
+                else
+                {
+                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
-        //private void WPFInvoke(Packet p) { Application.Current.Dispatcher.Invoke(new Action(() => { DataManager(p); })); }
-
-        //private void DataManager(Packet packet)
-        //{
-        //    try
-        //    {
-        //        switch (packet.packetType)
-        //        {
-        //            //Type Authentication-----------------------------
-        //            case PacketType.Authentication:
-        //                switch (packet.authState_SERVER)
-        //                {
-        //                    case AuthenticationState_SERVER_Events.SERVER_Register_ID:
-
-        //                        client.ID = (packet.auth_keyList["id"].ToString());
-        //                        break;
-
-        //                    case AuthenticationState_SERVER_Events.SERVER_Klassenwahl_Response:
-        //                        ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
-
-        //                        List<string> lst_data = (List<string>)packet.auth_keyList["Kl_Name"];
-        //                        cb.Items.Clear();
-                                
-        //                        foreach (string s in lst_data)
-        //                        {
-        //                            cb.Items.Add(s);    
-        //                        }
-        //                        break;
-
-        //                    case AuthenticationState_SERVER_Events.SERVER_Login_Failed:
-        //                        break;
-
-        //                    case AuthenticationState_SERVER_Events.SERVER_Registraition_Accepted:
-        //                        Pages.Login.Schüler_Register sr =
-        //                            UIHelper.FindVisualChildByName<Pages.Login.Schüler_Register>(LoginFrm,
-        //                                "pg_Schüler_Regi");
-        //                        sr.lbl_Schüler_Registrations_Error.Text = "Erfolgreich Registriert";
-        //                        sr.IsEnabled = false;
-        //                        break;
-        //                    case AuthenticationState_SERVER_Events.SERVER_Registraition_Failed:
-        //                        UIHelper.FindVisualChildByName<TextBlock>(LoginFrm, "lbl_Schüler_Registrations_Error").Text = packet.informationString;
-        //                        break;
-        //                }
-        //                return;
-        //            //------------------------------
-        //            case PacketType.DataTable:
-        //                switch (packet.tableType_SERVER)
-        //                {
-        //                    case DataTableType_SERVER_Events.SERVER_Kurswahl_Response:
-        //                        //frm_Kurswahl kurswahl = new frm_Kurswahl(client, packet.lst_TableDictionary);
-        //                        //kurswahl.Show();
-        //                        break;
-        //                }
-        //                break;
-
-        //            case PacketType.System_Error:
-        //                Fehler_Ausgabe("Server Error: " + packet.informationString);
-        //                break;
-
-
-        //            default:
-        //                Fehler_Ausgabe("Unbekanntes Packet");
-        //                break;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Fehler_Ausgabe(ex.Message);
-        //    }
-        //}
 
         private void Fehler_Ausgabe(string s)
         {
@@ -181,13 +153,14 @@ namespace Test
                 cmd_LehrerRegi.Click += cmd_LehrerRegi_Click;
                 SubscribedEvents.Add("cmd_LehrerRegi");
             }
-
-            ModernTab tab_Schüler = UIHelper.FindVisualChildByName<ModernTab>(LoginFrm, "tab_Schüler");
-            if (tab_Schüler != null && !SubscribedEvents.Contains("tab_Schüler"))
+            
+            ComboBox cbB_Klasse = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
+            if (cbB_Klasse != null && !SubscribedEvents.Contains("cbB_Klasse"))
             {
-                tab_Schüler.SelectedSourceChanged += tab_Schüler_SelectedSourceChanged;
-                SubscribedEvents.Add("tab_Schüler");
+                cbB_Klasse.DropDownOpened += CbB_Klasse_DropDownOpened;
+                SubscribedEvents.Add("cbB_Klasse");
             }
+            
         }
 
         private void cmd_LehrerLogin_Click(object sender, RoutedEventArgs e)
@@ -196,8 +169,8 @@ namespace Test
                 UIHelper.FindVisualParent<Pages.Login.Lehrer_Login>((Button) sender);
             try
             {
-                Packet login = client.Login(lehrer_login.txt_Email.Text, lehrer_login.txt_Passwort.Password);
-                if (login.success)
+                Packet login = client.Login(lehrer_login.txt_Email.Text, lehrer_login.txt_Passwort.Password,false);
+                if (login.Success)
                 {
                     LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
@@ -205,7 +178,7 @@ namespace Test
                 }
                 else
                 {
-                    lehrer_login.lbl_LehrerLoginError.Text = login.informationString;
+                    lehrer_login.lbl_LehrerLoginError.Text = login.MessageString;
 
                 }
             }
@@ -225,10 +198,18 @@ namespace Test
                 string lehrerCode = lehrer_regi.txt_LehrerCode.Text;
                 string Email = lehrer_regi.txt_Email.Text;
                 string Passwort = lehrer_regi.txt_Passwort.Password;
-                //client.Register_Lehrer(Name, Vname, Phone,Klasse, Email, Passwort);
                 string Anrede = (string)lehrer_regi.cbB_Anrede.SelectedValue;
-                string Titel = (string) lehrer_regi.cbB_Titel.SelectedValue;
-                MessageBox.Show(Vname + Name + Anrede + Email + Passwort + Titel);
+                string Titel = (string)lehrer_regi.cbB_Titel.SelectedValue;
+                //MessageBox.Show(Vname + Name + Anrede + Email + Passwort + Titel);
+                Packet register = client.Register_Lehrer(Name, Vname, Anrede, Email, Passwort, Titel);
+                if (register.Success)
+                {
+                    throw new Exception("Registrierung erfolgreich.");
+                }
+                else
+                {
+                    throw new Exception(register.MessageString);
+                }
             }
             catch (Exception ex)
             {
@@ -248,10 +229,10 @@ namespace Test
                 string Passwort = schüler_regi.txt_Passwort.Password;
                 string Klasse = Convert.ToString(schüler_regi.cbB_Klasse.SelectedValue);
 
-                Packet register = client.Register_User(Name, Vname, Phone,Klasse, Email, Passwort);
+                Packet register = client.Register_Schüler(Name, Vname, Phone,Klasse, Email, Passwort);
                 if (register.Success)
                 {
-
+                    throw new Exception("Registrierung erfolgreich.");
                 }
                 else
                 {
@@ -264,16 +245,14 @@ namespace Test
             }
         }
 
-        void tab_Schüler_SelectedSourceChanged(object sender, SourceEventArgs e)
+        void CbB_Klasse_DropDownOpened(object sender, EventArgs e)
         {
-            if (e.Source.ToString() == "Pages/Login/Schüler_Register.xaml")
-            {
                 Packet klassen = client.GetKlassen();
-                if (klassen.success)
+                if (klassen.Success)
                 {
-                    ComboBox cb = UIHelper.FindVisualChildByName<ComboBox>(LoginFrm, "cbB_Klasse");
+                    ComboBox cb = (ComboBox) sender;
 
-                    List<string> lst_data = (List<string>) klassen.lst_Dir_Auth["Kl_Name"];
+                    List<string> lst_data = (List<string>) klassen.Data["Kl_Name"];
                     cb.Items.Clear();
 
                     foreach (string s in lst_data)
@@ -284,9 +263,9 @@ namespace Test
                 else
                 {
                     MessageBox.Show(
-                        "Klassen konnten nicht geladen werden:\n" + klassen.informationString);
+                        "Klassen konnten nicht geladen werden:\n" + klassen.MessageString);
                 }
-            }
+            
         }
 
         void cmd_SchülerLogin_Click(object sender, RoutedEventArgs e)
@@ -294,13 +273,14 @@ namespace Test
             Pages.Login.Schüler_Login schüler_login = UIHelper.FindVisualParent<Pages.Login.Schüler_Login>((Button)sender);
             try
             {
-                Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password);
+                Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password,true);
                 if (login.Success)
 
                 {
                     LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
                     IsEnabled = true;
+                    Reload_Kurse();
                 }
                 else
                 {
@@ -311,6 +291,50 @@ namespace Test
             catch (Exception ex)
             {
                 schüler_login.lbl_SchülerLoginError.Text = ex.Message;
+            }
+        }
+
+        void Reload_Kurse()
+        {
+            try
+            {
+                if (Kurse == null)
+                {
+                    Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
+                }
+                Packet GetKurse = client.SendGetKursePacket();
+                if (GetKurse.Success)
+                {
+                    foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);
+
+                    if (((List<string>)GetKurse.Data["K_Name"]).Count != 0)
+                    {
+                        foreach (string Kurs in (List<string>)GetKurse.Data["K_Name"])
+                        {
+                            Kurse.Links.Add(new Link
+                            {
+                                DisplayName = Kurs,
+                                Source = new Uri("Pages/KursUebersicht.xaml?Kurs=" + Kurs, UriKind.Relative)
+                            });
+                        }
+                    }
+                    else
+                    {
+                        Kurse.Links.Add(new Link
+                        {
+                            DisplayName = "Kurse Hinzufügen",
+                            Source = new Uri("Pages/Settings/KursAuswahl.xaml", UriKind.Relative)
+                        });
+                    }
+                }
+                else
+                {
+                    throw new Exception(GetKurse.MessageString);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
