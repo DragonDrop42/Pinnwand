@@ -17,7 +17,12 @@ namespace ClientClassLib
     {
         static Socket masterS;
         static string id;
-        List<Packet> lst_PacketResponse = new List<Packet>();
+        //List<Packet> lst_PacketResponse = new List<Packet>();
+        Packet currentPacket;   //Zwichenspeicher
+
+        //Login
+        //password Hash
+        private string salt = "492";   //random seed
 
         private readonly EventWaitHandle waitHandle = new AutoResetEvent(false);
 
@@ -94,22 +99,34 @@ namespace ClientClassLib
 
 
         private Packet WaitForPacketResponse(Packet waitPacket)
-        { 
-            waitHandle.WaitOne(2000);   //2sec. Timeout
-            waitHandle.Reset();
-
-            foreach (Packet p in lst_PacketResponse)
+        {
+            try
             {
-                if (p.packetType == waitPacket.packetType)
+                waitHandle.WaitOne(2000);   //2sec. Timeout
+                waitHandle.Reset();
+
+                if (currentPacket.packetType == waitPacket.packetType)
                 {
-                    lst_PacketResponse.Remove(p);
-                    return p;
+                    Packet tmp = currentPacket.Copy();
+                    currentPacket = null;
+                    return tmp;   //könnte zu problemen führen
                 }
+                //foreach (Packet p in lst_PacketResponse)
+                //{
+                //    if (p.packetType == waitPacket.packetType)
+                //    {
+                //        lst_PacketResponse.Remove(p);
+                //        return p;
+                //    }
+                //}
+
+                return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
             }
-
-            return new Packet("Zeitüberschreitung oder Packet nicht gefunden");
+            catch
+            {
+                throw new Exception("Fehler: WaitForPacket");
+            }
         }
-
 
         //PacketManager++++++++++++++++++++++++++++++++++++++++++++++++++++
         private void PacketManager(Packet packet)
@@ -128,10 +145,13 @@ namespace ClientClassLib
             //----------------
 
             //Client Events
-            lst_PacketResponse.Add(packet);
+            //lst_PacketResponse.Add(packet);
+            currentPacket = packet; //Packet Zwischenspeicher
             //event auslösen
             waitHandle.Set();
             //------------
+            Thread.Sleep(100);
+            errorCallback("Packet " + packet.packetType);
             return;
         }
 
@@ -213,7 +233,6 @@ namespace ClientClassLib
             {
                 throw new Exception("Die eingetragene email ist fehlerhaft!");
             }
-
             return true;
         }
         private string check_password(string pass)
@@ -223,9 +242,7 @@ namespace ClientClassLib
                 //errorCallback("Passwort ist zu kurz (>5)");
                 throw new Exception("Passwort ist zu kurz (>5)");
             }
-
             //passwort verschlüsslung
-            string salt = "492";
             System.Security.Cryptography.SHA1 sha = System.Security.Cryptography.SHA1.Create();
             byte[] preHash = Encoding.UTF32.GetBytes(pass + salt);
             byte[] hash = sha.ComputeHash(preHash);
