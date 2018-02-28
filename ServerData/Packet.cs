@@ -88,5 +88,19 @@ namespace ServerData
             this.senderID = "server";
             this.MessageString = error;
         }
+
+
+
+
+        public Packet Copy()
+        {
+            Packet p = new Packet(this.packetType);
+            p.Data = this.Data;
+            p.Success = this.Success;
+            p.MessageString = this.MessageString;
+            p.senderID = this.senderID;
+
+            return p;
+        }
     }
 }

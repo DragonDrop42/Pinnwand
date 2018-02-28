@@ -211,21 +211,6 @@ namespace ClientClassLib
             }
             return null;
         }
-        //Get Klassen
-        public Packet GetKlassen()
-        {
-            Packet klassen = new Packet(PacketType.Klassenwahl, id);
-            SendPacket(klassen);
-            return WaitForPacketResponse(new Packet(PacketType.Klassenwahl));
-        }
-        //Kurswahl+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public Packet Kurswahl()
-        {
-            Packet kurswahl = new Packet(PacketType.Kurswahl, id);
-            SendPacket(kurswahl);
-            return WaitForPacketResponse(new Packet(PacketType.Kurswahl));
-        }
-        //-----------------------------------------------------------
         private bool check_email(string email)
         {
             //check
@@ -255,7 +240,7 @@ namespace ClientClassLib
         #endregion
         //=>
         #region Communication (Packets)
-
+        //spezielle Packete+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         private void SendSchülerRegisterPacket(string name, string vname, string phone, string klasse, string email, string passwort)
         {
             ListDictionary data = new ListDictionary{
@@ -303,10 +288,11 @@ namespace ClientClassLib
             return WaitForPacketResponse(new Packet(PacketType.KursUpdate));
         }
 
-        public Packet SendGetKursePacket()
+        //universelle Packete+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        public Packet SendAndWaitForResponse(PacketType packetType)
         {
-            SendPacket(new Packet(PacketType.GetKurse,id));
-            return WaitForPacketResponse(new Packet(PacketType.GetKurse));
+            SendPacket(new Packet(packetType, id));
+            return WaitForPacketResponse(new Packet(packetType));
         }
         #endregion
 
