@@ -18,14 +18,14 @@ namespace Server
     class Server
     {
         //DB+++++++++++
-        static PinnwandDBAdapter db_Manager;
+        //static PinnwandDBAdapter db_Manager;
         //+++++++++++++
 
         //Start Server
         static void Main(string[] args)
         {
             //DB++
-            db_Manager = new PinnwandDBAdapter();
+            //db_Manager = new PinnwandDBAdapter();
             //---
             //Settings
             int port = 4444;
@@ -50,7 +50,7 @@ namespace Server
                 //Anmeldunsfreie Packete+++++++++++++++++++++++++++++++++++++++++++++++
                 if(PublicPacketHandler(p, client))
                 {
-                    return; //packet ist bbereits bearbeitet
+                    return; //packet ist bereits bearbeitet
                 }
 
                 //Anmeldungspflicht+++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -92,13 +92,13 @@ namespace Server
         {
             //idAbfragen
             //kurse abfragen
-            DatenbankArgs args = db_Manager.Schüler.getby(client.email, "S_Email");
+            DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
             if (args.Success)
             {
                 int id = (int)args.Data.Rows[0][0];
 
                 ClientHandler.Ausgabe("GetKurse", ("Schueler ID: " + args.Data.Rows[0][0]));
-                args = db_Manager.Schüler.getKurse(id);
+                args = client.db_Manager.Schüler.getKurse(id);
             }
 
             Packet response = new Packet(PacketType.GetKurse, args.Data, args.Success, args.Error);
@@ -109,13 +109,13 @@ namespace Server
         {
             //idAbfragen
             //kurse abfragen
-            DatenbankArgs args = db_Manager.Schüler.getby(client.email, "S_Email");
+            DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
             if (args.Success)
             {
                 int id = (int)args.Data.Rows[0][0];
 
                 ClientHandler.Ausgabe("KursUpdate", ("Schueler ID: " + args.Data.Rows[0][0]));
-                args = db_Manager.Schüler.updateKurse(id,(List<string>)packet.Data["K_ID"]);
+                args = client.db_Manager.Schüler.updateKurse(id, (List<string>)packet.Data["K_ID"]);
             }
 
             Packet response = new Packet(PacketType.KursUpdate, args.Data, args.Success, args.Error);
@@ -135,15 +135,14 @@ namespace Server
                     //DB-----   Try Login
                     ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
 
-                    DatenbankArgs args = db_Manager.Schüler.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
+                    DatenbankArgs args = client.db_Manager.Schüler.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
                     {
                         ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich eingeloggt"));
                         client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
                         Console.WriteLine(client.id);
                         ClientHandler.ClientLogin(client.id);   //In liste schreiben
-                        Console.WriteLine(
-                            ClientHandler.checkLoginState(client.id));
+                        Console.WriteLine(ClientHandler.checkLoginState(client.id));
                     }
                     else
                     {
@@ -156,7 +155,7 @@ namespace Server
                     //DB-----   Try Login
                     ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
 
-                    args = db_Manager.Lehrer.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
+                    args = client.db_Manager.Lehrer.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
                     {
                         ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich eingeloggt"));
@@ -174,7 +173,7 @@ namespace Server
 
                 case PacketType.Schüler_Registraition: //Register Schüler
 
-                    args = db_Manager.Schüler.add(p.Data["name"].ToString(), p.Data["vname"].ToString(), p.Data["phone"].ToString(), p.Data["email"].ToString(), p.Data["klasse"].ToString(), p.Data["passwort"].ToString());
+                    args = client.db_Manager.Schüler.add(p.Data["name"].ToString(), p.Data["vname"].ToString(), p.Data["phone"].ToString(), p.Data["email"].ToString(), p.Data["klasse"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
                     {
                         ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich registriert"));
@@ -188,7 +187,7 @@ namespace Server
                     
                 case PacketType.Lehrer_Registraition: //Register Lehrer
 
-                    args = db_Manager.Lehrer.add(p.Data["vname"].ToString(), p.Data["name"].ToString(), p.Data["anrede"].ToString(), p.Data["email"].ToString(), p.Data["passwort"].ToString(), p.Data["titel"].ToString());
+                    args = client.db_Manager.Lehrer.add(p.Data["vname"].ToString(), p.Data["name"].ToString(), p.Data["anrede"].ToString(), p.Data["email"].ToString(), p.Data["passwort"].ToString(), p.Data["titel"].ToString());
                     if (args.Success)
                     {
                         ClientHandler.Ausgabe("Auth", p.Data["email"] + " wurde erfolgreich registriert");
@@ -208,6 +207,7 @@ namespace Server
             if (response != null)
             {
                 ClientHandler.SendSinglePacket(client, response);
+                ClientHandler.Ausgabe("Auth", "Anfrage wurde bearbeitet");
                 return true;
             }
             return false;
@@ -217,7 +217,7 @@ namespace Server
         {
             //idAbfragen
             //kurse abfragen
-            DatenbankArgs args = db_Manager.Schüler.getKlassenNamen();
+            DatenbankArgs args = client.db_Manager.Schüler.getKlassenNamen();
 
             if (args.Success == false)
             {
@@ -231,13 +231,13 @@ namespace Server
         {
             //idAbfragen
             //kurse abfragen
-            DatenbankArgs args = db_Manager.Schüler.getby(client.email, "S_Email");
+            DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
             if (args.Success)
             {
                 int id = (int)args.Data.Rows[0][5];
 
                 ClientHandler.Ausgabe("Kurswahl", ("Schueler ID: " + args.Data.Rows[0][0]));
-                args = db_Manager.Kurse.getByKlasse(id);
+                args = client.db_Manager.Kurse.getByKlasse(id);
             }
 
             Packet response = new Packet(PacketType.Kurswahl, args.Data, args.Success, args.Error);
