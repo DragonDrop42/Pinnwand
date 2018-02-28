@@ -20,10 +20,14 @@ namespace Server
         public string id;
         public string email;
 
+        public PinnwandDBAdapter db_Manager;
+
         public ClientData(Socket clientSocket)
         {
             id = Guid.NewGuid().ToString();
             email = null;
+
+            db_Manager = new PinnwandDBAdapter();
 
             this.clientSocket = clientSocket;
 
