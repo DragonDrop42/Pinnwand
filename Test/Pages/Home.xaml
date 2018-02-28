@@ -8,48 +8,42 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" VerticalAlignment="Top" MinWidth="1000" Width="auto" >
+                <StackPanel Height="50">
+                    <Label FontWeight="Bold" FontSize="30" HorizontalContentAlignment="Center" Foreground="#FFB0B0B0"> 
+                        Aktuelle Termine
+                    </Label>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinWidth="800" Width="auto" MinHeight="450">
-                        <!-- Kalender-->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinWidth="800" Width="auto" MinHeight="400">
+                        <UniformGrid Width="1003">
+                            <StackPanel Width="200" Height="80" >
+                                <StackPanel.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFB2B2B2" Offset="0"/>
+                                        <GradientStop Color="#FF3E67D4" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </StackPanel.Background>
+                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,15,0,5" Foreground="Black">Klausur Mathe</Label>
+                                <Label HorizontalAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
+                            </StackPanel>
+                            <StackPanel Width="200" Height="80" >
+                                <StackPanel.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFB2B2B2" Offset="0"/>
+                                        <GradientStop Color="#FF3E67D4" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </StackPanel.Background>
+                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,15,0,5" Foreground="Black">Klausur Mathe</Label>
+                                <Label HorizontalAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
+                            </StackPanel>
+  
 
 
 
-
+                        </UniformGrid>
                     </StackPanel>
 
                     <!-- Daten einfügen-->
-                    <StackPanel Width="200">
-                        <StackPanel Width="auto" Height="60" >
-                            <StackPanel.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF292727" Offset="0"/>
-                                    <GradientStop Color="#FF514242" Offset="1"/>
-                                </LinearGradientBrush>
-                            </StackPanel.Background>
-                            <Label HorizontalAlignment="Center" FontSize="17" Margin="0,5,0,5">Klausur Mathe</Label>
-                            <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
-                        </StackPanel>
-                        <StackPanel Width="auto" Height="60" >
-                            <StackPanel.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF292727" Offset="0"/>
-                                    <GradientStop Color="#FF514242" Offset="1"/>
-                                </LinearGradientBrush>
-                            </StackPanel.Background>
-                            <Label HorizontalAlignment="Center" FontSize="17" Margin="0,5,0,5">Klausur Mathe</Label>
-                            <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
-                        </StackPanel>
-                        <StackPanel Width="auto" Height="60" >
-                            <StackPanel.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF292727" Offset="0"/>
-                                    <GradientStop Color="#FF514242" Offset="1"/>
-                                </LinearGradientBrush>
-                            </StackPanel.Background>
-                            <Label HorizontalAlignment="Center" FontSize="17" Margin="0,5,0,5">Klausur Mathe</Label>
-                            <Label HorizontalAlignment="Center" FontSize="17">12.01.2018</Label>
-                        </StackPanel>
-                    </StackPanel>
                 </StackPanel>
                 <StackPanel Height="300" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <StackPanel MinWidth="800">
