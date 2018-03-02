@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PiaLib.PinnwandDBAdapter">
+    <Position X="10" Y="1" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="PiaLib.PinnwandDBAdapter.schüler">
+        <TypeIdentifier>
+          <NewMemberFileName>Pidba.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PiaLib.PinnwandDBAdapter.lehrer">
+        <TypeIdentifier>
+          <NewMemberFileName>Pidba.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PiaLib.PinnwandDBAdapter.kurse">
+        <TypeIdentifier>
+          <NewMemberFileName>Pidba.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="PiaLib.PinnwandDBAdapter.klasse">
+        <TypeIdentifier>
+          <NewMemberFileName>Pidba.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAEAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Pidba.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.DatenbankArgs">
+    <Position X="7.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAQAAAAAAAAAAAgAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>DatenbankArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSet" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAIAEgBJwAAQAJABiAYRBAQEAoDQVgAJAAAAAECBBE=</HashCode>
+      <FileName>PinnwandDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.ChatnachrichtenTableAdapter" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.EreignisseTableAdapter" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.KlasseTableAdapter" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABDA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.KursTableAdapter" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAMAAAAAAAACEICAAAAAAAAAAARBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.LehrerTableAdapter" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.SchülerTableAdapter" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.Verbund_Kurs_SchülerTableAdapter" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAgACAcAIAAAAAAAACFICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.PinnwandDataSetTableAdapters.TableAdapterManager" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAQCCEAEABABAEJCDAAMQAkEAACgAAEAAYAIAAABAQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PiaLib.Properties.Settings" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAgA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
