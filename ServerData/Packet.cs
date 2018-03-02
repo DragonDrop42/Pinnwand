@@ -27,6 +27,7 @@ namespace ServerData
         //--------------------------------
 
         //Datenpackete++++++++++++++++++++
+        GetSchülerInKurs, //Liste der Schüler in einem Kurs
         Kurswahl,
         GetKurse,
         KursUpdate,

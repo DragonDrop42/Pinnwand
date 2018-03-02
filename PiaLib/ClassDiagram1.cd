@@ -6,36 +6,36 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Class Name="PiaLib.PinnwandDBAdapter.lehrer" Collapsed="true">
+      <Class Name="PiaLib.PinnwandDBAdapter.schüler">
         <TypeIdentifier>
           <NewMemberFileName>Pidba.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="PiaLib.PinnwandDBAdapter.kurse" Collapsed="true">
+      <Class Name="PiaLib.PinnwandDBAdapter.lehrer">
         <TypeIdentifier>
           <NewMemberFileName>Pidba.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="PiaLib.PinnwandDBAdapter.schüler" Collapsed="true">
+      <Class Name="PiaLib.PinnwandDBAdapter.kurse">
         <TypeIdentifier>
           <NewMemberFileName>Pidba.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="PiaLib.PinnwandDBAdapter.User" Collapsed="true">
+      <Class Name="PiaLib.PinnwandDBAdapter.klasse">
         <TypeIdentifier>
           <NewMemberFileName>Pidba.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAEAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAEAAAAEAEAAAAAAAAAAA=</HashCode>
       <FileName>Pidba.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PiaLib.DatenbankArgs">
     <Position X="7.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAgAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAIAAAAAQAAAAAAAAAAAgAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>DatenbankArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -43,6 +43,7 @@
     <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAIAEgBJwAAQAJABiAYRBAQEAoDQVgAJAAAAAECBBE=</HashCode>
+      <FileName>PinnwandDataSet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PiaLib.PinnwandDataSetTableAdapters.ChatnachrichtenTableAdapter" Collapsed="true">
@@ -60,13 +61,13 @@
   <Class Name="PiaLib.PinnwandDataSetTableAdapters.KlasseTableAdapter" Collapsed="true">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABDA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="PiaLib.PinnwandDataSetTableAdapters.KursTableAdapter" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+      <HashCode>EASAAGAAEAAAAAcAMAAAAAAAACEICAAAAAAAAAAARBA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="PiaLib.PinnwandDataSetTableAdapters.LehrerTableAdapter" Collapsed="true">
@@ -84,7 +85,7 @@
   <Class Name="PiaLib.PinnwandDataSetTableAdapters.Verbund_Kurs_SchülerTableAdapter" Collapsed="true">
     <Position X="2.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+      <HashCode>EASAAGAAEAgACAcAIAAAAAAAACFICAAAAAAAAAAABBA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="PiaLib.PinnwandDataSetTableAdapters.TableAdapterManager" Collapsed="true">

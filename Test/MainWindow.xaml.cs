@@ -26,7 +26,7 @@ namespace Test
     /// </summary>
     public partial class MainWindow : ModernWindow
     {
-        Client client;
+        public Client client;
         List<string> SubscribedEvents = new List<string>();
         public Login LoginFrm;
         private ModernTab Kurse;
@@ -96,8 +96,8 @@ namespace Test
             Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
             try
             {
-                Packet kurse = client.Kurswahl();
-                Packet getKurse = client.SendGetKursePacket();
+                Packet kurse = client.SendAndWaitForResponse(PacketType.Kurswahl);
+                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetKurse);
                 if (kurse.Success && getKurse.Success)
                 {
                     kw.UpdateKurse(kurse.Data,getKurse.Data);
@@ -247,7 +247,7 @@ namespace Test
 
         void CbB_Klasse_DropDownOpened(object sender, EventArgs e)
         {
-                Packet klassen = client.GetKlassen();
+                Packet klassen = client.SendAndWaitForResponse(PacketType.Klassenwahl);
                 if (klassen.Success)
                 {
                     ComboBox cb = (ComboBox) sender;
@@ -302,7 +302,7 @@ namespace Test
                 {
                     Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
                 }
-                Packet GetKurse = client.SendGetKursePacket();
+                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetKurse);
                 if (GetKurse.Success)
                 {
                     foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);
@@ -314,17 +314,9 @@ namespace Test
                             Kurse.Links.Add(new Link
                             {
                                 DisplayName = Kurs,
-                                Source = new Uri("Pages/KursUebersicht.xaml?Kurs=" + Kurs, UriKind.Relative)
+                                Source = new Uri("Pages/Home.xaml?Kurs=" + Kurs, UriKind.Relative)
                             });
                         }
-                    }
-                    else
-                    {
-                        Kurse.Links.Add(new Link
-                        {
-                            DisplayName = "Kurse Hinzufügen",
-                            Source = new Uri("Pages/Settings/KursAuswahl.xaml", UriKind.Relative)
-                        });
                     }
                 }
                 else

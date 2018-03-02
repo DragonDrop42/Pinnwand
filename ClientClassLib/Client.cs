@@ -151,7 +151,7 @@ namespace ClientClassLib
             waitHandle.Set();
             //------------
             Thread.Sleep(100);
-            errorCallback("Packet " + packet.packetType);
+            //errorCallback("Packet " + packet.packetType);
             return;
         }
 
@@ -292,6 +292,11 @@ namespace ClientClassLib
         public Packet SendAndWaitForResponse(PacketType packetType)
         {
             SendPacket(new Packet(packetType, id));
+            return WaitForPacketResponse(new Packet(packetType));
+        }
+        public Packet SendAndWaitForResponse(PacketType packetType, ListDictionary data)
+        {
+            SendPacket(new Packet(packetType, data, id));
             return WaitForPacketResponse(new Packet(packetType));
         }
         #endregion

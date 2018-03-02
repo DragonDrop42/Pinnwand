@@ -294,6 +294,7 @@ namespace PiaLib
         public class kurse
         {
             KursTableAdapter kta = new KursTableAdapter();
+            Verbund_Kurs_SchülerTableAdapter vksta = new Verbund_Kurs_SchülerTableAdapter();
 
             //public int getIDBy(string Search_String, string Field)
             //{
@@ -317,6 +318,23 @@ namespace PiaLib
                     if (data.Rows.Count == 0)
                     {
                         throw new Exception("Keine Kurse vorhanden oder Klasse nicht gefunden!");
+                    }
+                    return new DatenbankArgs(data);
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs getSchüler(int K_ID)
+            {
+                try
+                {
+                    DataTable data = vksta.getSchülerInKurs(K_ID);
+                    if (data.Rows.Count == 0)
+                    {
+                        throw new Exception("Keine Schüler vorhanden oder Kurs nicht gefunden!");
                     }
                     return new DatenbankArgs(data);
                 }

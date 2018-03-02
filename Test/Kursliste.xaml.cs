@@ -35,15 +35,7 @@ namespace Test
                     new Link
                     {
                         DisplayName = kurs,
-                        Source = new Uri("/Pages/KursÜbersicht.xaml?Kurs=" + kurs)
-                    });
-
-            if (Kurslist.Count == 0)
-                mt_Kurse.Links.Add(
-                    new Link
-                    {
-                        DisplayName = "Kurse hinzufügen",
-                        Source = new Uri("/Pages/Settings/Kurswahl.xaml")
+                        Source = new Uri("/Pages/Home.xaml?Kurs=" + kurs)
                     });
         }
     }
