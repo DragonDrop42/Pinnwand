@@ -96,8 +96,8 @@ namespace Test
             Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
             try
             {
-                Packet kurse = client.Kurswahl();
-                Packet getKurse = client.SendGetKursePacket();
+                Packet kurse = client.SendAndWaitForResponse(PacketType.Kurswahl);
+                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetKurse);
                 if (kurse.Success && getKurse.Success)
                 {
                     kw.UpdateKurse(kurse.Data,getKurse.Data);
@@ -247,7 +247,7 @@ namespace Test
 
         void CbB_Klasse_DropDownOpened(object sender, EventArgs e)
         {
-                Packet klassen = client.GetKlassen();
+            Packet klassen = client.SendAndWaitForResponse(PacketType.Klassenwahl);
                 if (klassen.Success)
                 {
                     ComboBox cb = (ComboBox) sender;
@@ -302,7 +302,7 @@ namespace Test
                 {
                     Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
                 }
-                Packet GetKurse = client.SendGetKursePacket();
+                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetKurse);
                 if (GetKurse.Success)
                 {
                     foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);
