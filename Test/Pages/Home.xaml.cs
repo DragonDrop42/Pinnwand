@@ -23,7 +23,8 @@ namespace Test.Pages
 
         public Home()
         {
-            InitializeComponent();          
+            InitializeComponent();
+            
         }
 
         #region Mitschüler liste erstellen
@@ -44,5 +45,20 @@ namespace Test.Pages
 
 
         }
+
+        private void txt_chatEingabe_GotFocus(object sender, RoutedEventArgs e)
+        {
+            txt_chatEingabe.Text = "";
+        }
+
+        private void cmd_senden_Click(object sender, RoutedEventArgs e)
+        {
+            lbl_chatAusgabe.Content += txt_chatEingabe.Text + "\n";
+        }
+
+
+
+
+
     }
 }
