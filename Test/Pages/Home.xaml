@@ -72,7 +72,7 @@
                     <TextBlock Padding="5">
                         <Label FontSize="23" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" HorizontalContentAlignment="Center" FontWeight="Bold" >Schülerliste</Label>
                     </TextBlock>
-                    <TextBox HorizontalContentAlignment="Center" Padding="5" Text="Arndt-Christian Wagner" FontSize="16" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsEnabled="False"/>
+                    <TextBox x:Name="Mitschüler_box" HorizontalContentAlignment="Center" Padding="5" Text="Arndt-Christian Wagner" FontSize="16" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsEnabled="False"/>
 
 
 

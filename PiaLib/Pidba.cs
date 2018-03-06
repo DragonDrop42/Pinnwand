@@ -294,6 +294,7 @@ namespace PiaLib
         public class kurse
         {
             KursTableAdapter kta = new KursTableAdapter();
+            ChatnachrichtenTableAdapter cta = new ChatnachrichtenTableAdapter();
             Verbund_Kurs_SchülerTableAdapter vksta = new Verbund_Kurs_SchülerTableAdapter();
 
             //public int getIDBy(string Search_String, string Field)
@@ -324,6 +325,32 @@ namespace PiaLib
                 catch (Exception ex)
                 {
                     return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs getChat(int K_ID)
+            {
+                try
+                {
+                    DataTable data = cta.GetData();
+                    return new DatenbankArgs(data);
+                }
+                catch (Exception e)
+                {
+                    return new DatenbankArgs(e.Message);
+                }
+            }
+
+            public DatenbankArgs sendChat(string C_Sendername,String C_Inhalt,int K_ID)
+            {
+                try
+                {
+                    cta.Insert(C_Sendername,C_Inhalt,K_ID);
+                    return new DatenbankArgs(new DataTable());
+                }
+                catch (Exception e)
+                {
+                    return new DatenbankArgs(e.Message);
                 }
             }
 

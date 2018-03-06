@@ -35,7 +35,7 @@ namespace PiaLib
         {
             get
             {
-                string debug = Success.ToString() + " " + Error + " " + Data.ToString() + "\n";
+                string debug = Success + " " + Error + " " + Data + "\n";
                 List<int> lenghts = new List<int>();
 
                 foreach (DataColumn col in Data.Columns)
