@@ -98,14 +98,16 @@ namespace ClientClassLib
         #endregion
 
 
-        private Packet WaitForPacketResponse(Packet waitPacket)
+        private Packet WaitForPacketResponse(Packet send_waitPacket)
         {
             try
             {
+                SendPacket(send_waitPacket); //Packet an Server senden
+                //auf Packet warten
                 waitHandle.WaitOne(2000);   //2sec. Timeout
                 waitHandle.Reset();
 
-                if (currentPacket.packetType == waitPacket.packetType)
+                if (currentPacket.packetType == send_waitPacket.packetType)
                 {
                     Packet tmp = currentPacket.Copy();
                     currentPacket = null;
@@ -151,7 +153,7 @@ namespace ClientClassLib
             waitHandle.Set();
             //------------
             Thread.Sleep(100);
-            errorCallback("Packet " + packet.packetType);
+            //errorCallback("Packet " + packet.packetType);
             return;
         }
 
@@ -168,9 +170,9 @@ namespace ClientClassLib
             if (check_email(email) && (passwort = check_password(passwort)) != null)
             {
                 //Packet senden
-                SendSchülerRegisterPacket(name, vname, phone, klasse, email, passwort);
+                Packet sendP = SendSchülerRegisterPacket(name, vname, phone, klasse, email, passwort);
                 //Auf Antwort warten
-                return WaitForPacketResponse(new Packet(PacketType.Schüler_Registraition)); 
+                return WaitForPacketResponse(sendP); 
             }
             return null;
         }
@@ -186,9 +188,9 @@ namespace ClientClassLib
             {
                 //Packet senden
                 if (titel == null) titel = "";
-                SendLehrerRegisterPacket(name, vname, anrede, email, passwort, titel);
+                Packet sendP = SendLehrerRegisterPacket(name, vname, anrede, email, passwort, titel);
                 //Auf Antwort warten
-                return WaitForPacketResponse(new Packet(PacketType.Lehrer_Registraition)); 
+                return WaitForPacketResponse(sendP); 
             }
             return null;
         }
@@ -204,10 +206,17 @@ namespace ClientClassLib
             if (check_email(email) == true && (passwort = check_password(passwort)) != null)
             {
                 //Packet senden
-                SendLoginPacket(email, passwort,schüler);
+                Packet sendP = SendLoginPacket(email, passwort,schüler);
                 //auf response warten
-                return schüler ? WaitForPacketResponse(new Packet(PacketType.Schüler_Login)):
-                    WaitForPacketResponse(new Packet(PacketType.Lehrer_Login));
+                if (schüler)
+                {
+                    sendP.packetType = PacketType.Schüler_Login;
+                }
+                else
+                {
+                    sendP.packetType = PacketType.Lehrer_Login;
+                }
+                return WaitForPacketResponse(sendP);
             }
             return null;
         }
@@ -241,7 +250,7 @@ namespace ClientClassLib
         //=>
         #region Communication (Packets)
         //spezielle Packete+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        private void SendSchülerRegisterPacket(string name, string vname, string phone, string klasse, string email, string passwort)
+        private Packet SendSchülerRegisterPacket(string name, string vname, string phone, string klasse, string email, string passwort)
         {
             ListDictionary data = new ListDictionary{
                 {"name", name},
@@ -252,9 +261,9 @@ namespace ClientClassLib
                 {"passwort", passwort}
             };
             Packet register = new Packet(PacketType.Schüler_Registraition, data, id);
-            SendPacket(register);
+            return register;
         }
-        private void SendLehrerRegisterPacket(string name, string vname, string anrede, string email, string passwort, string titel)
+        private Packet SendLehrerRegisterPacket(string name, string vname, string anrede, string email, string passwort, string titel)
         {
             ListDictionary data = new ListDictionary{
                 {"name", name},
@@ -265,17 +274,18 @@ namespace ClientClassLib
                 {"passwort", passwort}
             };
             Packet register = new Packet(PacketType.Lehrer_Registraition, data, id);
-            SendPacket(register);
+            return register;
         }
 
-        private void SendLoginPacket(string email, string passwort, bool schüler)
+        private Packet SendLoginPacket(string email, string passwort, bool schüler)
         {
             ListDictionary data = new ListDictionary
             {
                 {"email", email},
                 {"passwort", passwort}
             };
-            SendPacket(schüler ? new Packet(PacketType.Schüler_Login, data, id) : new Packet(PacketType.Lehrer_Login, data, id));
+            Packet login = (schüler ? new Packet(PacketType.Schüler_Login, data, id) : new Packet(PacketType.Lehrer_Login, data, id));
+            return login;
         }
 
         public Packet SendKursUpdatePacket(List<string> Kurse)
@@ -284,15 +294,15 @@ namespace ClientClassLib
             {
                 {"K_ID",Kurse}
             };
-            SendPacket(new Packet(PacketType.KursUpdate,data,id));
-            return WaitForPacketResponse(new Packet(PacketType.KursUpdate));
+            Packet sendP = new Packet(PacketType.KursUpdate,data,id);
+            return WaitForPacketResponse(sendP);
         }
 
         //universelle Packete+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         public Packet SendAndWaitForResponse(PacketType packetType)
         {
-            SendPacket(new Packet(packetType, id));
-            return WaitForPacketResponse(new Packet(packetType));
+            Packet sendP = new Packet(packetType, id);
+            return WaitForPacketResponse(sendP);
         }
         #endregion
 
