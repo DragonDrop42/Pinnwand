@@ -63,17 +63,33 @@ namespace Test.Pages
         private void cmd_senden_Click(object sender, RoutedEventArgs e) // Ausführen wenn der klick auf senden ausgeführt wird
         {
             lbl_chatAusgabe.Content += txt_chatEingabe.Text + "\n";
+            ereignisseErstellen();
         }
 
 
         private void ereignisseErstellen()
         {
-            LinearGradientBrush gradientBrush = new  LinearGradientBrush( Color.FromArgb(0, 178, 178, 178),  Color.FromArgb(0, 38, 139, 185), new Point(0.5, 0), new Point(0.5, 1));
+            // Verlauf der Farbe erstellen
+            LinearGradientBrush gradientBrush = new  LinearGradientBrush();
+            gradientBrush.StartPoint = new Point(0.5, 0);
+            gradientBrush.EndPoint = new Point(0.5, 1);
+            gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 178, 178, 178), 0));
+            gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 38, 139, 185), 1));
 
             StackPanel stack_ereignis = new StackPanel {Width = 150 , Height = 70, Background = gradientBrush };
-            Label lbl_namenEreignis = new Label();
-            Label lbl_datumEreignis = new Label();
 
+            Label lbl_namenEreignis = new Label {HorizontalContentAlignment = HorizontalAlignment.Center ,  FontSize= 17 , Margin = new Thickness(0,10,0,5), Foreground = Brushes.Black };
+            lbl_namenEreignis.Content = "Hallo";    // Name des neuen Ereignisses
+
+            Label lbl_datumEreignis = new Label {HorizontalContentAlignment = HorizontalAlignment.Center, FontSize = 17, Foreground = Brushes.Black};
+            lbl_datumEreignis.Content = "02.10.1998";   // Datum des neuen Ereignisses
+
+            // Anzeigen auf der Pinnwand
+            ug_terminÜbersicht.Children.Add(stack_ereignis);
+            stack_ereignis.Children.Add(lbl_namenEreignis);
+            stack_ereignis.Children.Add(lbl_datumEreignis);
+
+            //Hinzufügen zur Datenbank
 
         }
 
