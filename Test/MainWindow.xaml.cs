@@ -26,7 +26,7 @@ namespace Test
     /// </summary>
     public partial class MainWindow : ModernWindow
     {
-        Client client;
+        public Client client;
         List<string> SubscribedEvents = new List<string>();
         public Login LoginFrm;
         private ModernTab Kurse;
@@ -247,7 +247,7 @@ namespace Test
 
         void CbB_Klasse_DropDownOpened(object sender, EventArgs e)
         {
-            Packet klassen = client.SendAndWaitForResponse(PacketType.Klassenwahl);
+                Packet klassen = client.SendAndWaitForResponse(PacketType.Klassenwahl);
                 if (klassen.Success)
                 {
                     ComboBox cb = (ComboBox) sender;
@@ -314,17 +314,9 @@ namespace Test
                             Kurse.Links.Add(new Link
                             {
                                 DisplayName = Kurs,
-                                Source = new Uri("Pages/KursUebersicht.xaml?Kurs=" + Kurs, UriKind.Relative)
+                                Source = new Uri("Pages/Home.xaml?Kurs=" + Kurs, UriKind.Relative)
                             });
                         }
-                    }
-                    else
-                    {
-                        Kurse.Links.Add(new Link
-                        {
-                            DisplayName = "Kurse Hinzufügen",
-                            Source = new Uri("Pages/Settings/KursAuswahl.xaml", UriKind.Relative)
-                        });
                     }
                 }
                 else
