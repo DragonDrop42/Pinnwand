@@ -304,6 +304,11 @@ namespace ClientClassLib
             Packet sendP = new Packet(packetType, id);
             return WaitForPacketResponse(sendP);
         }
+        public Packet SendAndWaitForResponse(PacketType packetType, ListDictionary data)
+        {
+            SendPacket(new Packet(packetType, data, id));
+            return WaitForPacketResponse(new Packet(packetType));
+        }
         #endregion
 
         //Property Set new ID

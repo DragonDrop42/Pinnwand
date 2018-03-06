@@ -1,0 +1,27 @@
+﻿<mui:ModernWindow x:Class="Test.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        Title="Pinnwand - Login" IsTitleVisible="True"
+        ContentSource="Schüler.xaml" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" >
+    <Style TargetType="{x:Type mui:ModernButton}">
+        <Style.Triggers>
+            <Trigger Property="Command" Value="NavigationCommands.BrowseBack">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup>
+            <mui:LinkGroup.Links>
+                <mui:Link Source="Schüler.xaml" DisplayName="Schüler" />
+                <mui:Link Source="Lehrer.xaml" DisplayName="Lehrer" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="Einstellungen" GroupKey="settings">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="software" Source="/Pages/SettingsPage.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+</mui:ModernWindow>
