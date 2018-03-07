@@ -73,6 +73,16 @@ namespace ClientClassLib
         //packet senden++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         public void SendPacket(Packet p)
         {
+            if (this.ID == null)
+            {
+                errorCallback("Es wurde keine ID vergeben");
+                return;
+            }
+            if (p.senderID == null)
+            {
+                errorCallback("Dieses Packet besitzt keine gültige ID!");
+                return;
+            }
             TCP_connection.SendPacket(masterS, p, new TCP_connection.ExceptionCallback(SocketDisconnectedException));
         }
         private void SocketDisconnectedException(Socket socket, Exception exc)
@@ -107,6 +117,11 @@ namespace ClientClassLib
                 waitHandle.WaitOne(3000);   //3sec. Timeout
                 waitHandle.Reset();
 
+                if (currentPacket == null)
+                {
+                    throw new Exception("Received Packet == null");
+                }
+
                 if (currentPacket.packetType == send_waitPacket.packetType)
                 {
                     Packet tmp = currentPacket.Copy();
@@ -124,9 +139,11 @@ namespace ClientClassLib
 
                 return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
             }
-            catch
+            catch(Exception exc)
             {
-                throw new Exception("Fehler: WaitForPacket");
+                //throw new Exception("Fehler: WaitForPacket >>" + exc.Message);
+                errorCallback("Fehler: WaitForPacket >>" + exc.Message);
+                return null;
             }
         }
 
@@ -137,6 +154,7 @@ namespace ClientClassLib
             if (packet.packetType == PacketType.Register_ID)
             {
                 ID = packet.Data["id"].ToString();
+                //errorCallback("id: " + ID);
                 return;
             }
             else if (packet.packetType == PacketType.SystemError)
@@ -149,6 +167,7 @@ namespace ClientClassLib
             //Client Events
             //lst_PacketResponse.Add(packet);
             currentPacket = packet; //Packet Zwischenspeicher
+
             //event auslösen
             waitHandle.Set();
             //------------
@@ -297,8 +316,7 @@ namespace ClientClassLib
         }
         public Packet SendAndWaitForResponse(PacketType packetType, ListDictionary data)
         {
-            SendPacket(new Packet(packetType, data, id));
-            return WaitForPacketResponse(new Packet(packetType));
+            return WaitForPacketResponse(new Packet(packetType, data, id));
         }
         #endregion
 
@@ -308,6 +326,10 @@ namespace ClientClassLib
             set
             {
                 id = value;
+            }
+            get
+            {
+                return id;
             }
         }
     }
