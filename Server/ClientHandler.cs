@@ -91,7 +91,7 @@ namespace Server
                 }
                 i++;
             }
-            Ausgabe("Client nicht gefunden");
+            Ausgabe("Client nicht gefunden (by ID)");
             return (-1);
         }
         public static ClientData GetClientByID(string id)
@@ -108,7 +108,7 @@ namespace Server
                     return client.id;
                 }
             }
-            Ausgabe("Client nicht gefunden");
+            Ausgabe("Client nicht gefunden (from Socket)");
             return "";
         }
         #endregion

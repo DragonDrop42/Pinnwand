@@ -44,6 +44,8 @@ namespace Server
 
             Packet p = new Packet(PacketType.Register_ID, list, "server");
             ClientHandler.SendSinglePacket(this, p);
+
+            //ClientHandler.Ausgabe("Debug", id);
         }
     }
 }

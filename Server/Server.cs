@@ -54,8 +54,8 @@ namespace Server
                 }
 
                 //Anmeldungspflicht+++++++++++++++++++++++++++++++++++++++++++++++++++++
-                Console.WriteLine(client.id);
-                Console.WriteLine(ClientHandler.checkLoginState(client.id));
+                //Console.WriteLine(client.id);
+                //Console.WriteLine(ClientHandler.checkLoginState(client.id));
                 if(!ClientHandler.checkLoginState(client.id))
                 {
                     ClientHandler.Send_Error_Message_to_Client(client, "Bitte Anmeldung durchführen!");
@@ -65,16 +65,34 @@ namespace Server
                 //Angemeldet: (gesicherter Bereich)
                 switch (p.packetType)
                 {
-                    case PacketType.GetKurse:
+                    case PacketType.Default:
+
+                        Thread.Sleep(500);
+                        ClientHandler.Ausgabe("Debug", "packet Defaultz received");
+                        ClientHandler.SendSinglePacket(client, p);
+
+                        break;
+
+                    case PacketType.GetKurseVonSchüler:
                         GetKurse(client);
                         break;
                         
-                    case PacketType.Kurswahl:
+                    case PacketType.GetVerfügbareKurse:
                         Kurswahl(client);
                         break;
                         
                     case PacketType.KursUpdate:
                         UpdateKlassen(client, p);
+                        break;
+
+                    case PacketType.GetSchülerInKurs:
+                        GetSchülerInKurs(client, p);
+                        break;
+                    case PacketType.GetChat:
+                        GetChat(client, p);
+                        break;
+                    case PacketType.SendChatNachricht:
+                        SendChatNachricht(client, p);
                         break;
 
                     default:
@@ -88,39 +106,139 @@ namespace Server
             }
         }
 
-        private static void GetKurse(ClientData client)
+        private static void SendChatNachricht(ClientData client, Packet p)
         {
-            //idAbfragen
-            //kurse abfragen
-            DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
-            if (args.Success)
+            DatenbankArgs args = client.db_Manager.Kurse.sendChat(
+                (string)p.Data["C_Sendername"],
+                (string)p.Data["C_Inhalt"],
+                (int)p.Data["K_ID"]);
+            if (!args.Success)
             {
-                int id = (int)args.Data.Rows[0][0];
+                ClientHandler.Ausgabe("sendChat","null");
+            }
+            else
+            {
+                Console.WriteLine((string)p.Data["C_Sendername"]+": "+(string)p.Data["C_Inhalt"]);
+            }
+            Packet response = new Packet(PacketType.SendChatNachricht, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
 
-                ClientHandler.Ausgabe("GetKurse", ("Schueler ID: " + args.Data.Rows[0][0]));
-                args = client.db_Manager.Schüler.getKurse(id);
+        private static void GetChat(ClientData client, Packet p)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.getChat((int)p.Data["K_ID"]);
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("getChat", "null");
             }
 
-            Packet response = new Packet(PacketType.GetKurse, args.Data, args.Success, args.Error);
+            Packet response = new Packet(PacketType.GetChat, args.Data, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void GetSchülerInKurs(ClientData client, Packet p)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.getSchüler((int)p.Data["K_ID"]);
+            if (args.Success == false)
+            {
+                ClientHandler.Ausgabe("getSchülerInKurs", "null");
+            }
+
+            Packet response = new Packet(PacketType.GetSchülerInKurs, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void GetKurse(ClientData client)
+        {
+            try
+            {
+                //idAbfragen
+                //kurse abfragen
+                DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
+                if (args.Success)
+                {
+                    int id = (int)args.Data.Rows[0][0];
+
+                    ClientHandler.Ausgabe("GetKurse", ("Schueler ID: " + args.Data.Rows[0][0]));
+                    args = client.db_Manager.Schüler.getKurse(id);
+                }
+
+                Packet response = new Packet(PacketType.GetKurseVonSchüler, args.Data, args.Success, args.Error);
+                ClientHandler.SendSinglePacket(client, response);
+            }
+            catch(Exception exc)
+            {
+                throw new Exception(">>GetKurse: " + exc);
+            }
         }
 
         public static void UpdateKlassen(ClientData client, Packet packet)
         {
-            //idAbfragen
-            //kurse abfragen
-            DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
-            if (args.Success)
+            try
             {
-                int id = (int)args.Data.Rows[0][0];
+                //idAbfragen
+                //kurse abfragen
+                DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
+                if (args.Success)
+                {
+                    int id = (int)args.Data.Rows[0][0];
 
-                ClientHandler.Ausgabe("KursUpdate", ("Schueler ID: " + args.Data.Rows[0][0]));
-                args = client.db_Manager.Schüler.updateKurse(id, (List<string>)packet.Data["K_ID"]);
+                    ClientHandler.Ausgabe("KursUpdate", ("Schueler ID: " + args.Data.Rows[0][0]));
+                    args = client.db_Manager.Schüler.updateKurse(id, (List<string>)packet.Data["K_ID"]);
+                }
+
+                Packet response = new Packet(PacketType.KursUpdate, args.Data, args.Success, args.Error);
+                ClientHandler.SendSinglePacket(client, response);
             }
+            catch (Exception exc)
+            {
+                throw new Exception(">>UpdateKlassen: " + exc);
+            }
+        }
 
-            Packet response = new Packet(PacketType.KursUpdate, args.Data, args.Success, args.Error);
-            ClientHandler.SendSinglePacket(client, response);
-            
+        static Packet Klassenwahl(ClientData client)
+        {
+            try
+            {
+                //idAbfragen
+                //kurse abfragen
+                DatenbankArgs args = client.db_Manager.Schüler.getKlassenNamen();
+
+                if (args.Success == false)
+                {
+                    ClientHandler.Ausgabe("Klassenwahl", "null");
+                }
+
+                return new Packet(PacketType.Klassenwahl, args.Data, args.Success, args.Error);
+            }
+            catch (Exception exc)
+            {
+                throw new Exception(">>Klassenwahl: " + exc);
+            }
+        }
+
+        static void Kurswahl(ClientData client)
+        {
+            try
+            {
+                //idAbfragen
+                //kurse abfragen
+                DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
+                if (args.Success)
+                {
+                    int id = (int)args.Data.Rows[0][5];
+
+                    ClientHandler.Ausgabe("Kurswahl", ("Schueler ID: " + args.Data.Rows[0][0]));
+                    args = client.db_Manager.Kurse.getByKlasse(id);
+                }
+
+                Packet response = new Packet(PacketType.GetVerfügbareKurse, args.Data, args.Success, args.Error);
+                ClientHandler.SendSinglePacket(client, response);
+            }
+            catch (Exception exc)
+            {
+                throw new Exception(">>Kurswahl: " + exc);
+            }
         }
 
         #endregion
@@ -133,7 +251,7 @@ namespace Server
             {
                 case PacketType.Schüler_Login:
                     //DB-----   Try Login
-                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
+                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"] + " Passwort: " + p.Data["passwort"]) + " try to login");
 
                     DatenbankArgs args = client.db_Manager.Schüler.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
@@ -153,7 +271,7 @@ namespace Server
                     break;
                 case PacketType.Lehrer_Login:
                     //DB-----   Try Login
-                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
+                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"] + " Passwort: " + p.Data["passwort"]) + " try to login");
 
                     args = client.db_Manager.Lehrer.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
@@ -213,35 +331,6 @@ namespace Server
             return false;
         }
 
-        static Packet Klassenwahl(ClientData client)
-        {
-            //idAbfragen
-            //kurse abfragen
-            DatenbankArgs args = client.db_Manager.Schüler.getKlassenNamen();
-
-            if (args.Success == false)
-            {
-                ClientHandler.Ausgabe("Klassenwahl", "null");
-            }
-
-            return new Packet(PacketType.Klassenwahl, args.Data, args.Success, args.Error);
-        }
-
-        static void Kurswahl(ClientData client)
-        {
-            //idAbfragen
-            //kurse abfragen
-            DatenbankArgs args = client.db_Manager.Schüler.getby(client.email, "S_Email");
-            if (args.Success)
-            {
-                int id = (int)args.Data.Rows[0][5];
-
-                ClientHandler.Ausgabe("Kurswahl", ("Schueler ID: " + args.Data.Rows[0][0]));
-                args = client.db_Manager.Kurse.getByKlasse(id);
-            }
-
-            Packet response = new Packet(PacketType.Kurswahl, args.Data, args.Success, args.Error);
-            ClientHandler.SendSinglePacket(client, response);
-        }
+        
     }
 }
