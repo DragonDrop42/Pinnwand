@@ -65,11 +65,11 @@ namespace Server
                 //Angemeldet: (gesicherter Bereich)
                 switch (p.packetType)
                 {
-                    case PacketType.GetKurse:
+                    case PacketType.GetKurseVonSchüler:
                         GetKurse(client);
                         break;
                         
-                    case PacketType.Kurswahl:
+                    case PacketType.GetVerfügbareKurse:
                         Kurswahl(client);
                         break;
                         
@@ -79,6 +79,12 @@ namespace Server
 
                     case PacketType.GetSchülerInKurs:
                         GetSchülerInKurs(client, p);
+                        break;
+                    case PacketType.GetChat:
+                        GetChat(client, p);
+                        break;
+                    case PacketType.SendChatNachricht:
+                        SendChatNachricht(client, p);
                         break;
 
                     default:
@@ -92,6 +98,36 @@ namespace Server
             }
         }
 
+        private static void SendChatNachricht(ClientData client, Packet p)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.sendChat(
+                (string)p.Data["C_Sendername"],
+                (string)p.Data["C_Inhalt"],
+                (int)p.Data["K_ID"]);
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("sendChat","null");
+            }
+            else
+            {
+                Console.WriteLine((string)p.Data["C_Sendername"]+": "+(string)p.Data["C_Inhalt"]);
+            }
+            Packet response = new Packet(PacketType.SendChatNachricht, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void GetChat(ClientData client, Packet p)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.getChat((int)p.Data["K_ID"]);
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("getChat", "null");
+            }
+
+            Packet response = new Packet(PacketType.GetChat, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
         private static void GetSchülerInKurs(ClientData client, Packet p)
         {
             DatenbankArgs args = client.db_Manager.Kurse.getSchüler((int)p.Data["K_ID"]);
@@ -100,7 +136,7 @@ namespace Server
                 ClientHandler.Ausgabe("getSchülerInKurs", "null");
             }
 
-            Packet response = new Packet(PacketType.GetKurse, args.Data, args.Success, args.Error);
+            Packet response = new Packet(PacketType.GetSchülerInKurs, args.Data, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
         }
 
@@ -117,7 +153,7 @@ namespace Server
                 args = client.db_Manager.Schüler.getKurse(id);
             }
 
-            Packet response = new Packet(PacketType.GetKurse, args.Data, args.Success, args.Error);
+            Packet response = new Packet(PacketType.GetKurseVonSchüler, args.Data, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
         }
 
@@ -166,7 +202,7 @@ namespace Server
                 args = client.db_Manager.Kurse.getByKlasse(id);
             }
 
-            Packet response = new Packet(PacketType.Kurswahl, args.Data, args.Success, args.Error);
+            Packet response = new Packet(PacketType.GetVerfügbareKurse, args.Data, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
         }
 
@@ -180,7 +216,7 @@ namespace Server
             {
                 case PacketType.Schüler_Login:
                     //DB-----   Try Login
-                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
+                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"] + " Passwort: " + p.Data["passwort"]) + " try to login");
 
                     DatenbankArgs args = client.db_Manager.Schüler.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
@@ -200,7 +236,7 @@ namespace Server
                     break;
                 case PacketType.Lehrer_Login:
                     //DB-----   Try Login
-                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"].ToString() + " Passwort: " + p.Data["passwort"]) + " try to login");
+                    ClientHandler.Ausgabe("Auth", ("Email: " + p.Data["email"] + " Passwort: " + p.Data["passwort"]) + " try to login");
 
                     args = client.db_Manager.Lehrer.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)

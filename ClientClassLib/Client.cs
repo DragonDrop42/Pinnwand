@@ -104,7 +104,7 @@ namespace ClientClassLib
             {
                 SendPacket(send_waitPacket); //Packet an Server senden
                 //auf Packet warten
-                waitHandle.WaitOne(2000);   //2sec. Timeout
+                waitHandle.WaitOne(3000);   //3sec. Timeout
                 waitHandle.Reset();
 
                 if (currentPacket.packetType == send_waitPacket.packetType)

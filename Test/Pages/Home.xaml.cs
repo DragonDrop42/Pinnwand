@@ -27,11 +27,12 @@ namespace Test.Pages
         private string kurs;
         private ListDictionary Schüler;
         private ClientClassLib.Client client;
+        private int K_ID;
         
         public Home()
         {
             InitializeComponent();
-            this.Loaded += OnLoaded;
+            Loaded += OnLoaded;
             //kurs = KListe.mt_Kurse.SelectedSource.Query.;
         }
 
@@ -40,45 +41,47 @@ namespace Test.Pages
             KListe = UIHelper.FindVisualChildByName<ModernTab>(Application.Current.MainWindow,"mt_Kurse");
             client = UIHelper.FindVisualParent<MainWindow>(this).client;
             kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
-            lbl_chatAusgabe.Content += kurs +"\n";
 
             if (kurs != "Pages/Home.xaml") {
-                lbl_chatAusgabe.Content += sender.ToString() + "\n";
-                Packet kidp = client.SendAndWaitForResponse(PacketType.GetKurse);
-                int K_ID = Convert.ToInt32( ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]);
-                ListDictionary data = new ListDictionary{{"K_ID",K_ID}};
-                Packet p = client.SendAndWaitForResponse(PacketType.GetSchülerInKurs, data);
-                if (p.Success)
+                Packet kidp = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
+                K_ID = Convert.ToInt32( ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]);
+                Packet SchülerPacket = client.SendAndWaitForResponse(
+                    PacketType.GetSchülerInKurs,
+                    new ListDictionary
+                    {
+                        {"K_ID",Math.Abs(K_ID)}
+                    }
+                    );
+                if (SchülerPacket.Success)
                 {
-                    Schüler = p.Data;
-                    schülerLaden((List<string>)Schüler["S_Vorname"]);
+                    Mitschüler_box.Text = "";
+                    for (int i = 0; i < ((List<string>)SchülerPacket.Data["S_ID"]).Count; i++)
+                    {
+                        Mitschüler_box.Text += ((List<string>) SchülerPacket.Data["S_Vorname"])[i] + " " +
+                                               ((List<string>) SchülerPacket.Data["S_Name"])[i] + "\n";
+                    }
                 }
-                else { MessageBox.Show(p.MessageString); }
-            }
-        }
+                else { MessageBox.Show(SchülerPacket.MessageString); }
 
-        #region Mitschüler liste erstellen
-        public void schülerLaden( List<string> schüler)
-        {
-            foreach (string schülername in schüler)
-            {
-                StackPanel stack_schüler = new StackPanel { Margin = new Thickness(5) };
-                Label lbl_schüler = new Label { FontSize = 17 };
-                lbl_schüler.Content = schülername;
-
-
-                stack_Mitschüler.Children.Add(stack_schüler);
-                stack_schüler.Children.Add(lbl_schüler);
-            }
-        }
-        #endregion
-
-        public void chatLaden( List<string> chats)
-        {
-            lbl_chatAusgabe.Content = "";
-            foreach (string nachricht in chats)
-            {
-                lbl_chatAusgabe.Content += nachricht + "\n";
+                Packet ChatPacket =
+                    client.SendAndWaitForResponse(
+                        PacketType.GetChat,
+                        new ListDictionary
+                        {
+                            {"K_ID", K_ID}
+                        });
+                if (ChatPacket.Success)
+                {
+                    for (int i = 0; i < ((List<string>)ChatPacket.Data["C_ID"]).Count; i++)
+                    {
+                        lbl_chatAusgabe.Content += ((List<string>) ChatPacket.Data["C_Sendername"])[i] + ": " +
+                                                   ((List<string>) ChatPacket.Data["C_Inhalt"])[i] + "\n";
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(ChatPacket.MessageString);
+                }
             }
         }
 
@@ -89,18 +92,45 @@ namespace Test.Pages
 
         private void cmd_senden_Click(object sender, RoutedEventArgs e) // Ausführen wenn der klick auf senden ausgeführt wird
         {
-            lbl_chatAusgabe.Content += txt_chatEingabe.Text + "\n";
+            //lbl_chatAusgabe.Content += txt_chatEingabe.Text + "\n";
+            Packet chatsendpacket = client.SendAndWaitForResponse(PacketType.SendChatNachricht,
+                new ListDictionary
+                {
+                    {"K_ID",K_ID},
+                    {"C_Sendername", "Mehritz"},
+                    {"C_Inhalt", txt_chatEingabe.Text}
+                });
+            if (!chatsendpacket.Success)
+            {
+                MessageBox.Show("Senden Fehlgeschlagen: " + chatsendpacket.MessageString);
+            }
+            ereignisseErstellen();
         }
 
 
         private void ereignisseErstellen()
         {
-            LinearGradientBrush gradientBrush = new  LinearGradientBrush( Color.FromArgb(0, 178, 178, 178),  Color.FromArgb(0, 38, 139, 185), new Point(0.5, 0), new Point(0.5, 1));
+            // Verlauf der Farbe erstellen
+            LinearGradientBrush gradientBrush = new  LinearGradientBrush();
+            gradientBrush.StartPoint = new Point(0.5, 0);
+            gradientBrush.EndPoint = new Point(0.5, 1);
+            gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 178, 178, 178), 0));
+            gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 38, 139, 185), 1));
 
             StackPanel stack_ereignis = new StackPanel {Width = 150 , Height = 70, Background = gradientBrush };
-            Label lbl_namenEreignis = new Label();
-            Label lbl_datumEreignis = new Label();
 
+            Label lbl_namenEreignis = new Label {HorizontalContentAlignment = HorizontalAlignment.Center ,  FontSize= 17 , Margin = new Thickness(0,10,0,5), Foreground = Brushes.Black };
+            lbl_namenEreignis.Content = "Hallo";    // Name des neuen Ereignisses
+
+            Label lbl_datumEreignis = new Label {HorizontalContentAlignment = HorizontalAlignment.Center, FontSize = 17, Foreground = Brushes.Black};
+            lbl_datumEreignis.Content = "02.10.1998";   // Datum des neuen Ereignisses
+
+            // Anzeigen auf der Pinnwand
+            ug_terminÜbersicht.Children.Add(stack_ereignis);
+            stack_ereignis.Children.Add(lbl_namenEreignis);
+            stack_ereignis.Children.Add(lbl_datumEreignis);
+
+            //Hinzufügen zur Datenbank
 
         }
 
