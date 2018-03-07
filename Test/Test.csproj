@@ -61,9 +61,6 @@
     <Compile Include="Kursliste.xaml.cs">
       <DependentUpon>Kursliste.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\KursÜbersicht.xaml.cs">
-      <DependentUpon>KursUebersicht.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
@@ -88,10 +85,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Kursliste.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\KursUebersicht.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

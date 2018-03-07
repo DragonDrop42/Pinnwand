@@ -8,57 +8,59 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" VerticalAlignment="Top" MinWidth="1000" Width="auto" >
-                <StackPanel Height="50">
-                    <Label FontWeight="Bold" FontSize="30" HorizontalContentAlignment="Center" Foreground="#FFB0B0B0"> 
-                        Aktuelle Termine
-                    </Label>
-                </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinWidth="800" Width="auto" MinHeight="400">
-                        <UniformGrid Width="1003">
-                            <StackPanel Width="200" Height="80" >
-                                <StackPanel.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FFB2B2B2" Offset="0"/>
-                                        <GradientStop Color="#FF3E67D4" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </StackPanel.Background>
-                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,15,0,5" Foreground="Black">Klausur Mathe</Label>
-                                <Label HorizontalAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinWidth="800" Width="auto" MinHeight="440">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label FontWeight="Bold" FontSize="30" Width="1000" HorizontalContentAlignment="Center" Foreground="#FFDBEFFF">
+                                    Aktuelle Termine
+                                </Label>
                             </StackPanel>
-                            <StackPanel Width="200" Height="80" >
-                                <StackPanel.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FFB2B2B2" Offset="0"/>
-                                        <GradientStop Color="#FF3E67D4" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </StackPanel.Background>
-                                <Label HorizontalAlignment="Center" FontSize="17" Margin="0,15,0,5" Foreground="Black">Klausur Mathe</Label>
-                                <Label HorizontalAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
+                            <StackPanel Orientation="Horizontal">
+                
+                                <StackPanel Width="950">
+                                    <UniformGrid  Height="390" x:Name="ug_terminÜbersicht">
+                                        <StackPanel Width="150" Height="70" >
+                                            <StackPanel.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#FFB2B2B2" Offset="0.003"/>
+                                                    <GradientStop Color="#FF268BB9" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </StackPanel.Background>
+                                            <Label HorizontalContentAlignment="Center" FontSize="17" Margin="0,10,0,5" Foreground="Black">Klausur Mathe</Label>
+                                            <Label HorizontalContentAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
+                                        </StackPanel>
+                                    </UniformGrid>
+                                </StackPanel>
+                                
+                                <StackPanel Width="50">
+                                    <Image Source="../Images/images.png"></Image>
+                                </StackPanel>
                             </StackPanel>
-  
-
-
-
-                        </UniformGrid>
+                        </StackPanel>
                     </StackPanel>
 
                     <!-- Daten einfügen-->
                 </StackPanel>
                 <StackPanel Height="300" Orientation="Horizontal" VerticalAlignment="Bottom">
-                    <StackPanel MinWidth="800">
+                    <StackPanel Width="600" Margin="0,10,0,0">
                         <StackPanel>
-                            <Label x:Name="lbl_chatAusgabe" Height="250" Margin="0,0,0,20" Background="#FF323232" BorderBrush="#FF00115F" >
+                            <Label x:Name="lbl_chatAusgabe" Height="240" Margin="0,0,0,20" Background="{x:Null}" BorderBrush="#FF3E3E3E" BorderThickness="1" >
 
                             </Label>
                             <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="txt_chatEingabe" GotFocus="txt_chatEingabe_GotFocus" Width="710" >Eingabe für Chat</TextBox>
-                                <Button MinWidth="70" Margin="20,0,0,0" x:Name="cmd_senden" Click="cmd_senden_Click">Senden</Button>
+                                <TextBox x:Name="txt_chatEingabe" GotFocus="txt_chatEingabe_GotFocus" Width="510" >Eingabe für Chat</TextBox>
+                                <Button Width="75" Margin="15,0,0,0" x:Name="cmd_senden" Click="cmd_senden_Click">Senden</Button>
                             </StackPanel>
 
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Width="200">
+                    <StackPanel Width="390" Margin="10,0,0,0">
+                        <!-- Inhalte der Ereignis-->
+                        <Label FontSize="23" Margin="0,5,0,10" FontWeight="Bold"> Informationen des Termins:</Label>
+
+                        <!-- Informationen eintragen-->
+                        
 
                     </StackPanel>
 
@@ -66,10 +68,11 @@
             </StackPanel>
             <!-- Feste Breite da die Namen nicht länger werden als 130px-->
             <ScrollViewer>
-                <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" MaxWidth="220" MinWidth="220">
+                <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" Width="200">
                     <TextBlock Padding="5">
-                        <Label FontSize="17" Width="220" >Arndt-Christian Wagner</Label>
+                        <Label FontSize="23" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" HorizontalContentAlignment="Center" FontWeight="Bold" >Schülerliste</Label>
                     </TextBlock>
+                    <TextBox x:Name="Mitschüler_box" HorizontalContentAlignment="Center" Padding="5" Text="Arndt-Christian Wagner" FontSize="16" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsEnabled="False"/>
 
 
 

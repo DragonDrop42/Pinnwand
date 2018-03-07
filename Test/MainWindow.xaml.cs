@@ -26,7 +26,7 @@ namespace Test
     /// </summary>
     public partial class MainWindow : ModernWindow
     {
-        Client client;
+        public Client client;
         List<string> SubscribedEvents = new List<string>();
         public Login LoginFrm;
         private ModernTab Kurse;
@@ -44,8 +44,8 @@ namespace Test
             LoginFrm.Show();
             LoginFrm.Loaded += LoginFrm_Loaded;
             LoginFrm.GotFocus += LoginFrm_GotFocus;
-            LoginFrm.Closing += LoginFrmOnClosing;
-            IsEnabled = false;
+            //LoginFrm.Closing += LoginFrmOnClosing;
+            //IsEnabled = false;
             GotFocus += OnGotFocus;
             
         }
@@ -96,8 +96,8 @@ namespace Test
             Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
             try
             {
-                Packet kurse = client.Kurswahl();
-                Packet getKurse = client.SendGetKursePacket();
+                Packet kurse = client.SendAndWaitForResponse(PacketType.GetVerfügbareKurse);
+                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
                 if (kurse.Success && getKurse.Success)
                 {
                     kw.UpdateKurse(kurse.Data,getKurse.Data);
@@ -169,8 +169,13 @@ namespace Test
                 UIHelper.FindVisualParent<Pages.Login.Lehrer_Login>((Button) sender);
             try
             {
-                Packet login = client.Login(lehrer_login.txt_Email.Text, lehrer_login.txt_Passwort.Password,false);
-                if (login.Success)
+                ListDictionary dataLogin = new ListDictionary{
+                    {"email", lehrer_login.txt_Email.Text},
+                    {"passwort", lehrer_login.txt_Passwort.Password}
+                };
+                Packet loginResponse = client.Login(dataLogin, false);
+
+                if (loginResponse.Success)
                 {
                     LoginFrm.Closing -= LoginFrmOnClosing; 
                     LoginFrm.Close();
@@ -178,7 +183,7 @@ namespace Test
                 }
                 else
                 {
-                    lehrer_login.lbl_LehrerLoginError.Text = login.MessageString;
+                    lehrer_login.lbl_LehrerLoginError.Text = loginResponse.MessageString;
 
                 }
             }
@@ -193,22 +198,32 @@ namespace Test
             Pages.Login.Lehrer_Register lehrer_regi = UIHelper.FindVisualParent<Pages.Login.Lehrer_Register>((Button)sender);
             try
             {
-                string Name = lehrer_regi.txt_Name.Text;
-                string Vname = lehrer_regi.txt_Vorname.Text;
-                string lehrerCode = lehrer_regi.txt_LehrerCode.Text;
-                string Email = lehrer_regi.txt_Email.Text;
-                string Passwort = lehrer_regi.txt_Passwort.Password;
-                string Anrede = (string)lehrer_regi.cbB_Anrede.SelectedValue;
-                string Titel = (string)lehrer_regi.cbB_Titel.SelectedValue;
+                //string Name = lehrer_regi.txt_Name.Text;
+                //string Vname = lehrer_regi.txt_Vorname.Text;
+                //string lehrerCode = lehrer_regi.txt_LehrerCode.Text;
+                //string Email = lehrer_regi.txt_Email.Text;
+                //string Passwort = lehrer_regi.txt_Passwort.Password;
+                //string Anrede = (string)lehrer_regi.cbB_Anrede.SelectedValue;
+                //string Titel = (string)lehrer_regi.cbB_Titel.SelectedValue;
                 //MessageBox.Show(Vname + Name + Anrede + Email + Passwort + Titel);
-                Packet register = client.Register_Lehrer(Name, Vname, Anrede, Email, Passwort, Titel);
-                if (register.Success)
+
+                ListDictionary dataRegister = new ListDictionary{
+                        {"name", lehrer_regi.txt_Name.Text},
+                        {"vname", lehrer_regi.txt_Vorname.Text},
+                        {"anrede", (string)lehrer_regi.cbB_Anrede.SelectedValue},
+                        {"titel", (string)lehrer_regi.cbB_Titel.SelectedValue},
+                        {"email", lehrer_regi.txt_Email.Text},
+                        {"passwort", lehrer_regi.txt_Passwort.Password}
+                    };
+
+                Packet registerResponse = client.Register_Lehrer(dataRegister);
+                if (registerResponse.Success)
                 {
                     throw new Exception("Registrierung erfolgreich.");
                 }
                 else
                 {
-                    throw new Exception(register.MessageString);
+                    throw new Exception(registerResponse.MessageString);
                 }
             }
             catch (Exception ex)
@@ -222,21 +237,30 @@ namespace Test
             Pages.Login.Schüler_Register schüler_regi = UIHelper.FindVisualParent<Pages.Login.Schüler_Register>((Button)sender);
             try
             {
-                string Name = schüler_regi.txt_Name.Text;
-                string Vname = schüler_regi.txt_Vorname.Text;
-                string Phone = schüler_regi.txt_Telefonnummer.Text;
-                string Email = schüler_regi.txt_Email.Text;
-                string Passwort = schüler_regi.txt_Passwort.Password;
-                string Klasse = Convert.ToString(schüler_regi.cbB_Klasse.SelectedValue);
+                //string Name = schüler_regi.txt_Name.Text;
+                //string Vname = schüler_regi.txt_Vorname.Text;
+                //string Phone = schüler_regi.txt_Telefonnummer.Text;
+                //string Email = schüler_regi.txt_Email.Text;
+                //string Passwort = schüler_regi.txt_Passwort.Password;
+                //string Klasse = Convert.ToString(schüler_regi.cbB_Klasse.SelectedValue);
 
-                Packet register = client.Register_Schüler(Name, Vname, Phone,Klasse, Email, Passwort);
-                if (register.Success)
+                ListDictionary dataRegister = new ListDictionary{
+                {"name", schüler_regi.txt_Name.Text},
+                {"vname", schüler_regi.txt_Vorname.Text},
+                {"phone", schüler_regi.txt_Telefonnummer.Text},
+                {"klasse",Convert.ToString(schüler_regi.cbB_Klasse.SelectedValue)},
+                {"email", schüler_regi.txt_Email.Text},
+                {"passwort", schüler_regi.txt_Passwort.Password}
+            };
+
+                Packet registerResponse = client.Register_Schüler(dataRegister);
+                if (registerResponse.Success)
                 {
                     throw new Exception("Registrierung erfolgreich.");
                 }
                 else
                 {
-                    throw new Exception(register.MessageString);
+                    throw new Exception(registerResponse.MessageString);
                 }
             }
             catch (Exception ex)
@@ -247,7 +271,7 @@ namespace Test
 
         void CbB_Klasse_DropDownOpened(object sender, EventArgs e)
         {
-                Packet klassen = client.GetKlassen();
+                Packet klassen = client.SendAndWaitForResponse(PacketType.Klassenwahl);
                 if (klassen.Success)
                 {
                     ComboBox cb = (ComboBox) sender;
@@ -273,8 +297,13 @@ namespace Test
             Pages.Login.Schüler_Login schüler_login = UIHelper.FindVisualParent<Pages.Login.Schüler_Login>((Button)sender);
             try
             {
-                Packet login = client.Login(schüler_login.txt_Email.Text, schüler_login.txt_Passwort.Password,true);
-                if (login.Success)
+                ListDictionary dataLogin = new ListDictionary{
+                    {"email", schüler_login.txt_Email.Text},
+                    {"passwort", schüler_login.txt_Passwort.Password}
+                };
+
+                Packet loginResponse = client.Login(dataLogin, true);
+                if (loginResponse.Success)
 
                 {
                     LoginFrm.Closing -= LoginFrmOnClosing; 
@@ -284,7 +313,7 @@ namespace Test
                 }
                 else
                 {
-                    throw new Exception(login.MessageString);
+                    throw new Exception(loginResponse.MessageString);
 
                 }
             }
@@ -302,7 +331,7 @@ namespace Test
                 {
                     Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
                 }
-                Packet GetKurse = client.SendGetKursePacket();
+                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
                 if (GetKurse.Success)
                 {
                     foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);
@@ -314,17 +343,9 @@ namespace Test
                             Kurse.Links.Add(new Link
                             {
                                 DisplayName = Kurs,
-                                Source = new Uri("Pages/KursUebersicht.xaml?Kurs=" + Kurs, UriKind.Relative)
+                                Source = new Uri("Pages/Home.xaml?Kurs=" + Kurs, UriKind.Relative)
                             });
                         }
-                    }
-                    else
-                    {
-                        Kurse.Links.Add(new Link
-                        {
-                            DisplayName = "Kurse Hinzufügen",
-                            Source = new Uri("Pages/Settings/KursAuswahl.xaml", UriKind.Relative)
-                        });
                     }
                 }
                 else

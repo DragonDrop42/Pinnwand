@@ -27,11 +27,21 @@ namespace ServerData
         //--------------------------------
 
         //Datenpackete++++++++++++++++++++
-        Kurswahl,
-        GetKurse,
+        GetSchülerInKurs, //Liste der Schüler in einem Kurs
+        GetSchülerInKlasse, //
+        GetVerfügbareKurse,
+        GetKurseVonSchüler,
         KursUpdate,
+        SendChatNachricht,
+        GetChat,
+        GetEreignisse,
+        SendEreigniss,
         //--------------------------------
-
+        
+        //Admin oder Lehrerpakete+++++++++
+        UpdateSchülerInKurs,
+        KlasseErstellen,
+        //--------------------------------
         //SystemError
         SystemError
     }

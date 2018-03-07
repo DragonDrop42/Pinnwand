@@ -6766,7 +6766,7 @@ WHERE        (Klasse.Kl_Name = ?)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[3];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[4];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT V_ID, S_ID, K_ID FROM [Verbund_Kurs-Schüler]";
@@ -6778,13 +6778,20 @@ WHERE        (Klasse.Kl_Name = ?)";
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("S_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "S_ID", global::System.Data.DataRowVersion.Original, false, null));
             this._commandCollection[2] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT        Kurs.K_Name
+            this._commandCollection[2].CommandText = @"SELECT        Kurs.K_Name, Kurs.K_ID
 FROM            (([Verbund_Kurs-Schüler] INNER JOIN
                          Kurs ON [Verbund_Kurs-Schüler].K_ID = Kurs.K_ID) INNER JOIN
                          Schüler ON [Verbund_Kurs-Schüler].S_ID = Schüler.S_ID)
 WHERE        (Schüler.S_ID = ?)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("S_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "S_ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "SELECT        Schüler.S_Name, Schüler.S_Vorname\r\nFROM            ([Verbund_Kurs-S" +
+                "chüler] INNER JOIN\r\n                         Schüler ON [Verbund_Kurs-Schüler].S" +
+                "_ID = Schüler.S_ID)\r\nWHERE        ([Verbund_Kurs-Schüler].K_ID = ?)";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("K_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "K_ID", global::System.Data.DataRowVersion.Current, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6832,6 +6839,18 @@ WHERE        (Schüler.S_ID = ?)";
         public virtual PinnwandDataSet._Verbund_Kurs_SchülerDataTable GetDataBy1(int S_ID) {
             this.Adapter.SelectCommand = this.CommandCollection[2];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(S_ID));
+            PinnwandDataSet._Verbund_Kurs_SchülerDataTable dataTable = new PinnwandDataSet._Verbund_Kurs_SchülerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual PinnwandDataSet._Verbund_Kurs_SchülerDataTable getSchülerInKurs(int K_ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(K_ID));
             PinnwandDataSet._Verbund_Kurs_SchülerDataTable dataTable = new PinnwandDataSet._Verbund_Kurs_SchülerDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
