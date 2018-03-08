@@ -64,6 +64,9 @@
     <Compile Include="Pages\ExtraPage\TerminErstellen.xaml.cs">
       <DependentUpon>TerminErstellen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ExtraPage\TerminInformation.xaml.cs">
+      <DependentUpon>TerminInformation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,10 @@
     <Page Include="Pages\ExtraPage\TerminErstellen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ExtraPage\TerminInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Login\Lehrer_Register.xaml">
       <Generator>MSBuild:Compile</Generator>
