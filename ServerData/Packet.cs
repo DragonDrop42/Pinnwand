@@ -43,8 +43,11 @@ namespace ServerData
         KlasseErstellen,
         //--------------------------------
         //SystemError
-        SystemError
+        SystemError,
+        //Update
+        UpdateAll
     }
+
 
     [Serializable]
     public class Packet

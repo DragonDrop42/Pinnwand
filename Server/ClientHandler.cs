@@ -78,6 +78,16 @@ namespace Server
         {
             TCP_connection.SendPacket(client.clientSocket, p, new TCP_connection.ExceptionCallback(SocketDisconnectedException));
         }
+        public static void SendPacketToAllLoggedInClients(Packet p)
+        {
+            foreach (ClientData client in lst_clients)
+            {
+                if (checkLoginState(client.id))
+                {
+                    SendSinglePacket(client, p);
+                }
+            }
+        }
 
         #region getSocketby...
         static int GetClientIndexbyID(string ID)
