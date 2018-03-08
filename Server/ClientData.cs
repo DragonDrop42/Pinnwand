@@ -17,10 +17,15 @@ namespace Server
     {
         public Socket clientSocket;
         public Thread clientThread;
-        public string id;
-        public string email;
+
 
         public PinnwandDBAdapter db_Manager;
+
+        //person data
+        public string id;
+        public string email;
+        public string vname = "";
+        public string name = "";
 
         public ClientData(Socket clientSocket)
         {
@@ -44,6 +49,16 @@ namespace Server
 
             Packet p = new Packet(PacketType.Register_ID, list, "server");
             ClientHandler.SendSinglePacket(this, p);
+
+            //ClientHandler.Ausgabe("Debug", id);
+        }
+
+
+        public void SetAutorKürzel(string vname, string name)
+        {
+            string kürzel = "";
+            kürzel += (vname.Length < 3 ? vname.Substring(0, vname.Length) : vname.Substring(0, 3));
+            kürzel += "." + name;
         }
     }
 }
