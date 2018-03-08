@@ -11,6 +11,9 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinWidth="800" Width="auto" MinHeight="440">
                         <StackPanel>
+                            <StackPanel.Background>
+                                <ImageBrush ImageSource="../Images/Pinnwand-textur-2.jpg"/>
+                            </StackPanel.Background>
                             <StackPanel Orientation="Horizontal">
                                 <Label FontWeight="Bold" FontSize="30" Width="1000" HorizontalContentAlignment="Center" Foreground="#FFDBEFFF">
                                     Aktuelle Termine
@@ -32,9 +35,20 @@
                                         </StackPanel>
                                     </UniformGrid>
                                 </StackPanel>
-                                
-                                <StackPanel Width="50">
-                                    <Image Source="../Images/images.png"></Image>
+                                <!-- Bearbeiten der Termine mittels der Button -->
+                                <StackPanel Width="50" HorizontalAlignment="Center">
+                                    <TextBlock> 
+                                        <Hyperlink NavigateUri="ExtraPage/TerminErstellen.xaml" TargetName="stack_informationsausgabe"> 
+
+                                            asdkjf
+                                        </Hyperlink>
+                                    </TextBlock>
+                                    
+                                    <Button x:Name="terminLöschen" Width="35" Height="45" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="terminLöschen_Click">
+                                        <Button.Background>
+                                            <ImageBrush ImageSource="../Images/loeschen2.png"/>
+                                        </Button.Background>
+                                    </Button>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -42,7 +56,7 @@
 
                     <!-- Daten einfügen-->
                 </StackPanel>
-                <StackPanel Height="300" Orientation="Horizontal" VerticalAlignment="Bottom">
+                <StackPanel x:Name="stack_chatUndInfoBereich" Height="300" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <StackPanel Width="600" Margin="0,10,0,0">
                         <StackPanel>
                             <Label x:Name="lbl_chatAusgabe" Height="240" Margin="0,0,0,20" Background="{x:Null}" BorderBrush="#FF3E3E3E" BorderThickness="1" >
@@ -50,19 +64,23 @@
                             </Label>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox x:Name="txt_chatEingabe" GotFocus="txt_chatEingabe_GotFocus" Width="510" >Eingabe für Chat</TextBox>
-                                <Button Width="75" Margin="15,0,0,0" x:Name="cmd_senden" Click="cmd_senden_Click">Senden</Button>
+                                <Button Width="80" Margin="10,0,0,0" x:Name="cmd_senden" Click="cmd_senden_Click">Senden</Button>
                             </StackPanel>
 
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Width="390" Margin="10,0,0,0">
-                        <!-- Inhalte der Ereignis-->
+                    <Frame x:Name="stack_informationsausgabe" Width="390" Margin="10,0,0,0" />
+
+
+
+                    <!--<StackPanel x:Name="stack_informationsausgabe" Width="390" Margin="10,0,0,0" >
+                        --><!-- Inhalte der Ereignis--><!--
                         <Label FontSize="23" Margin="0,5,0,10" FontWeight="Bold"> Informationen des Termins:</Label>
 
-                        <!-- Informationen eintragen-->
+                        --><!-- Informationen eintragen--><!--
                         
 
-                    </StackPanel>
+                    </StackPanel>-->
 
                 </StackPanel>
             </StackPanel>
