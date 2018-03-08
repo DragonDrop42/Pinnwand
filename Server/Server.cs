@@ -42,6 +42,10 @@ namespace Server
         {
             try
             {
+                //warten bis Packet verarbeitet wird --> Socket bereit
+                Thread.Sleep(100);
+                //----------------
+
                 ClientData client = ClientHandler.GetClientByID(p.senderID);
                 if (client == null)
                 {
@@ -66,9 +70,9 @@ namespace Server
                 switch (p.packetType)
                 {
                     case PacketType.Default:
-
+                        //zum Testen
                         Thread.Sleep(500);
-                        ClientHandler.Ausgabe("Debug", "packet Defaultz received");
+                        ClientHandler.Ausgabe("Debug", "packet Default received");
                         ClientHandler.SendSinglePacket(client, p);
 
                         break;
@@ -106,10 +110,11 @@ namespace Server
             }
         }
 
+        //Case Methoden
         private static void SendChatNachricht(ClientData client, Packet p)
         {
             DatenbankArgs args = client.db_Manager.Kurse.sendChat(
-                (string)p.Data["C_Sendername"],
+                client.name,           //(string)p.Data["C_Sendername"],
                 (string)p.Data["C_Inhalt"],
                 (int)p.Data["K_ID"]);
             if (!args.Success)
@@ -242,7 +247,8 @@ namespace Server
         }
 
         #endregion
-          
+        
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Public Packets
         static bool PublicPacketHandler(Packet p, ClientData client)
         {
             Packet response = null;
@@ -256,11 +262,13 @@ namespace Server
                     DatenbankArgs args = client.db_Manager.Schüler.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
                     {
-                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich eingeloggt"));
-                        client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
-                        Console.WriteLine(client.id);
                         ClientHandler.ClientLogin(client.id);   //In liste schreiben
-                        Console.WriteLine(ClientHandler.checkLoginState(client.id));
+                        //Console.WriteLine(ClientHandler.checkLoginState(client.id));
+                        //Daten speichern
+                        client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
+                        client.name = (string)args.Data.Rows[0]["S_Name"];
+                        client.vname = (string)args.Data.Rows[0]["S_Vorname"];
+                        ClientHandler.Ausgabe("Auth", (client.vname + "." + client.name + "." + client.email + " (Schüler) eingeloggt"));
                     }
                     else
                     {
@@ -276,10 +284,12 @@ namespace Server
                     args = client.db_Manager.Lehrer.login(p.Data["email"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
                     {
-                        ClientHandler.Ausgabe("Auth", (p.Data["email"] + " wurde erfolgreich eingeloggt"));
-                        client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
-
                         ClientHandler.ClientLogin(client.id);   //In liste schreiben
+                        
+                        client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
+                        client.name = (string)args.Data.Rows[0]["L_Name"];
+                        client.vname = (string)args.Data.Rows[0]["L_Vorname"];
+                        ClientHandler.Ausgabe("Auth", (client.vname + "." + client.name + "." + client.email + " (Lehrer) eingeloggt"));
                     }
                     else
                     {
@@ -325,7 +335,7 @@ namespace Server
             if (response != null)
             {
                 ClientHandler.SendSinglePacket(client, response);
-                ClientHandler.Ausgabe("Auth", "Anfrage wurde bearbeitet");
+                //ClientHandler.Ausgabe("Auth", "Anfrage wurde bearbeitet");
                 return true;
             }
             return false;

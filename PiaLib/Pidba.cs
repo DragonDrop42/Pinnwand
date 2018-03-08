@@ -105,7 +105,7 @@ namespace PiaLib
                         string c = (string)user.Data.Rows[0]["S_Passwort"];
                         if (c == Passwort)
                         {
-                            return new DatenbankArgs(new DataTable());
+                            return new DatenbankArgs(user.Data);
                         }
                         else
                         {
@@ -258,7 +258,7 @@ namespace PiaLib
                     {
                         if ((string)(user.Data.Rows[0]["L_Passwort"]) == Passwort)
                         {
-                            return new DatenbankArgs(new DataTable());
+                            return new DatenbankArgs(user.Data);
                         }
                         else
                         {

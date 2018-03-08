@@ -17,12 +17,13 @@ namespace ClientClassLib
     {
         static Socket masterS;
         static string id;
-        //List<Packet> lst_PacketResponse = new List<Packet>();
+        
         Packet currentPacket;   //Zwichenspeicher
 
         //Login
         //password Hash
         private string salt = "492";   //random seed
+        private Random rand = new Random();
 
         private readonly EventWaitHandle waitHandle = new AutoResetEvent(false);
 
@@ -35,13 +36,11 @@ namespace ClientClassLib
             errorCallback = errorDel;
         }
     
-
         #region Connect to Server
         //try to connect to server
         public bool Connect(string ip, int port)
         {
             string ipHost = ip;
-
             masterS = TCP_connection.SocketSetup;
 
             try
@@ -52,14 +51,14 @@ namespace ClientClassLib
             catch (Exception exc)
             {
                 Thread.Sleep(500);
-                errorCallback("Konnte nicht verbinden || " + exc.Message);
+                errorCallback("Es konnte keine Verbindung zu "+ ip +" hergestellt werden. \n>> " + exc.Message);
                 return false;
             }
 
             Thread dataINThread = new Thread(DataIN);
             dataINThread.Start(masterS);
 
-            errorCallback("Erfolgreich verbunden");
+            errorCallback("Erfolgreich mit " + ip +" verbunden.");
             return true;
         }
         #endregion
@@ -73,11 +72,6 @@ namespace ClientClassLib
         //packet senden++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         public void SendPacket(Packet p)
         {
-            if (this.ID == null)
-            {
-                errorCallback("Es wurde keine ID vergeben");
-                return;
-            }
             if (p.senderID == null)
             {
                 errorCallback("Dieses Packet besitzt keine gültige ID!");
@@ -107,38 +101,28 @@ namespace ClientClassLib
         }
         #endregion
 
-
-        private Packet WaitForPacketResponse(Packet send_waitPacket)
+        private Packet WaitForPacketResponseHandler(Packet send_waitPacket)
         {
             try
             {
-                SendPacket(send_waitPacket); //Packet an Server senden
-                //auf Packet warten
-                waitHandle.WaitOne(3000);   //3sec. Timeout
-                waitHandle.Reset();
+                Packet response = null;
 
-                if (currentPacket == null)
-                {
-                    throw new Exception("Received Packet == null");
+                for (int i = 0; i < 2; i++){    //zwei Versuche
+                    response = WaitForPacketResponse(send_waitPacket);
+
+                    if(response != null){
+                        break;
+                    }
+                    Thread.Sleep(rand.Next(1,100));
                 }
 
-                if (currentPacket.packetType == send_waitPacket.packetType)
-                {
-                    Packet tmp = currentPacket.Copy();
-                    currentPacket = null;
-                    return tmp;   //könnte zu problemen führen
+                if(response != null){
+                    return response;
                 }
-                //foreach (Packet p in lst_PacketResponse)
-                //{
-                //    if (p.packetType == waitPacket.packetType)
-                //    {
-                //        lst_PacketResponse.Remove(p);
-                //        return p;
-                //    }
-                //}
-
-                return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
-            }
+                else{
+                    return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
+                }
+			}     
             catch(Exception exc)
             {
                 //throw new Exception("Fehler: WaitForPacket >>" + exc.Message);
@@ -146,6 +130,29 @@ namespace ClientClassLib
                 return null;
             }
         }
+
+        private Packet WaitForPacketResponse(Packet send_waitPacket)
+        {
+            SendPacket(send_waitPacket); //Packet an Server senden
+            //auf Packet warten
+            waitHandle.WaitOne(1500);   //1.5sec. Timeout
+            waitHandle.Reset();
+
+            if (currentPacket == null)  //Fehler oder Timeout
+            {
+                //throw new Exception("Received Packet == null");
+                return null;
+            }
+
+            if (currentPacket.packetType == send_waitPacket.packetType)
+            {
+                Packet tmp = currentPacket.Copy();
+                currentPacket = null;
+                return tmp;   //könnte zu problemen führen
+            }
+            return null;//new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
+        }
+        
 
         //PacketManager++++++++++++++++++++++++++++++++++++++++++++++++++++
         private void PacketManager(Packet packet)

@@ -97,7 +97,7 @@ namespace Test.Pages
                 new ListDictionary
                 {
                     {"K_ID",K_ID},
-                    {"C_Sendername", "Mehritz"},
+                   // {"C_Sendername", client.Kürzel},
                     {"C_Inhalt", txt_chatEingabe.Text}
                 });
             if (!chatsendpacket.Success)
