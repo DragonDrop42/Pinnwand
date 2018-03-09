@@ -128,9 +128,9 @@ namespace Server
             }
             else
             {
-                Console.WriteLine((string)p.Data["C_Sendername"]+": "+(string)p.Data["C_Inhalt"]);
+                Console.WriteLine(client.name + ": "+(string)p.Data["C_Inhalt"]);
                 //An alle eingelogten Clients senden
-                UpdateAll();
+                //UpdateAll();
             }
             Packet response = new Packet(PacketType.SendChatNachricht, null, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
