@@ -24,5 +24,6 @@ namespace Test.Pages.ExtraPage
         {
             InitializeComponent();
         }
+
     }
 }
