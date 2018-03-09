@@ -20,7 +20,7 @@
                                 </Label>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                
+
                                 <StackPanel Width="950">
                                     <UniformGrid  Height="390" x:Name="ug_terminÜbersicht">
                                         <Button Width="150" Height="70" BorderBrush="{x:Null}" Click="aktiverButton" >
@@ -96,7 +96,6 @@
                         <Label FontSize="23" Margin="0,5,0,10" FontWeight="Bold"> Informationen des Termins:</Label>
 
                         --><!-- Informationen eintragen--><!--
-                        
 
                     </StackPanel>-->
 

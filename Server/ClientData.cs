@@ -26,6 +26,7 @@ namespace Server
         public string email;
         public string vname = "";
         public string name = "";
+        public bool hasRights;
 
         public ClientData(Socket clientSocket)
         {

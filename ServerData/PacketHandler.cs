@@ -60,6 +60,11 @@ namespace ServerData
 
         public static ListDictionary ConvertTableToList(DataTable table)
         {
+            if (table == null)
+            {
+                return new ListDictionary();
+            }
+
             ListDictionary list = new ListDictionary();
 
             for (int i = 0; i < table.Columns.Count; i++)

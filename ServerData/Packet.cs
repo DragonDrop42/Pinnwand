@@ -18,33 +18,37 @@ namespace ServerData
         Default,
 
         //Authentication++++++++++++++++++
-        Register_ID,
-        Schüler_Login,
-        Schüler_Registraition,
-        Lehrer_Login,
-        Lehrer_Registraition,
-        Klassenwahl,
+        Register_ID,                        // (✔)
+        Schüler_Login,                      // (✔)
+        Schüler_Registraition,              // (✔)
+        Lehrer_Login,                       // (✔)
+        Lehrer_Registraition,               // (✔)
+        Klassenwahl,                        // (✔)
         //--------------------------------
 
         //Datenpackete++++++++++++++++++++
-        GetSchülerInKurs, //Liste der Schüler in einem Kurs
-        GetSchülerInKlasse, //
-        GetVerfügbareKurse,
-        GetKurseVonSchüler,
-        KursUpdate,
-        SendChatNachricht,
-        GetChat,
-        GetEreignisse,
-        SendEreigniss,
+        GetSchülerInKurs,                   //Liste der Schüler in einem Kurs (✔)
+        GetSchülerInKlasse,                 // (✔)
+        GetVerfügbareKurse,                 // (✔)
+        GetKurseVonSchüler,                 // (✔)
+        KursUpdate,                         // (✔)
+        SendChatNachricht,                  // (✔)
+        GetChat,                            // (✔)
+        GetEreignisse,                      // (✔)
+        SendEreigniss,                      // (✔)
         //--------------------------------
         
         //Admin oder Lehrerpakete+++++++++
         UpdateSchülerInKurs,
-        KlasseErstellen,
+        UpdateSchülerInKlasse,
+        KlasseErstellen,                    // (✔)
         //--------------------------------
         //SystemError
-        SystemError
+        SystemError,
+        //Update
+        UpdateAll
     }
+
 
     [Serializable]
     public class Packet
