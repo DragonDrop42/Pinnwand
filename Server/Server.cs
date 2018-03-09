@@ -109,6 +109,11 @@ namespace Server
                 ClientHandler.Ausgabe("PacketManager", exc.Message);
             }
         }
+        private static void UpdateAll()
+        {
+            Packet contentChanged = new Packet(PacketType.UpdateAll);
+            ClientHandler.SendPacketToAllLoggedInClients(contentChanged);
+        }
 
         //Case Methoden
         private static void SendChatNachricht(ClientData client, Packet p)
@@ -123,9 +128,11 @@ namespace Server
             }
             else
             {
-                Console.WriteLine((string)p.Data["C_Sendername"]+": "+(string)p.Data["C_Inhalt"]);
+                Console.WriteLine(client.name + ": "+(string)p.Data["C_Inhalt"]);
+                //An alle eingelogten Clients senden
+                //UpdateAll();
             }
-            Packet response = new Packet(PacketType.SendChatNachricht, args.Data, args.Success, args.Error);
+            Packet response = new Packet(PacketType.SendChatNachricht, null, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
         }
 

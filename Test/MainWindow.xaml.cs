@@ -80,7 +80,12 @@ namespace Test
             {
                 List<string> k = kw.GetChecked();
                 if (k.Count == 0) throw new Exception("Bitte mindestens einen Kurs auswählen.");
-                Packet kursUpdate = client.SendKursUpdatePacket(k);
+
+                ListDictionary data = new ListDictionary
+                {
+                    {"K_ID",k}
+                };
+                Packet kursUpdate = client.SendAndWaitForResponse(PacketType.KursUpdate, data);
                 if (!kursUpdate.Success) throw new Exception(kursUpdate.MessageString);
                 Reload_Kurse();
                 throw new Exception("Erfolgreich gespeichert");
