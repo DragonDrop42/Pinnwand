@@ -169,6 +169,10 @@ namespace ClientClassLib
                 errorCallback(packet.MessageString);
                 return;
             }
+            else if (packet.packetType == PacketType.UpdateAll)
+            {
+                //Ereigniss auslösen
+            }
             //----------------
 
             //Client Events
