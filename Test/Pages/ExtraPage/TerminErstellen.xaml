@@ -14,14 +14,14 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
             <Label Width="110">Termindatum</Label>
-            <ComboBox Width="40" Height="25" Margin="5,0,0,0" x:Name="cb_terminDatumTag">1</ComboBox>
-            <ComboBox Width="80" Height="25" Margin="5,0,0,0" x:Name="cb_terminDatumMonat">1</ComboBox>
-            <ComboBox Width="80" Height="25" Margin="5,0,0,0" x:Name="cb_terminDatumJahr">1</ComboBox>            
+            <ComboBox Width="40" Height="25" Margin="5,0,0,0" x:Name="cb_terminDatumTag"></ComboBox>
+            <ComboBox Width="80" Height="25" Margin="5,0,0,0" x:Name="cb_terminDatumMonat"></ComboBox>
+            <ComboBox Width="80" Height="25" Margin="5,0,0,0" x:Name="cb_terminDatumJahr"></ComboBox>            
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
             <Label Width="110">Terminbeschreibung</Label>
-            <TextBox Width="250" Height="145" Margin="5,0,0,0"></TextBox>
+            <TextBox Width="250" Height="145" Margin="5,0,0,0" x:Name="txt_terminBeschreibung"></TextBox>
         </StackPanel>
-        <Button Width="100" Height="35" HorizontalAlignment="Left" Margin="265,10,0,0">Abschicken</Button>
+        <Button Width="100" Height="35" HorizontalAlignment="Left" Margin="265,10,0,0" Click="Button_Click">Erstellen</Button>
     </StackPanel>
 </UserControl>

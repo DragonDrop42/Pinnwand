@@ -35,6 +35,18 @@
                                                 <Label HorizontalContentAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
                                             </StackPanel>
                                         </Button>
+                                        <Button Width="150" Height="70" BorderBrush="{x:Null}" Click="aktiverButton" >
+                                            <Button.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#FFB2B2B2" Offset="0.003"/>
+                                                    <GradientStop Color="#CC268BB9" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Button.Background>
+                                            <StackPanel>
+                                                <Label HorizontalContentAlignment="Center" FontSize="17" Margin="0,5,0,5" Foreground="Black">Klausur Mathe</Label>
+                                                <Label HorizontalContentAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
+                                            </StackPanel>
+                                        </Button>
                                     </UniformGrid>
                                 </StackPanel>
                                 <!-- Bearbeiten der Termine mittels der Button -->

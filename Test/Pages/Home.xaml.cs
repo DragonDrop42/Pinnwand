@@ -29,6 +29,7 @@ namespace Test.Pages
         private ListDictionary Schüler;
         private ClientClassLib.Client client;
         private int K_ID;
+        private Button letzterAktiverButton;
         
         
         public Home()
@@ -243,13 +244,47 @@ namespace Test.Pages
         private void aktiverButton(object sender, RoutedEventArgs e)
         {
             // Aufrufen der Information über das Ereigniss identifizierne aus der DB mittels des einer ID?????
+            foreach (Button cmd in ug_terminÜbersicht.Children)
+            {
+                cmd.Background = getFarbverlauf(1);
+            }            
+
+
             Button aktiverButton = (Button)sender;
-            aktiverButton.Background = Brushes.Black;
+            aktiverButton.Background = getFarbverlauf(2);
+
+            letzterAktiverButton = (Button)sender;  // Zum speichern des letzten gedrückten Buttons
         }
 
         private void buttonHinzufügen(object sender, RoutedEventArgs e)
         {
             ereignisseErstellen();
+        }
+
+        //Farben
+        private GradientBrush getFarbverlauf(int zahl)
+        {
+            LinearGradientBrush gradientBrush = new LinearGradientBrush();
+            switch (zahl)
+            {
+                case 1:             
+                    gradientBrush.StartPoint = new Point(0.5, 0);
+                    gradientBrush.EndPoint = new Point(0.5, 1);
+                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 178, 178, 178), 0));
+                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 38, 139, 185), 1));           
+                    break;
+                case 2:
+                    gradientBrush.StartPoint = new Point(0.5, 0);
+                    gradientBrush.EndPoint = new Point(0.5, 1);
+                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(200, 178, 178, 178), 0));
+                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(200, 38, 139, 185), 1)); 
+                    break;
+                default:
+                    break;
+            }
+
+            return gradientBrush;
+
         }
 
     }
