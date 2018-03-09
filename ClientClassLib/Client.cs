@@ -135,7 +135,7 @@ namespace ClientClassLib
         {
             SendPacket(send_waitPacket); //Packet an Server senden
             //auf Packet warten
-            waitHandle.WaitOne(1500);   //1.5sec. Timeout
+            waitHandle.WaitOne(2000);   //2sec. Timeout
             waitHandle.Reset();
 
             if (currentPacket == null)  //Fehler oder Timeout
@@ -201,7 +201,7 @@ namespace ClientClassLib
                 //Packet senden
                 Packet sendP = new Packet(PacketType.Schüler_Registraition, dataRegister, id);
                 //Auf Antwort warten
-                return WaitForPacketResponse(sendP); 
+                return WaitForPacketResponseHandler(sendP); 
             }
             return null;
         }
@@ -219,7 +219,7 @@ namespace ClientClassLib
                 if (dataRegister["titel"] == null) dataRegister["titel"] = "";
                 Packet sendP = new Packet(PacketType.Lehrer_Registraition, dataRegister, id);
                 //Auf Antwort warten
-                return WaitForPacketResponse(sendP); 
+                return WaitForPacketResponseHandler(sendP); 
             }
             return null;
         }
@@ -237,7 +237,7 @@ namespace ClientClassLib
                 //Packet senden
                 Packet sendP = (schüler ? new Packet(PacketType.Schüler_Login, dataLogin, id) : new Packet(PacketType.Lehrer_Login, dataLogin, id));
                 //auf response warten
-                return WaitForPacketResponse(sendP);
+                return WaitForPacketResponseHandler(sendP);
             }
             return null;
         }
@@ -309,25 +309,25 @@ namespace ClientClassLib
         //    return login;
         //}
 
-        public Packet SendKursUpdatePacket(List<string> Kurse)
-        {
-            ListDictionary data = new ListDictionary
-            {
-                {"K_ID",Kurse}
-            };
-            Packet sendP = new Packet(PacketType.KursUpdate,data,id);
-            return WaitForPacketResponse(sendP);
-        }
+        //public Packet SendKursUpdatePacket(List<string> Kurse)
+        //{
+        //    ListDictionary data = new ListDictionary
+        //    {
+        //        {"K_ID",Kurse}
+        //    };
+        //    Packet sendP = new Packet(PacketType.KursUpdate,data,id);
+        //    return WaitForPacketResponse(sendP);
+        //}
 
         //universelle Packete+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         public Packet SendAndWaitForResponse(PacketType packetType)
         {
             Packet sendP = new Packet(packetType, id);
-            return WaitForPacketResponse(sendP);
+            return WaitForPacketResponseHandler(sendP);
         }
         public Packet SendAndWaitForResponse(PacketType packetType, ListDictionary data)
         {
-            return WaitForPacketResponse(new Packet(packetType, data, id));
+            return WaitForPacketResponseHandler(new Packet(packetType, data, id));
         }
         #endregion
 
