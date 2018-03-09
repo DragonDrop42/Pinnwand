@@ -113,7 +113,7 @@ namespace Test.Pages
 
         private void terminHinzufügen_Click(object sender, RoutedEventArgs e)
         {
-            frame_informationsausgabe.Navigate(new ExtraPage.TerminErstellen());
+            frame_informationsausgabe.Navigate(new ExtraPage.TerminErstellen(client,K_ID));
 
             // Hinzufügen eines neuen Termins
             // Einfügen einer Page an die unten rechte Stelle !!!!!

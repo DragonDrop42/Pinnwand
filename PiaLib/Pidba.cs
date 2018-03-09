@@ -354,11 +354,11 @@ namespace PiaLib
                 }
             }
 
-            public DatenbankArgs sendEreigniss( int K_ID, string E_Art, DateTime E_Erstelldatum, DateTime E_Fälligkeitsdatum, string E_Autor, string E_Beschreibung)
+            public DatenbankArgs sendEreigniss( int K_ID, string E_Art, DateTime E_Fälligkeitsdatum, string E_Autor, string E_Beschreibung)
             {
                 try
                 {
-                    eta.Insert(K_ID, E_Art, E_Erstelldatum, E_Fälligkeitsdatum, E_Autor, E_Beschreibung);
+                    eta.InsertEreigniss(K_ID, E_Art, E_Fälligkeitsdatum, E_Autor, E_Beschreibung);
                     return new DatenbankArgs();
                 }
                 catch (Exception e)
