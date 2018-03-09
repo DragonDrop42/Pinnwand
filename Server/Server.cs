@@ -93,12 +93,20 @@ namespace Server
                         GetSchülerInKurs(client, p);
                         break;
                     case PacketType.GetChat:
-                        GetChat(client, p);
+                        GetChat(client);
                         break;
                     case PacketType.SendChatNachricht:
                         SendChatNachricht(client, p);
                         break;
-
+                    case PacketType.GetEreignisse:
+                        GetEreignisse(client);
+                        break;
+                    case PacketType.SendEreigniss:
+                        SendEreigniss(client, p);
+                        break;
+                    case PacketType.KlasseErstellen:
+                        KlasseErstellen(client, p);
+                        break;
                     default:
                         ClientHandler.Send_Error_Message_to_Client(client, "Unerwartetes Packet!!!");
                         break;
@@ -113,6 +121,56 @@ namespace Server
         {
             Packet contentChanged = new Packet(PacketType.UpdateAll);
             ClientHandler.SendPacketToAllLoggedInClients(contentChanged);
+        }
+
+        private static void KlasseErstellen(ClientData client, Packet p)
+        {
+            Packet response;
+            if (client.hasRights)
+            {
+                DatenbankArgs args = client.db_Manager.Klasse.add(
+                    (string)p.Data["Kl_Name"],
+                    (DateTime)p.Data["Kl_Abschlussdatum"]);
+                response = new Packet(PacketType.GetEreignisse, args.Data, args.Success, args.Error);
+            }
+            else
+            {
+                response = new Packet(PacketType.SendEreigniss, new DataTable() , false , "Nicht genügend Rechte");
+            }
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void SendEreigniss(ClientData client, Packet p)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.sendEreigniss(
+                (int)p.Data["K_ID"],
+                (string)p.Data["Art"],
+                (DateTime)p.Data["E_Erstelldatum"],
+                (DateTime)p.Data["E_Fälligkeitsdatum"],
+                (string)p.Data["E_Autor"],
+                (string)p.Data["E_Beschreibung"]);
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("SendEreigniss", "null");
+            }
+            else
+            {
+                Console.WriteLine((string)p.Data["E_Autor"] + ": " + (string)p.Data["E_Beschreibung"]);
+            }
+            Packet response = new Packet(PacketType.SendEreigniss, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void GetEreignisse(ClientData client)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.getEreignisse();
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("GetEreignisse", "null");
+            }
+
+            Packet response = new Packet(PacketType.GetEreignisse, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
         }
 
         //Case Methoden
@@ -136,9 +194,9 @@ namespace Server
             ClientHandler.SendSinglePacket(client, response);
         }
 
-        private static void GetChat(ClientData client, Packet p)
+        private static void GetChat(ClientData client)
         {
-            DatenbankArgs args = client.db_Manager.Kurse.getChat((int)p.Data["K_ID"]);
+            DatenbankArgs args = client.db_Manager.Kurse.getChat();
             if (!args.Success)
             {
                 ClientHandler.Ausgabe("getChat", "null");
@@ -296,6 +354,7 @@ namespace Server
                         client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
                         client.name = (string)args.Data.Rows[0]["L_Name"];
                         client.vname = (string)args.Data.Rows[0]["L_Vorname"];
+                        client.hasRights = true;
                         ClientHandler.Ausgabe("Auth", (client.vname + "." + client.name + "." + client.email + " (Lehrer) eingeloggt"));
                     }
                     else

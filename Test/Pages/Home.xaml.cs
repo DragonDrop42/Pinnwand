@@ -63,19 +63,17 @@ namespace Test.Pages
                 }
                 else { MessageBox.Show(SchülerPacket.MessageString); }
 
-                Packet ChatPacket =
-                    client.SendAndWaitForResponse(
-                        PacketType.GetChat,
-                        new ListDictionary
-                        {
-                            {"K_ID", K_ID}
-                        });
+                Packet ChatPacket = client.SendAndWaitForResponse(PacketType.GetChat);
                 if (ChatPacket.Success)
                 {
+                    lbl_chatAusgabe.Content = "";
                     for (int i = 0; i < ((List<string>)ChatPacket.Data["C_ID"]).Count; i++)
                     {
-                        lbl_chatAusgabe.Content += ((List<string>) ChatPacket.Data["C_Sendername"])[i] + ": " +
-                                                   ((List<string>) ChatPacket.Data["C_Inhalt"])[i] + "\n";
+                        if (((List<string>)ChatPacket.Data["K_ID"])[i] == K_ID.ToString())
+                        {
+                            lbl_chatAusgabe.Content += ((List<string>)ChatPacket.Data["C_Sendername"])[i] + ": " +
+                                                       ((List<string>)ChatPacket.Data["C_Inhalt"])[i] + "\n";
+                        }
                     }
                 }
                 else

@@ -296,6 +296,7 @@ namespace PiaLib
             KursTableAdapter kta = new KursTableAdapter();
             ChatnachrichtenTableAdapter cta = new ChatnachrichtenTableAdapter();
             Verbund_Kurs_SchülerTableAdapter vksta = new Verbund_Kurs_SchülerTableAdapter();
+            EreignisseTableAdapter eta = new EreignisseTableAdapter();
 
             //public int getIDBy(string Search_String, string Field)
             //{
@@ -328,12 +329,37 @@ namespace PiaLib
                 }
             }
 
-            public DatenbankArgs getChat(int K_ID)
+            public DatenbankArgs getChat()
             {
                 try
                 {
                     DataTable data = cta.GetData();
                     return new DatenbankArgs(data);
+                }
+                catch (Exception e)
+                {
+                    return new DatenbankArgs(e.Message);
+                }
+            }
+
+            public DatenbankArgs getEreignisse()
+            {
+                try
+                {
+                    return new DatenbankArgs(eta.GetData());
+                }
+                catch (Exception e)
+                {
+                    return new DatenbankArgs(e.Message);
+                }
+            }
+
+            public DatenbankArgs sendEreigniss( int K_ID, string E_Art, DateTime E_Erstelldatum, DateTime E_Fälligkeitsdatum, string E_Autor, string E_Beschreibung)
+            {
+                try
+                {
+                    eta.Insert(K_ID, E_Art, E_Erstelldatum, E_Fälligkeitsdatum, E_Autor, E_Beschreibung);
+                    return new DatenbankArgs();
                 }
                 catch (Exception e)
                 {
@@ -406,8 +432,6 @@ namespace PiaLib
         {
             KlasseTableAdapter klta = new KlasseTableAdapter();
 
-
-
             public int getIDByName(string Name)
             {
                 DataTable data = klta.GetData();
@@ -422,7 +446,19 @@ namespace PiaLib
                 return 0;
             }
 
-            public DatenbankArgs add() { return new DatenbankArgs(); }
+            public DatenbankArgs add(string Kl_Name, DateTime Kl_Abschlussdatum) 
+            {
+                try
+                {
+                    klta.Insert(Kl_Name, Kl_Abschlussdatum);
+                    return new DatenbankArgs();
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+
+            }
         }
     }
 }
