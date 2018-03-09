@@ -61,6 +61,7 @@
     <Compile Include="Kursliste.xaml.cs">
       <DependentUpon>Kursliste.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ExtraPage\Termin.cs" />
     <Compile Include="Pages\ExtraPage\TerminErstellen.xaml.cs">
       <DependentUpon>TerminErstellen.xaml</DependentUpon>
     </Compile>

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ServerData;
 
 namespace Test.Pages.ExtraPage
 {
@@ -22,33 +23,40 @@ namespace Test.Pages.ExtraPage
     /// </summary>
     public partial class TerminErstellen : UserControl
     {
-
+        private ClientClassLib.Client client;
+        int K_ID;
         
         private CultureInfo ci = new CultureInfo("de-DE");
 
-        public TerminErstellen()
+        public TerminErstellen(ClientClassLib.Client client,int K_ID)
         {
             InitializeComponent();
             datenInit();
-
+            this.client = client;
+            this.K_ID = K_ID;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string terminname;
-            string termindatum;
+            DateTime termindatum;
             string terminbeschreibung;
 
             terminname = txt_terminName.Text;
-            termindatum = (string)cb_terminDatumTag.SelectedValue + "." + (string)cb_terminDatumMonat.SelectedValue + "." + (string)cb_terminDatumJahr.SelectedValue;
+            termindatum = Convert.ToDateTime(cb_terminDatumTag.SelectedValue.ToString() + "." + cb_terminDatumMonat.SelectedValue.ToString() + "." + cb_terminDatumJahr.SelectedValue.ToString());
             terminbeschreibung = txt_terminBeschreibung.Text;
 
             ListDictionary data = new ListDictionary{
+                {"K_ID",K_ID},
                 {"E_Art", terminname},
+                {"E_Autor",null},
                 {"E_Fälligkeitsdatum", termindatum},
                 {"E_Beschreibung", terminbeschreibung}
             };
             ///Senden+++++++++++++++++++++++++++++++++++++++++++++
+
+            Packet args = client.SendAndWaitForResponse(PacketType.SendEreigniss, data);
+            MessageBox.Show(args.Success + " " + args.MessageString);
         }
 
         private void datenInit()
