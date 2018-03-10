@@ -144,10 +144,9 @@ namespace Server
         {
             DatenbankArgs args = client.db_Manager.Kurse.sendEreigniss(
                 (int)p.Data["K_ID"],
-                (string)p.Data["Art"],
-                (DateTime)p.Data["E_Erstelldatum"],
+                (string)p.Data["E_Art"],
                 (DateTime)p.Data["E_Fälligkeitsdatum"],
-                (string)p.Data["E_Autor"],
+                client.name, //(string)p.Data["E_Autor"],
                 (string)p.Data["E_Beschreibung"]);
             if (!args.Success)
             {
