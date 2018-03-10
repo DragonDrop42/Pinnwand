@@ -47,7 +47,7 @@ namespace Test.Pages
             kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
 
             if (kurs != "Pages/Home.xaml") {
-                Packet kidp = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
+                Packet kidp = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 K_ID = Convert.ToInt32( ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]);
                 Packet SchülerPacket = client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
