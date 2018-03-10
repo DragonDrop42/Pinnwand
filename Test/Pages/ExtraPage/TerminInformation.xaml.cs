@@ -20,9 +20,13 @@ namespace Test.Pages.ExtraPage
     /// </summary>
     public partial class TerminInformation : UserControl
     {
-        public TerminInformation()
+        public TerminInformation(string E_Art, DateTime E_Datum, string E_Beschreibung,string E_Autor)
         {
             InitializeComponent();
+            lbl_E_Art.Content = E_Art;
+            lbl_E_Datum.Content = E_Datum.ToShortDateString();
+            lbl_E_Beschreibung.Content = E_Beschreibung;
+            lbl_E_Autor.Content = E_Autor;
         }
 
     }
