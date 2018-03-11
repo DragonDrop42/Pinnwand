@@ -35,19 +35,31 @@ namespace Test
         {
             InitializeComponent();
 
-            TCP_connection.ErrorMessageCallback ErrorCallback = Fehler_Ausgabe;
-            client = new Client(ErrorCallback);
+            GlobalMethods.ErrorMessageCallback ErrorCallback = Fehler_Ausgabe;
+            GlobalMethods.UpdateFormCallback UpdateFormCallback = UpdateChat;
 
-            client.Connect(PacketHandler.GetIPAddress(), 4444);
+            client = new Client(ErrorCallback, UpdateFormCallback);
+
+            client.Connect(PacketHandler.GetIPAddress(), 4444); //Connect to Server on IP and POrt 4444
 
             LoginFrm = new Login();
             LoginFrm.Show();
             LoginFrm.Loaded += LoginFrm_Loaded;
             LoginFrm.GotFocus += LoginFrm_GotFocus;
-            //LoginFrm.Closing += LoginFrmOnClosing;
-            //IsEnabled = false;
+            LoginFrm.Closing += LoginFrmOnClosing;
+            IsEnabled = false;
             GotFocus += OnGotFocus;
             
+        }
+
+        //Callback Delegates+++++++++++++++++++++++++++
+        private void Fehler_Ausgabe(string s)
+        {
+            MessageBox.Show(s);
+        }
+        private void UpdateChat(Packet p)
+        {
+            //Chat im aktiven Fenster neu laden ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         }
 
         private void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -80,7 +92,11 @@ namespace Test
             {
                 List<string> k = kw.GetChecked();
                 if (k.Count == 0) throw new Exception("Bitte mindestens einen Kurs auswählen.");
-                Packet kursUpdate = client.SendKursUpdatePacket(k);
+                ListDictionary data = new ListDictionary
+                {
+                    {"K_ID",k}
+                };
+                Packet kursUpdate = client.SendAndWaitForResponse(PacketType.KursUpdate, data);
                 if (!kursUpdate.Success) throw new Exception(kursUpdate.MessageString);
                 Reload_Kurse();
                 throw new Exception("Erfolgreich gespeichert");
@@ -113,10 +129,7 @@ namespace Test
             }
         }
 
-        private void Fehler_Ausgabe(string s)
-        {
-            MessageBox.Show(s);
-        }
+        
 
         void LoginFrm_Loaded(object sender, RoutedEventArgs e)
         {
@@ -163,6 +176,8 @@ namespace Test
             
         }
 
+
+        //Lehrer++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         private void cmd_LehrerLogin_Click(object sender, RoutedEventArgs e)
         {
             Pages.Login.Lehrer_Login lehrer_login =
@@ -213,7 +228,8 @@ namespace Test
                         {"anrede", (string)lehrer_regi.cbB_Anrede.SelectedValue},
                         {"titel", (string)lehrer_regi.cbB_Titel.SelectedValue},
                         {"email", lehrer_regi.txt_Email.Text},
-                        {"passwort", lehrer_regi.txt_Passwort.Password}
+                        {"passwort", lehrer_regi.txt_Passwort.Password},
+                        {"lehrerPasswort", "teachersPassword"}         //Lehrer Passwort abfrage designen+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                     };
 
                 Packet registerResponse = client.Register_Lehrer(dataRegister);
@@ -232,6 +248,7 @@ namespace Test
             }
         }
 
+        //Schüler++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         void cmd_SchülerRegi_Click(object sender, RoutedEventArgs e)
         {
             Pages.Login.Schüler_Register schüler_regi = UIHelper.FindVisualParent<Pages.Login.Schüler_Register>((Button)sender);
@@ -322,6 +339,7 @@ namespace Test
                 schüler_login.lbl_SchülerLoginError.Text = ex.Message;
             }
         }
+        //-------------------------------------------------------------------------------
 
         void Reload_Kurse()
         {

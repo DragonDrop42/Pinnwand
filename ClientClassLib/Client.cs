@@ -20,19 +20,20 @@ namespace ClientClassLib
         
         Packet currentPacket;   //Zwichenspeicher
 
-        //Login
-        //password Hash
-        private string salt = "492";   //random seed
         private Random rand = new Random();
 
         private readonly EventWaitHandle waitHandle = new AutoResetEvent(false);
 
         TCP_connection.DataManagerCallback packetCallback;
-        TCP_connection.ErrorMessageCallback errorCallback;
 
-        public Client(TCP_connection.ErrorMessageCallback errorDel)
+        GlobalMethods.ErrorMessageCallback errorCallback;
+        GlobalMethods.UpdateFormCallback updateChatCallback;
+
+        public Client(GlobalMethods.ErrorMessageCallback errorDel, GlobalMethods.UpdateFormCallback updateChatDel)
         {
-            packetCallback = new TCP_connection.DataManagerCallback(PacketManager);
+            packetCallback = new TCP_connection.DataManagerCallback(PacketManager); //PacketManager
+
+            updateChatCallback = updateChatDel;
             errorCallback = errorDel;
         }
     
@@ -169,9 +170,11 @@ namespace ClientClassLib
                 errorCallback(packet.MessageString);
                 return;
             }
-            else if (packet.packetType == PacketType.UpdateAll)
+            else if (packet.packetType == PacketType.UpdateChat)
             {
-                //Ereigniss auslösen
+                //Ereignis auslösen
+                updateChatCallback(packet);
+                return;
             }
             //----------------
 
@@ -192,11 +195,12 @@ namespace ClientClassLib
         public Packet Register_Schüler(ListDictionary dataRegister)
         {
             //check
-            if ((string)dataRegister["name"] == "" || (string)dataRegister["vname"] == "" || (string)dataRegister["email"] == "" || (string)dataRegister["passswort"] == "" || (string)dataRegister["klasse"] == "")
+            if ((string)dataRegister["name"] == "" || (string)dataRegister["vname"] == "" || (string)dataRegister["email"] == "" || (string)dataRegister["passwort"] == "" || (string)dataRegister["klasse"] == "")
             {
                 throw new Exception("Bitte alle notwendigen Felder ausfüllen!");
             }
-            if (check_email(dataRegister["email"].ToString()) && (dataRegister["passwort"] = check_password(dataRegister["passwort"].ToString())) != null)
+
+            if (GlobalMethods.check_email(dataRegister["email"].ToString()) && (dataRegister["passwort"] = GlobalMethods.passwordToHash(dataRegister["passwort"].ToString())) != null)
             {
                 //Packet senden
                 Packet sendP = new Packet(PacketType.Schüler_Registraition, dataRegister, id);
@@ -209,14 +213,15 @@ namespace ClientClassLib
         public Packet Register_Lehrer(ListDictionary dataRegister)
         {
             //check
-            if ((string)dataRegister["name"] == "" || (string)dataRegister["vname"] == "" || (string)dataRegister["email"] == "" || (string)dataRegister["passswort"] == "" || (string)dataRegister["anrede"] == "")
+            if ((string)dataRegister["name"] == "" || (string)dataRegister["vname"] == "" || (string)dataRegister["email"] == "" || (string)dataRegister["passwort"] == "" || (string)dataRegister["lehrerPasswort"] == "" || (string)dataRegister["anrede"] == "")
             {
                 throw new Exception("Bitte alle notwendigen Felder ausfüllen!");
             }
-            if (check_email(dataRegister["email"].ToString()) && (dataRegister["passwort"] = check_password(dataRegister["passwort"].ToString())) != null)
+            if (GlobalMethods.check_email(dataRegister["email"].ToString()) && (dataRegister["passwort"] = GlobalMethods.passwordToHash(dataRegister["passwort"].ToString())) != null)
             {
                 //Packet senden
                 if (dataRegister["titel"] == null) dataRegister["titel"] = "";
+                dataRegister["lehrerPasswort"] = GlobalMethods.passwordToHash((string)dataRegister["lehrerPasswort"]);
                 Packet sendP = new Packet(PacketType.Lehrer_Registraition, dataRegister, id);
                 //Auf Antwort warten
                 return WaitForPacketResponseHandler(sendP); 
@@ -232,7 +237,7 @@ namespace ClientClassLib
             {
                 throw new Exception("Bitte Anmeldedaten eintragen!");
             }
-            if (check_email(dataLogin["email"].ToString()) == true && (dataLogin["passwort"] = check_password(dataLogin["passwort"].ToString())) != null)
+            if (GlobalMethods.check_email(dataLogin["email"].ToString()) == true && (dataLogin["passwort"] = GlobalMethods.passwordToHash(dataLogin["passwort"].ToString())) != null)
             {
                 //Packet senden
                 Packet sendP = (schüler ? new Packet(PacketType.Schüler_Login, dataLogin, id) : new Packet(PacketType.Lehrer_Login, dataLogin, id));
@@ -240,31 +245,6 @@ namespace ClientClassLib
                 return WaitForPacketResponseHandler(sendP);
             }
             return null;
-        }
-        private bool check_email(string email)
-        {
-            //check
-            if (email.Contains('@') == false)// || (email.Contains(".com")||email.Contains(".net")||email.Contains(".de")) == false)
-            {
-                throw new Exception("Die eingetragene email ist fehlerhaft!");
-            }
-            return true;
-        }
-        private string check_password(string pass)
-        {
-            if (pass.Length < 5)
-            {
-                //errorCallback("Passwort ist zu kurz (>5)");
-                throw new Exception("Passwort ist zu kurz (>5)");
-            }
-            //passwort verschlüsslung
-            System.Security.Cryptography.SHA1 sha = System.Security.Cryptography.SHA1.Create();
-            byte[] preHash = Encoding.UTF32.GetBytes(pass + salt);
-            byte[] hash = sha.ComputeHash(preHash);
-            string password = Convert.ToBase64String(hash, 0, hash.Length);  //immer 15 Stellen lang
-            //
-            //errorCallback(password);
-            return password;
         }
         //----------------------------------------------------------------------------
         #endregion

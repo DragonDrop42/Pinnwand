@@ -19,18 +19,18 @@ namespace Server
     {
         //DB+++++++++++
         //static PinnwandDBAdapter db_Manager;
-        //+++++++++++++
+
+        //server setup+++++++++++
+        static int port = 4444;
+        static string ip = PacketHandler.GetIPAddress();
+
+        static string lehrerPasswort = GlobalMethods.passwordToHash("teachersPassword");
+        //-----------------------
 
         //Start Server
         static void Main(string[] args)
         {
-            //DB++
-            //db_Manager = new PinnwandDBAdapter();
-            //---
-            //Settings
-            int port = 4444;
-            string ip = PacketHandler.GetIPAddress();
-
+            //Server starten
             ClientHandler.StartServer(ip, port);    //Server starten
         }
 
@@ -191,6 +191,21 @@ namespace Server
             }
             Packet response = new Packet(PacketType.SendChatNachricht, null, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
+
+            //neue Nachricht wurde empfangen -> an alle Clients weiterleiten
+            Thread.Sleep(50);
+            //update Packet
+            args = client.db_Manager.Kurse.getChat();
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("sendChat", "SendChatUpdate");
+            }
+            else
+            {
+                Packet updateChat = new Packet(PacketType.UpdateChat, args.Data, "server");
+                ClientHandler.SendPacketToAllLoggedInClients(updateChat);
+            }
+           
         }
 
         private static void GetChat(ClientData client)
@@ -353,7 +368,7 @@ namespace Server
                         client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
                         client.name = (string)args.Data.Rows[0]["L_Name"];
                         client.vname = (string)args.Data.Rows[0]["L_Vorname"];
-                        client.hasRights = true;
+                        client.hasRights = true;    //höhere Rechte
                         ClientHandler.Ausgabe("Auth", (client.vname + "." + client.name + "." + client.email + " (Lehrer) eingeloggt"));
                     }
                     else
@@ -380,7 +395,14 @@ namespace Server
                     
                 case PacketType.Lehrer_Registraition: //Register Lehrer
 
-                    args = client.db_Manager.Lehrer.add(p.Data["vname"].ToString(), p.Data["name"].ToString(), p.Data["anrede"].ToString(), p.Data["email"].ToString(), p.Data["passwort"].ToString(), p.Data["titel"].ToString());
+                    if ((string)p.Data["lehrerPasswort"] != lehrerPasswort)
+                    {
+                        args = new DatenbankArgs("Lehrer Passwort falsch.\n Versuchen Sie es erneut.");
+                    }
+                    else
+                    {
+                        args = client.db_Manager.Lehrer.add(p.Data["vname"].ToString(), p.Data["name"].ToString(), p.Data["anrede"].ToString(), p.Data["email"].ToString(), p.Data["passwort"].ToString(), p.Data["titel"].ToString());
+                    }
                     if (args.Success)
                     {
                         ClientHandler.Ausgabe("Auth", p.Data["email"] + " wurde erfolgreich registriert");

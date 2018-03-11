@@ -23,6 +23,7 @@
                 
                                 <StackPanel Width="950">
                                     <UniformGrid  Height="390" x:Name="ug_terminÜbersicht">
+                                        <!--
                                         <Button Width="150" Height="70" BorderBrush="{x:Null}" Click="aktiverButton" >
                                             <Button.Background>
                                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -47,6 +48,7 @@
                                                 <Label HorizontalContentAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
                                             </StackPanel>
                                         </Button>
+                                        -->
                                     </UniformGrid>
                                 </StackPanel>
                                 <!-- Bearbeiten der Termine mittels der Button -->
@@ -56,12 +58,13 @@
                                             <ImageBrush ImageSource="../Images/Kreuz.png"/>
                                         </Button.Background>
                                     </Button>
-
+                                    <!--
                                     <Button x:Name="buttonHinzufügenTermin"  Width="35" Height="35" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="buttonHinzufügen" Margin="0,10,0,0">
                                         <Button.Background>
                                             <ImageBrush ImageSource="../Images/Kreuz.png"/>
                                         </Button.Background>
                                     </Button>
+                                    -->
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

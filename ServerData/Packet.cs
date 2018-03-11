@@ -46,6 +46,7 @@ namespace ServerData
         //SystemError
         SystemError,
         //Update
+        UpdateChat,
         UpdateAll
     }
 
@@ -72,6 +73,15 @@ namespace ServerData
         {
             this.packetType = type;
             this.Data = data;
+            this.Success = true;
+            this.MessageString = "";
+            this.senderID = id;
+        }
+        //dateTAble als Daten
+        public Packet(PacketType type, DataTable data, string id)
+        {
+            this.packetType = type;
+            this.Data = PacketHandler.ConvertTableToList(data);
             this.Success = true;
             this.MessageString = "";
             this.senderID = id;
