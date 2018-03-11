@@ -82,8 +82,12 @@ namespace Test
                 cmd_save.Click += cmd_save_Click;
                 SubscribedEvents.Add("cmd_save");
             }
-        
-    }
+
+            if (Kurse == null)
+            {
+                Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
+            }
+        }
 
     private void cmd_save_Click(object sender, RoutedEventArgs e)
         {
@@ -112,8 +116,8 @@ namespace Test
             Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
             try
             {
-                Packet kurse = client.SendAndWaitForResponse(PacketType.GetVerfügbareKurse);
-                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
+                Packet kurse = client.SendAndWaitForResponse(PacketType.GetAlleKurse);
+                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 if (kurse.Success && getKurse.Success)
                 {
                     kw.UpdateKurse(kurse.Data,getKurse.Data);
@@ -349,7 +353,7 @@ namespace Test
                 {
                     Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
                 }
-                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
+                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 if (GetKurse.Success)
                 {
                     foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);

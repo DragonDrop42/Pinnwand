@@ -28,9 +28,9 @@ namespace ServerData
 
         //Datenpackete++++++++++++++++++++
         GetSchülerInKurs,                   //Liste der Schüler in einem Kurs (✔)
-        GetSchülerInKlasse,                 // (✔)
-        GetVerfügbareKurse,                 // (✔)
-        GetKurseVonSchüler,                 // (✔)
+        GetSchülerInKlasse,                 // ( )
+        GetAlleKurse,                       // (✔)
+        GetGewählteKurse,                   // (✔)
         KursUpdate,                         // (✔)
         SendChatNachricht,                  // (✔)
         GetChat,                            // (✔)
@@ -42,6 +42,7 @@ namespace ServerData
         UpdateSchülerInKurs,
         UpdateSchülerInKlasse,
         KlasseErstellen,                    // (✔)
+        KlasseLöschen,
         //--------------------------------
         //SystemError
         SystemError,

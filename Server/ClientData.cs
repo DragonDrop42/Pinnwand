@@ -37,7 +37,7 @@ namespace Server
 
             this.clientSocket = clientSocket;
 
-            clientThread = new Thread((ClientHandler.DataIN));
+            clientThread = new Thread(ClientHandler.DataIN);
             clientThread.Start(clientSocket);
 
             SendRegistrationPacket();
@@ -58,7 +58,7 @@ namespace Server
         public void SetAutorKürzel(string vname, string name)
         {
             string kürzel = "";
-            kürzel += (vname.Length < 3 ? vname.Substring(0, vname.Length) : vname.Substring(0, 3));
+            kürzel += vname.Length < 3 ? vname.Substring(0, vname.Length) : vname.Substring(0, 3);
             kürzel += "." + name;
         }
     }
