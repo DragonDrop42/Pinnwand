@@ -28,12 +28,13 @@ namespace ServerData
 
         //Datenpackete++++++++++++++++++++
         GetSchülerInKurs,                   //Liste der Schüler in einem Kurs (✔)
-        GetSchülerInKlasse,                 // ( )
+        GetSchülerInKlasse,                 // (✔)
         GetAlleKurse,                       // (✔)
         GetGewählteKurse,                   // (✔)
         KursUpdate,                         // (✔)
         SendChatNachricht,                  // (✔)
         GetChat,                            // (✔)
+        getKlasse,                          // (✔)
         GetEreignisse,                      // (✔)
         SendEreigniss,                      // (✔)
         //--------------------------------

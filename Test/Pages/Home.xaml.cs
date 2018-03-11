@@ -41,82 +41,119 @@ namespace Test.Pages
             //kurs = KListe.mt_Kurse.SelectedSource.Query.;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        public void reload_Liste()
         {
-            KListe = UIHelper.FindVisualChildByName<ModernTab>(Application.Current.MainWindow,"mt_Kurse");
-            client = UIHelper.FindVisualParent<MainWindow>(this).client;
-            hasRights = UIHelper.FindVisualParent<MainWindow>(this).hasRights;
-            kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
-
-            if (kurs != "Pages/Home.xaml") {
-                Packet kidp = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
-                K_ID = Math.Abs(Convert.ToInt32( ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]));
-                Packet SchülerPacket = client.SendAndWaitForResponse(
+            Packet SchülerPacket;
+            if (kurs != "All")
+            {
+                lbl_Schülerliste.Content = "Schülerliste " + kurs;
+                SchülerPacket = client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
                     new ListDictionary
                     {
-                        {"K_ID",Math.Abs(K_ID)}
+                        {"K_ID", Math.Abs(K_ID)}
                     }
-                    );
-                if (SchülerPacket.Success)
-                {
-                    Mitschüler_box.Text = "";
-                    for (int i = 0; i < ((List<string>)SchülerPacket.Data["S_ID"]).Count; i++)
+                );
+            }
+            else
+            {
+                Packet Klassenpacket = client.SendAndWaitForResponse(PacketType.getKlasse);
+                lbl_Schülerliste.Content = "Schülerliste " + ((List<string>) Klassenpacket.Data["K_Name"])[0];
+                SchülerPacket = client.SendAndWaitForResponse(
+                    PacketType.GetSchülerInKlasse,
+                    new ListDictionary
                     {
-                        Mitschüler_box.Text += ((List<string>) SchülerPacket.Data["S_Vorname"])[i] + " " +
-                                               ((List<string>) SchülerPacket.Data["S_Name"])[i] + "\n";
+                        {"Kl_ID", Math.Abs(Convert.ToInt32(((List<string>)Klassenpacket.Data["KL_ID"])[0]))}
                     }
-                }
-                else { MessageBox.Show(SchülerPacket.MessageString); }
-
-                Packet ChatPacket = client.SendAndWaitForResponse(PacketType.GetChat);
-                if (ChatPacket.Success)
-                {
-                    lbl_chatAusgabe.Content = "";
-                    for (int i = 0; i < ((List<string>) ChatPacket.Data["C_ID"]).Count; i++)
-                    {
-                        if (((List<string>) ChatPacket.Data["K_ID"])[i] == K_ID.ToString())
-                        {
-                            lbl_chatAusgabe.Content += ((List<string>) ChatPacket.Data["C_Sendername"])[i] + ": " +
-                                                       ((List<string>) ChatPacket.Data["C_Inhalt"])[i] + "\n";
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(ChatPacket.MessageString);
-                }
-
-                Packet EreignissPacket = client.SendAndWaitForResponse(PacketType.GetEreignisse);
+                );
                 
-                if (EreignissPacket.Success)
+            }
+
+            if (SchülerPacket.Success)
+            {
+                Mitschüler_box.Text = "";
+                for (int i = 0; i < ((List<string>) SchülerPacket.Data["S_ID"]).Count; i++)
                 {
-                    ug_terminÜbersicht.Children.Clear();
-                    for (int i = 0; i < ((List<string>)EreignissPacket.Data["K_ID"]).Count; i++)
+                    Mitschüler_box.Text += ((List<string>) SchülerPacket.Data["S_Vorname"])[i] + " " +
+                                           ((List<string>) SchülerPacket.Data["S_Name"])[i] + "\n";
+                }
+            }
+            else { MessageBox.Show(SchülerPacket.MessageString); }
+        }
+
+        public void reload_Ereignisse()
+        {
+            Packet EreignissPacket = client.SendAndWaitForResponse(PacketType.GetEreignisse);
+                
+            if (EreignissPacket.Success)
+            {
+                ug_terminÜbersicht.Children.Clear();
+                for (int i = 0; i < ((List<string>)EreignissPacket.Data["K_ID"]).Count; i++)
+                {
+                    string t = ((List<string>) EreignissPacket.Data["K_ID"])[i];
+                    if ( ((List<string>) EreignissPacket.Data["K_ID"])[i] == K_ID.ToString() || kurs == "all" )
                     {
-                        string t = ((List<string>) EreignissPacket.Data["K_ID"])[i];
-                        if ( ((List<string>) EreignissPacket.Data["K_ID"])[i] == K_ID.ToString())
-                        {
-                            string E_Art = ((List<string>) EreignissPacket.Data["E_Art"])[i];
-                            DateTime E_Fälligkeitsdatum =
-                                Convert.ToDateTime(((List<string>) EreignissPacket.Data["E_Fälligkeitsdatum"])[i]);
-                            string E_Inhalt = ((List<string>) EreignissPacket.Data["E_Beschreibung"])[i];
-                            string E_Autor = ((List<string>)EreignissPacket.Data["E_Autor"])[i];
+                        string E_Art = ((List<string>) EreignissPacket.Data["E_Art"])[i];
+                        DateTime E_Fälligkeitsdatum =
+                            Convert.ToDateTime(((List<string>) EreignissPacket.Data["E_Fälligkeitsdatum"])[i]);
+                        string E_Inhalt = ((List<string>) EreignissPacket.Data["E_Beschreibung"])[i];
+                        string E_Autor = ((List<string>)EreignissPacket.Data["E_Autor"])[i];
 
-                            ereignisseErstellen(E_Art, E_Fälligkeitsdatum, E_Inhalt, E_Autor);
-
-                            /*ereignisseErstellen(
-                                ((List<string>)EreignissPacket.Data["E_Art"])[i],
-                                Convert.ToDateTime(((List<string>)EreignissPacket.Data["E_Erstelldatum"])[i]),
-                                ((List<string>)EreignissPacket.Data["E_Inhalt"])[i],
-                                ((List<string>)EreignissPacket.Data["E_Autor"])[i]);*/
-                        }
+                        ereignisseErstellen(E_Art, E_Fälligkeitsdatum, E_Inhalt, E_Autor);
                     }
+                }
+            }
+            else
+            {
+                MessageBox.Show(EreignissPacket.MessageString);
+            }
+        }
+
+        public void reload_Chat()
+        {
+            Packet ChatPacket = client.SendAndWaitForResponse(PacketType.GetChat);
+            if (ChatPacket.Success)
+            {
+                lbl_chatAusgabe.Content = "";
+                for (int i = 0; i < ((List<string>) ChatPacket.Data["C_ID"]).Count; i++)
+                {
+                    if (((List<string>) ChatPacket.Data["K_ID"])[i] == K_ID.ToString())
+                    {
+                        lbl_chatAusgabe.Content += ((List<string>) ChatPacket.Data["C_Sendername"])[i] + ": " +
+                                                   ((List<string>) ChatPacket.Data["C_Inhalt"])[i] + "\n";
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show(ChatPacket.MessageString);
+            }
+        }
+        
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (!UIHelper.FindVisualParent<MainWindow>(this).LoginFrm.IsVisible)
+            {
+                KListe = UIHelper.FindVisualChildByName<ModernTab>(Application.Current.MainWindow, "mt_Kurse");
+                client = UIHelper.FindVisualParent<MainWindow>(this).client;
+                hasRights = UIHelper.FindVisualParent<MainWindow>(this).hasRights;
+                kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
+
+                if (kurs == "Pages/Home.xaml")
+                {
+                    stack_Chat.Children.Clear();
+                    kurs = "all";
                 }
                 else
                 {
-                    MessageBox.Show(ChatPacket.MessageString);
+                    Packet kidp = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
+                    K_ID = Math.Abs(Convert.ToInt32(
+                        ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
+                    reload_Chat();
                 }
+
+                reload_Liste();
+                reload_Ereignisse();
             }
         }
 
@@ -139,63 +176,20 @@ namespace Test.Pages
             {
                 MessageBox.Show("Senden Fehlgeschlagen: " + chatsendpacket.MessageString);
             }
-            
         }
-
-
-        
 
         private void terminHinzufügen_Click(object sender, RoutedEventArgs e)
         {
-            frame_informationsausgabe.Navigate(new ExtraPage.TerminErstellen(client,K_ID));
-
-            // Hinzufügen eines neuen Termins
-            // Einfügen einer Page an die unten rechte Stelle !!!!!
-
-
-            //Aktualisierung der Datenbank mit dem neuen Termin
+            frame_informationsausgabe.Navigate(new TerminErstellen(client, K_ID));
         }
 
-
-        #region Erstellen eines Ereignisses auf der eigenen Pinnwand
         private void ereignisseErstellen(string Art, DateTime Datum, string Inhalt, string Autor)
         {
-            // Verlauf der Farbe erstellen
-            /*LinearGradientBrush gradientBrush = new LinearGradientBrush();
-            gradientBrush.StartPoint = new Point(0.5, 0);
-            gradientBrush.EndPoint = new Point(0.5, 1);
-            gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 178, 178, 178), 0));
-            gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 38, 139, 185), 1));
-
-            Button cmd_ereignis = new Button { Width = 150, Height = 70, Background = gradientBrush, Content="Hallo" };
-            cmd_ereignis.Click += new RoutedEventHandler(aktiverButton);
-
-            StackPanel stack_ereignis = new StackPanel();
-
-            Label lbl_namenEreignis = new Label { HorizontalContentAlignment = HorizontalAlignment.Center, FontSize = 17, Margin = new Thickness(0, 10, 0, 5), Foreground = Brushes.Black };
-            lbl_namenEreignis.Content = "Hallo";    // Name des neuen Ereignisses
-
-            Label lbl_datumEreignis = new Label { HorizontalContentAlignment = HorizontalAlignment.Center, FontSize = 17, Foreground = Brushes.Black };
-            lbl_datumEreignis.Content = "02.10.1998";   // Datum des neuen Ereignisses
-
-            // Anzeigen auf der Pinnwand
-            ug_terminÜbersicht.Children.Add(cmd_ereignis);
-            
-            stack_ereignis.Children.Add(lbl_namenEreignis);
-            stack_ereignis.Children.Add(lbl_datumEreignis);*/
-
             Termin cmd_termin = new Termin(Art, Datum, Inhalt, Autor);
             cmd_termin.Click += aktiverButton;
             ug_terminÜbersicht.Children.Add(cmd_termin);
-
         }
-        #endregion
-
-        private void terminLöschen_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
+        
         // Wird von jedem Button aufgerufen wenn er geklickt wird --> Übergabe des Names
         private void aktiverButton(object sender, RoutedEventArgs e)
         {
@@ -216,11 +210,6 @@ namespace Test.Pages
                 hasRights));
 
             letzterAktiverButton = (Button)sender;  // Zum speichern des letzten gedrückten Buttons
-        }
-
-        private void buttonHinzufügen(object sender, RoutedEventArgs e)
-        {
-            ereignisseErstellen("Klausur",DateTime.Now, "Hello","ME");
         }
 
         //Farben

@@ -34,7 +34,7 @@ namespace Test.Pages.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (!UIHelper.FindVisualParent<MainWindow>(this).hasRights)
+            if (!((MainWindow)Application.Current.MainWindow).hasRights)
             {
                  Lehrerptions.Children.Clear();   
             }

@@ -92,6 +92,9 @@ namespace Server
                     case PacketType.GetSchülerInKurs:
                         GetSchülerInKurs(client, p);
                         break;
+                    case PacketType.GetSchülerInKlasse:
+                        GetSchülerInKlasse(client, p);
+                        break;
                     case PacketType.GetChat:
                         GetChat(client);
                         break;
@@ -107,6 +110,9 @@ namespace Server
                     case PacketType.KlasseErstellen:
                         KlasseErstellen(client, p);
                         break;
+                    case PacketType.getKlasse:
+                        getKlasse(client);
+                        break;
                     default:
                         ClientHandler.Send_Error_Message_to_Client(client, "Unerwartetes Packet!!!");
                         break;
@@ -117,6 +123,37 @@ namespace Server
                 ClientHandler.Ausgabe("PacketManager", exc.Message);
             }
         }
+
+        private static void GetSchülerInKlasse(ClientData client, Packet packet)
+        {
+            DatenbankArgs args = client.db_Manager.Klasse.getSchüler(
+                (int)packet.Data["Kl_ID"]
+                );
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("GetSchülerInKlasse", "null");
+            }
+
+            Packet response = new Packet(PacketType.GetSchülerInKlasse, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void getKlasse(ClientData client)
+        {
+            DatenbankArgs args;
+            if (client.hasRights)
+            {
+                args = client.db_Manager.Schüler.getby(client.email, "L_Email");
+            }
+            else
+            {
+                args = client.db_Manager.Schüler.getKlasse(client.email);
+            }
+
+            Packet response = new Packet(PacketType.getKlasse,args.Data,args.Success,args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
         private static void UpdateAll()
         {
             Packet contentChanged = new Packet(PacketType.UpdateAll);

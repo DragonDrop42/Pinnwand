@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using System.Data.Common;
 
 namespace PiaLib
 {
@@ -104,6 +105,23 @@ namespace PiaLib
                     }
 
                     throw new Exception("Passwort Falsch");
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs getKlasse(string Email)
+            {
+                try
+                {
+                    DatenbankArgs user = getby(Email, "S_Email");
+                    if (user.Success == false)
+                    {
+                        throw new Exception(user.Error);
+                    }
+                    return new klasse().getNameByID((int)user.Data.Rows[0]["Kl_ID"]);
                 }
                 catch (Exception ex)
                 {
@@ -428,6 +446,21 @@ namespace PiaLib
         public class klasse
         {
             KlasseTableAdapter klta = new KlasseTableAdapter();
+            SchülerTableAdapter sta = new SchülerTableAdapter();
+
+            public DatenbankArgs getNameByID(int id)
+            {
+                DataTable data = klta.GetData();
+                DataTable Dataout = new DataTable();
+                foreach (DataRow row in data.Rows)
+                {
+                    if ((int)row["Kl_ID"] == id)
+                    {
+                        Dataout.Rows.Add(row);
+                    }
+                }
+                return new DatenbankArgs(Dataout);
+            }
 
             public int getIDByName(string Name)
             {
@@ -455,6 +488,26 @@ namespace PiaLib
                     return new DatenbankArgs(ex.Message);
                 }
 
+            }
+
+            public DatenbankArgs getSchüler(int Kl_ID)
+            {
+                try
+                {
+                    DataTable dataout = new DataTable();
+                    foreach (DataRow row in sta.GetData().Rows)
+                    {
+                        if ((int) row["KL_ID"] == Kl_ID)
+                        {
+                            dataout.Rows.Add(row);
+                        }
+                    }
+                    return new DatenbankArgs(dataout);
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
             }
         }
     }

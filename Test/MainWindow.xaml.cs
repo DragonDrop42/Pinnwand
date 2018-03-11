@@ -31,10 +31,9 @@ namespace Test
     public partial class MainWindow : ModernWindow
     {
         public Client client;
-        List<string> SubscribedEvents = new List<string>();
         public Login LoginFrm;
-        private ModernTab Kurse;
         public bool hasRights = false;
+        public Kursliste _kursliste;
 
         public MainWindow()
         {
@@ -51,6 +50,15 @@ namespace Test
             LoginFrm.Show();
             LoginFrm.Closing += LoginFrmOnClosing;
             Closing += OnClosing;
+            Loaded += (sender, args) =>
+            {
+                if (_kursliste == null)
+                {
+                    _kursliste = UIHelper.FindVisualChildByName<Kursliste>(this, "pg_kursliste");
+                    return;
+                };
+                Console.WriteLine(_kursliste.ToString());
+            };
             IsEnabled = false;
         }
 
@@ -76,37 +84,9 @@ namespace Test
 
         public void Reload_Kurse()
         {
-            try
+            if (_kursliste != null)
             {
-                if (Kurse == null)
-                {
-                    Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
-                }
-                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
-                if (GetKurse.Success)
-                {
-                    foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);
-
-                    if (((List<string>)GetKurse.Data["K_Name"]).Count != 0)
-                    {
-                        foreach (string Kurs in (List<string>)GetKurse.Data["K_Name"])
-                        {
-                            Kurse.Links.Add(new Link
-                            {
-                                DisplayName = Kurs,
-                                Source = new Uri("Pages/Home.xaml?Kurs=" + Kurs, UriKind.Relative)
-                            });
-                        }
-                    }
-                }
-                else
-                {
-                    throw new Exception(GetKurse.MessageString);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                _kursliste.Reload_Kurse();
             }
         }
     }
