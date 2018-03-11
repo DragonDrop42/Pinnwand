@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="390">
     <StackPanel>
         <Label FontSize="23" Margin="0,5,0,10" FontWeight="Bold">Informationen des Termins:</Label>
-        <Label FontSize="17" HorizontalContentAlignment="Center" Margin="0,0,0,5">Test</Label>
+        <Label x:Name="lbl_E_Art" FontSize="17" HorizontalContentAlignment="Center" Margin="0,0,0,5"></Label>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
@@ -19,13 +19,13 @@
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Right">Fach:</Label>
+            <Label Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Right">Autor:</Label>
             <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right">Termin:</Label>
             <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Right">Beschreibung:</Label>
             
-            <Label Grid.Column="1" Grid.Row="0" Margin="5,0,0,0"> Mathematik</Label>
-            <Label Grid.Column="1" Grid.Row="1" Margin="5,0,0,0">01.12.2018</Label>
-            <Label Grid.Column="1" Grid.Row="2" Margin="5,0,0,0">Inhalte der Arbeit sind </Label>
+            <Label x:Name="lbl_E_Autor" Grid.Column="1" Grid.Row="0" Margin="5,0,0,0"> Mathematik</Label>
+            <Label x:Name="lbl_E_Datum" Grid.Column="1" Grid.Row="1" Margin="5,0,0,0">01.12.2018</Label>
+            <Label x:Name="lbl_E_Beschreibung" Grid.Column="1" Grid.Row="2" Margin="5,0,0,0">Inhalte der Arbeit sind </Label>
         </Grid>
 
         <StackPanel  Margin="0,10,0,0" Orientation="Horizontal" x:Name="stack_button">

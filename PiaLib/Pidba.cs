@@ -276,18 +276,12 @@ namespace PiaLib
             {
                 try
                 {
-                    DataTable data = kta.GetDataBy(L_ID);
-                    if (data.Rows.Count == 0)
-                    {
-                        throw new Exception("Keine Kurse vorhanden oder Klasse nicht gefunden!");
-                    }
-                    return new DatenbankArgs(data);
+                    return new DatenbankArgs(kta.GetDataBy(L_ID));
                 }
                 catch (Exception ex)
                 {
                     return new DatenbankArgs(ex.Message);
                 }
-
             }
         }
 
@@ -327,6 +321,11 @@ namespace PiaLib
                 {
                     return new DatenbankArgs(ex.Message);
                 }
+            }
+
+            public DatenbankArgs getAll()
+            {
+                return new DatenbankArgs(kta.GetData());
             }
 
             public DatenbankArgs getChat()
@@ -420,6 +419,19 @@ namespace PiaLib
                 {
                     kta.Insert(K_Name, Kl_ID, L_ID);
                     return new DatenbankArgs(new DataTable());
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs changeLehrer(DataRow[] updated)
+            {
+                try
+                {
+                    kta.Update(updated);
+                    return new DatenbankArgs();
                 }
                 catch (Exception ex)
                 {

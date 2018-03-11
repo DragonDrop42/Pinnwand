@@ -44,8 +44,8 @@ namespace Test
             LoginFrm.Show();
             LoginFrm.Loaded += LoginFrm_Loaded;
             LoginFrm.GotFocus += LoginFrm_GotFocus;
-            //LoginFrm.Closing += LoginFrmOnClosing;
-            //IsEnabled = false;
+            LoginFrm.Closing += LoginFrmOnClosing;
+            IsEnabled = false;
             GotFocus += OnGotFocus;
             
         }
@@ -70,8 +70,12 @@ namespace Test
                 cmd_save.Click += cmd_save_Click;
                 SubscribedEvents.Add("cmd_save");
             }
-        
-    }
+
+            if (Kurse == null)
+            {
+                Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
+            }
+        }
 
     private void cmd_save_Click(object sender, RoutedEventArgs e)
         {
@@ -80,7 +84,11 @@ namespace Test
             {
                 List<string> k = kw.GetChecked();
                 if (k.Count == 0) throw new Exception("Bitte mindestens einen Kurs auswählen.");
-                Packet kursUpdate = client.SendKursUpdatePacket(k);
+                ListDictionary data = new ListDictionary
+                {
+                    {"K_ID",k}
+                };
+                Packet kursUpdate = client.SendAndWaitForResponse(PacketType.KursUpdate, data);
                 if (!kursUpdate.Success) throw new Exception(kursUpdate.MessageString);
                 Reload_Kurse();
                 throw new Exception("Erfolgreich gespeichert");
@@ -96,8 +104,8 @@ namespace Test
             Pages.Settings.Kurswahl kw = UIHelper.FindVisualParent<Pages.Settings.Kurswahl>((Button)sender);
             try
             {
-                Packet kurse = client.SendAndWaitForResponse(PacketType.GetVerfügbareKurse);
-                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
+                Packet kurse = client.SendAndWaitForResponse(PacketType.GetAlleKurse);
+                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 if (kurse.Success && getKurse.Success)
                 {
                     kw.UpdateKurse(kurse.Data,getKurse.Data);
@@ -331,7 +339,7 @@ namespace Test
                 {
                     Kurse = UIHelper.FindVisualChildByName<ModernTab>(this, "mt_Kurse");
                 }
-                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
+                Packet GetKurse = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 if (GetKurse.Success)
                 {
                     foreach (var Link in Kurse.Links.Where(L => L.Source.OriginalString != "Pages/Home.xaml").ToList()) Kurse.Links.Remove(Link);

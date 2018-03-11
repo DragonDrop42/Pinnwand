@@ -102,7 +102,7 @@ namespace Server
                 i++;
             }
             Ausgabe("Client nicht gefunden (by ID)");
-            return (-1);
+            return -1;
         }
         public static ClientData GetClientByID(string id)
         {

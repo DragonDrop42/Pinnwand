@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using FirstFloor.ModernUI.Windows.Controls;
 using ServerData;
 using System.Globalization;
+using Test.Pages.ExtraPage;
 
 namespace Test.Pages
 {
@@ -46,7 +47,7 @@ namespace Test.Pages
             kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
 
             if (kurs != "Pages/Home.xaml") {
-                Packet kidp = client.SendAndWaitForResponse(PacketType.GetKurseVonSchüler);
+                Packet kidp = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 K_ID = Convert.ToInt32( ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]);
                 Packet SchülerPacket = client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
@@ -66,19 +67,48 @@ namespace Test.Pages
                 }
                 else { MessageBox.Show(SchülerPacket.MessageString); }
 
-                Packet ChatPacket =
-                    client.SendAndWaitForResponse(
-                        PacketType.GetChat,
-                        new ListDictionary
-                        {
-                            {"K_ID", K_ID}
-                        });
+                Packet ChatPacket = client.SendAndWaitForResponse(PacketType.GetChat);
                 if (ChatPacket.Success)
                 {
-                    for (int i = 0; i < ((List<string>)ChatPacket.Data["C_ID"]).Count; i++)
+                    lbl_chatAusgabe.Content = "";
+                    for (int i = 0; i < ((List<string>) ChatPacket.Data["C_ID"]).Count; i++)
                     {
-                        lbl_chatAusgabe.Content += ((List<string>) ChatPacket.Data["C_Sendername"])[i] + ": " +
-                                                   ((List<string>) ChatPacket.Data["C_Inhalt"])[i] + "\n";
+                        if (((List<string>) ChatPacket.Data["K_ID"])[i] == K_ID.ToString())
+                        {
+                            lbl_chatAusgabe.Content += ((List<string>) ChatPacket.Data["C_Sendername"])[i] + ": " +
+                                                       ((List<string>) ChatPacket.Data["C_Inhalt"])[i] + "\n";
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(ChatPacket.MessageString);
+                }
+
+                Packet EreignissPacket = client.SendAndWaitForResponse(PacketType.GetEreignisse);
+                
+                if (EreignissPacket.Success)
+                {
+                    ug_terminÜbersicht.Children.Clear();
+                    for (int i = 0; i < ((List<string>)EreignissPacket.Data["K_ID"]).Count; i++)
+                    {
+                        string t = ((List<string>) EreignissPacket.Data["K_ID"])[i];
+                        if ( ((List<string>) EreignissPacket.Data["K_ID"])[i] == K_ID.ToString())
+                        {
+                            string E_Art = ((List<string>) EreignissPacket.Data["E_Art"])[i];
+                            DateTime E_Fälligkeitsdatum =
+                                Convert.ToDateTime(((List<string>) EreignissPacket.Data["E_Fälligkeitsdatum"])[i]);
+                            string E_Inhalt = ((List<string>) EreignissPacket.Data["E_Beschreibung"])[i];
+                            string E_Autor = ((List<string>)EreignissPacket.Data["E_Autor"])[i];
+
+                            ereignisseErstellen(E_Art, E_Fälligkeitsdatum, E_Inhalt, E_Autor);
+
+                            /*ereignisseErstellen(
+                                ((List<string>)EreignissPacket.Data["E_Art"])[i],
+                                Convert.ToDateTime(((List<string>)EreignissPacket.Data["E_Erstelldatum"])[i]),
+                                ((List<string>)EreignissPacket.Data["E_Inhalt"])[i],
+                                ((List<string>)EreignissPacket.Data["E_Autor"])[i]);*/
+                        }
                     }
                 }
                 else
@@ -126,10 +156,10 @@ namespace Test.Pages
 
 
         #region Erstellen eines Ereignisses auf der eigenen Pinnwand
-        private void ereignisseErstellen()
+        private void ereignisseErstellen(string Art, DateTime Datum, string Inhalt, string Autor)
         {
             // Verlauf der Farbe erstellen
-            LinearGradientBrush gradientBrush = new LinearGradientBrush();
+            /*LinearGradientBrush gradientBrush = new LinearGradientBrush();
             gradientBrush.StartPoint = new Point(0.5, 0);
             gradientBrush.EndPoint = new Point(0.5, 1);
             gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 178, 178, 178), 0));
@@ -150,7 +180,11 @@ namespace Test.Pages
             ug_terminÜbersicht.Children.Add(cmd_ereignis);
             
             stack_ereignis.Children.Add(lbl_namenEreignis);
-            stack_ereignis.Children.Add(lbl_datumEreignis);
+            stack_ereignis.Children.Add(lbl_datumEreignis);*/
+
+            Termin cmd_termin = new Termin(Art, Datum, Inhalt, Autor);
+            cmd_termin.Click += aktiverButton;
+            ug_terminÜbersicht.Children.Add(cmd_termin);
 
         }
         #endregion
@@ -169,17 +203,21 @@ namespace Test.Pages
                 cmd.Background = getFarbverlauf(1);
             }            
 
-            Button aktiverButton = (Button)sender;
+            Termin aktiverButton = (Termin)sender;
             aktiverButton.Background = getFarbverlauf(2);
             frame_informationsausgabe.Content = null;
-            frame_informationsausgabe.Navigate( new ExtraPage.TerminInformation());
+            frame_informationsausgabe.Navigate( new TerminInformation(
+                aktiverButton.Art,
+                aktiverButton.Datum,
+                aktiverButton.Inhalt,
+                aktiverButton.Autor));
 
             letzterAktiverButton = (Button)sender;  // Zum speichern des letzten gedrückten Buttons
         }
 
         private void buttonHinzufügen(object sender, RoutedEventArgs e)
         {
-            ereignisseErstellen();
+            ereignisseErstellen("Klausur",DateTime.Now, "Hello","ME");
         }
 
         //Farben
@@ -199,8 +237,6 @@ namespace Test.Pages
                     gradientBrush.EndPoint = new Point(0.5, 1);
                     gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(200, 178, 178, 178), 0));
                     gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(200, 38, 139, 185), 1)); 
-                    break;
-                default:
                     break;
             }
 
