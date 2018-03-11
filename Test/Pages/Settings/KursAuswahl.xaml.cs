@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClientClassLib;
+using ServerData;
 
 namespace Test.Pages.Settings
 {
@@ -27,6 +29,60 @@ namespace Test.Pages.Settings
         public Kurswahl()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (!UIHelper.FindVisualParent<MainWindow>(this).hasRights)
+            {
+                 Lehrerptions.Children.Clear();   
+            }
+            
+            cmd_refresh.Click += Cmd_Refresh_Click;
+            cmd_save.Click += cmd_save_Click;
+        }
+        private void cmd_save_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mw = UIHelper.FindVisualParent<MainWindow>(this);
+            try
+            {
+                List<string> k = GetChecked();
+                if (k.Count == 0) throw new Exception("Bitte mindestens einen Kurs auswählen.");
+                ListDictionary data = new ListDictionary
+                {
+                    {"K_ID",k}
+                };
+                Packet kursUpdate = mw.client.SendAndWaitForResponse(PacketType.KursUpdate, data);
+                if (!kursUpdate.Success) throw new Exception(kursUpdate.MessageString);
+                mw.Reload_Kurse();
+                throw new Exception("Erfolgreich gespeichert");
+            }
+            catch (Exception ex)
+            {
+                lbl_Kurswahl_Error.Text = ex.Message;
+            }
+        }
+        private void Cmd_Refresh_Click(object sender, RoutedEventArgs routedEventArgs)
+        {
+            Client client = UIHelper.FindVisualParent<MainWindow>(this).client;
+            try
+            {
+                Packet kurse = client.SendAndWaitForResponse(PacketType.GetAlleKurse);
+                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
+                if (kurse.Success && getKurse.Success)
+                {
+                    UpdateKurse(kurse.Data,getKurse.Data);
+                }
+                else
+                {
+                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void UpdateKurse(ListDictionary Kurse,ListDictionary CheckedKurse)

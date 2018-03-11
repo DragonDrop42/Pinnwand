@@ -66,33 +66,33 @@ namespace ServerData
         //WaitPacket
         public Packet(PacketType type)
         {
-            this.packetType = type;
+            packetType = type;
         }
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //standard Client Packet
         public Packet(PacketType type, ListDictionary data, string id)
         {
-            this.packetType = type;
-            this.Data = data;
-            this.Success = true;
-            this.MessageString = "";
-            this.senderID = id;
+            packetType = type;
+            Data = data;
+            Success = true;
+            MessageString = "";
+            senderID = id;
         }
         //dateTAble als Daten
         public Packet(PacketType type, DataTable data, string id)
         {
-            this.packetType = type;
-            this.Data = PacketHandler.ConvertTableToList(data);
-            this.Success = true;
-            this.MessageString = "";
-            this.senderID = id;
+            packetType = type;
+            Data = PacketHandler.ConvertTableToList(data);
+            Success = true;
+            MessageString = "";
+            senderID = id;
         }
 
         //client id
         public Packet(PacketType type, string id)
         {
-            this.packetType = type;
-            this.senderID = id;
+            packetType = type;
+            senderID = id;
         }
 
         //---------------------------------------------------------------------------Server
@@ -100,18 +100,18 @@ namespace ServerData
         //Server default packet
         public Packet(PacketType type, DataTable data, bool success, string message)
         {
-            this.packetType = type;
-            this.Data = PacketHandler.ConvertTableToList(data);
-            this.Success = success;
-            this.MessageString = message;
+            packetType = type;
+            Data = PacketHandler.ConvertTableToList(data);
+            Success = success;
+            MessageString = message;
         }
 
         //Messages++++++++++++++++++++
         public Packet(string error)
         {
-            this.packetType = PacketType.SystemError;
-            this.senderID = "server";
-            this.MessageString = error;
+            packetType = PacketType.SystemError;
+            senderID = "server";
+            MessageString = error;
         }
 
 
@@ -119,11 +119,11 @@ namespace ServerData
 
         public Packet Copy()
         {
-            Packet p = new Packet(this.packetType);
-            p.Data = this.Data;
-            p.Success = this.Success;
-            p.MessageString = this.MessageString;
-            p.senderID = this.senderID;
+            Packet p = new Packet(packetType);
+            p.Data = Data;
+            p.Success = Success;
+            p.MessageString = MessageString;
+            p.senderID = senderID;
 
             return p;
         }

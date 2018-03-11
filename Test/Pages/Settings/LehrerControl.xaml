@@ -15,14 +15,7 @@
                 </ListView>
                 <TextBlock x:Name="lbl_Kurswahl_Error"/>
                 <Button x:Name="cmd_save">Speichern</Button>
-                <StackPanel x:Name="Lehrerptions">
-                    <TextBlock Text="Klasse Hinzufügen" Style="{StaticResource Heading2}" />
-                    <TextBox x:Name="txt_Klassenname"></TextBox>
-                    <Button x:Name="cmd_addKlasse">Senden</Button>
-                    <TextBlock Text="Kurs Hinzufügen" Style="{StaticResource Heading2}" />
-                    <TextBox x:Name="txt_Kursname"></TextBox>
-                    <Button x:Name="cmd_addKurs">Senden</Button>
-                </StackPanel>
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

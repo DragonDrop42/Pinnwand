@@ -21,9 +21,11 @@ namespace Test
     /// </summary>
     public partial class Login : ModernWindow
     {
-        public Login()
+        public MainWindow mw;
+        public Login(MainWindow mw)
         {
             InitializeComponent();
+            this.mw = mw;
         }
     }
 }

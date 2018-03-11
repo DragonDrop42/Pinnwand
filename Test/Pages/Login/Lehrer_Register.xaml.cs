@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ServerData;
 
 namespace Test.Pages.Login
 {
@@ -20,11 +22,50 @@ namespace Test.Pages.Login
     /// </summary>
     public partial class Lehrer_Register : UserControl
     {
+        private MainWindow mw;
         public Lehrer_Register()
         {
             InitializeComponent();
 
             comboxenFuellen();
+
+            Loaded += (sender, args) =>
+            {
+                mw = UIHelper.FindVisualParent<Test.Login>(this).mw;
+                cmd_AbsendenRegistrierungLehrer.Click += CmdAbsendenRegistrierungLehrerOnClick;
+            };
+        }
+
+        private void CmdAbsendenRegistrierungLehrerOnClick(object o, RoutedEventArgs routedEventArgs)
+        {
+            try
+            {
+                ListDictionary dataRegister = new ListDictionary
+                {
+                    {"name", txt_Name.Text},
+                    {"vname", txt_Vorname.Text},
+                    {"anrede", (string) cbB_Anrede.SelectedValue},
+                    {"titel", (string) cbB_Titel.SelectedValue},
+                    {"email", txt_Email.Text},
+                    {"passwort", txt_Passwort.Password},
+                    {
+                        "lehrerPasswort", txt_LehrerCode.Text
+                    } //Lehrer Passwort abfrage designen+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                };
+
+                Packet registerResponse = mw.client.Register_Lehrer(dataRegister);
+                if (registerResponse.Success)
+                {
+                    throw new Exception("Registrierung erfolgreich.");
+                }
+
+                throw new Exception(registerResponse.MessageString);
+            }
+            catch (Exception ex)
+            {
+                lbl_Lehrer_Registrations_Error.Text = ex.Message;
+            }
+
         }
 
         public void comboxenFuellen()

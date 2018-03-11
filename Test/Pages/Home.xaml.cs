@@ -31,6 +31,7 @@ namespace Test.Pages
         private ClientClassLib.Client client;
         private int K_ID;
         private Button letzterAktiverButton;
+        private bool hasRights;
         
         
         public Home()
@@ -44,11 +45,12 @@ namespace Test.Pages
         {
             KListe = UIHelper.FindVisualChildByName<ModernTab>(Application.Current.MainWindow,"mt_Kurse");
             client = UIHelper.FindVisualParent<MainWindow>(this).client;
+            hasRights = UIHelper.FindVisualParent<MainWindow>(this).hasRights;
             kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
 
             if (kurs != "Pages/Home.xaml") {
                 Packet kidp = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
-                K_ID = Convert.ToInt32( ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]);
+                K_ID = Math.Abs(Convert.ToInt32( ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]));
                 Packet SchülerPacket = client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
                     new ListDictionary
@@ -210,7 +212,8 @@ namespace Test.Pages
                 aktiverButton.Art,
                 aktiverButton.Datum,
                 aktiverButton.Inhalt,
-                aktiverButton.Autor));
+                aktiverButton.Autor,
+                hasRights));
 
             letzterAktiverButton = (Button)sender;  // Zum speichern des letzten gedrückten Buttons
         }

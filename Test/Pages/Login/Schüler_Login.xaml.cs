@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ServerData;
 
 namespace Test.Pages.Login
 {
@@ -20,9 +22,45 @@ namespace Test.Pages.Login
     /// </summary>
     public partial class Schüler_Login : UserControl
     {
+        private MainWindow mw;
         public Schüler_Login()
         {
             InitializeComponent();
+            Loaded += (o, args) =>
+            {
+                mw = UIHelper.FindVisualParent<Test.Login>(this).mw;
+                cmd_SchülerLogin.Click += cmd_SchülerLogin_Click;
+            };
+        }
+
+        private void cmd_SchülerLogin_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ListDictionary dataLogin = new ListDictionary{
+                    {"email", txt_Email.Text},
+                    {"passwort", txt_Passwort.Password}
+                };
+
+                Packet loginResponse = mw.client.Login(dataLogin, true);
+                if (loginResponse.Success)
+
+                {
+                    mw.LoginFrm.Closing -= mw.LoginFrmOnClosing; 
+                    mw.LoginFrm.Close();
+                    mw.IsEnabled = true;
+                    mw.Reload_Kurse();
+                }
+                else
+                {
+                    throw new Exception(loginResponse.MessageString);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                lbl_SchülerLoginError.Text = ex.Message;
+            }
         }
     }
 }

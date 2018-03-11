@@ -59,10 +59,8 @@ namespace PiaLib
                     {
                         throw new Exception("Schüler nicht gefunden");
                     }
-                    else
-                    {
-                        return new DatenbankArgs(data);
-                    }
+
+                    return new DatenbankArgs(data);
                 }
                 catch (Exception ex) { return new DatenbankArgs(ex.Message); };
             }
@@ -80,10 +78,8 @@ namespace PiaLib
                         dataout.ImportRow(data.Rows[data.Rows.Count - 1]);
                         return new DatenbankArgs(dataout);
                     }
-                    else
-                    {
-                        throw new Exception("Email bereits registriert");
-                    }
+
+                    throw new Exception("Email bereits registriert");
                 }
                 catch (Exception ex)
                 {
@@ -100,18 +96,14 @@ namespace PiaLib
                     {
                         throw new Exception(user.Error);
                     }
-                    else
+
+                    string c = (string)user.Data.Rows[0]["S_Passwort"];
+                    if (c == Passwort)
                     {
-                        string c = (string)user.Data.Rows[0]["S_Passwort"];
-                        if (c == Passwort)
-                        {
-                            return new DatenbankArgs(user.Data);
-                        }
-                        else
-                        {
-                            throw new Exception("Passwort Falsch");
-                        }
+                        return new DatenbankArgs(user.Data);
                     }
+
+                    throw new Exception("Passwort Falsch");
                 }
                 catch (Exception ex)
                 {
@@ -157,7 +149,8 @@ namespace PiaLib
                     {
                         return new DatenbankArgs(data.Data);
                     }
-                    else { return data; }
+
+                    return data;
                 }
                 catch (Exception ex)
                 {
@@ -203,10 +196,8 @@ namespace PiaLib
                     {
                         throw new Exception("Lehrer nicht gefunden");
                     }
-                    else
-                    {
-                        return new DatenbankArgs(data);
-                    }
+
+                    return new DatenbankArgs(data);
                 }
                 catch (Exception ex) { return new DatenbankArgs(ex.Message); };
 
@@ -224,10 +215,8 @@ namespace PiaLib
                         dataout.ImportRow(data.Rows[data.Rows.Count - 1]);
                         return new DatenbankArgs(dataout);
                     }
-                    else
-                    {
-                        throw new Exception("Email bereits registriert");
-                    }
+
+                    throw new Exception("Email bereits registriert");
                 }
                 catch (Exception ex)
                 {
@@ -254,17 +243,13 @@ namespace PiaLib
                     {
                         throw new Exception(user.Error);
                     }
-                    else
+
+                    if ((string)(user.Data.Rows[0]["L_Passwort"]) == Passwort)
                     {
-                        if ((string)(user.Data.Rows[0]["L_Passwort"]) == Passwort)
-                        {
-                            return new DatenbankArgs(user.Data);
-                        }
-                        else
-                        {
-                            throw new Exception("Passwort Falsch");
-                        }
+                        return new DatenbankArgs(user.Data);
                     }
+
+                    throw new Exception("Passwort Falsch");
                 }
                 catch (Exception ex)
                 {

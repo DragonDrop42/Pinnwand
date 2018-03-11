@@ -33,11 +33,9 @@ namespace Test
             {
                 return parent;
             }
-            else
-            {
-                // use recursion to proceed with next level 
-                return FindVisualParent<T>(parentObject);
-            }
+
+            // use recursion to proceed with next level 
+            return FindVisualParent<T>(parentObject);
         } 
         public static T FindVisualChildByName<T>(DependencyObject parent, string name) where T : DependencyObject
         {
@@ -49,12 +47,10 @@ namespace Test
                 {
                     return child as T;
                 }
-                else
-                {
-                    T result = FindVisualChildByName<T>(child, name);
-                    if (result != null)
-                        return result;
-                }
+
+                T result = FindVisualChildByName<T>(child, name);
+                if (result != null)
+                    return result;
             }
             return null;
         }

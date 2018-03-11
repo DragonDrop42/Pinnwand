@@ -120,10 +120,9 @@ namespace ClientClassLib
                 if(response != null){
                     return response;
                 }
-                else{
-                    return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
-                }
-			}     
+
+                return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
+            }     
             catch(Exception exc)
             {
                 //throw new Exception("Fehler: WaitForPacket >>" + exc.Message);
@@ -165,12 +164,14 @@ namespace ClientClassLib
                 //errorCallback("id: " + ID);
                 return;
             }
-            else if (packet.packetType == PacketType.SystemError)
+
+            if (packet.packetType == PacketType.SystemError)
             {
                 errorCallback(packet.MessageString);
                 return;
             }
-            else if (packet.packetType == PacketType.UpdateChat)
+
+            if (packet.packetType == PacketType.UpdateChat)
             {
                 //Ereignis auslösen
                 updateChatCallback(packet);
