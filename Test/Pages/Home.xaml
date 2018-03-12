@@ -7,48 +7,23 @@
              d:DesignHeight="750" >
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Top" MinWidth="1000" Width="auto" >
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" MinWidth="900" Width="auto" x:Name="stack_MainStack">
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinWidth="800" Width="auto" MinHeight="440">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Width="{Binding ElementName=stack_MainStack,Path=ActualWidth}" >
                         <StackPanel>
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="../Images/Pinnwand-textur-2.jpg"/>
                             </StackPanel.Background>
                             <StackPanel Orientation="Horizontal">
-                                <Label FontWeight="Bold" FontSize="30" Width="1000" HorizontalContentAlignment="Center" Foreground="#FFDBEFFF">
+                                <Label FontWeight="Bold" FontSize="30" Width="{Binding ElementName=stack_MainStack,Path=ActualWidth}" HorizontalContentAlignment="Center" Foreground="#FFDBEFFF">
                                     Aktuelle Termine
                                 </Label>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" MaxWidth="{Binding ElementName=stack_MainStack,Path=ActualWidth}">
                 
-                                <StackPanel Width="950">
+                                <StackPanel Width="930" >
                                     <UniformGrid  Height="390" x:Name="ug_terminÜbersicht">
-                                        <!--
-                                        <Button Width="150" Height="70" BorderBrush="{x:Null}" Click="aktiverButton" >
-                                            <Button.Background>
-                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                    <GradientStop Color="#FFB2B2B2" Offset="0.003"/>
-                                                    <GradientStop Color="#FF268BB9" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Button.Background>
-                                            <StackPanel>
-                                                <Label HorizontalContentAlignment="Center" FontSize="17" Margin="0,5,0,5" Foreground="Black">Klausur Mathe</Label>
-                                                <Label HorizontalContentAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
-                                            </StackPanel>
-                                        </Button>
-                                        <Button Width="150" Height="70" BorderBrush="{x:Null}" Click="aktiverButton" >
-                                            <Button.Background>
-                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                    <GradientStop Color="#FFB2B2B2" Offset="0.003"/>
-                                                    <GradientStop Color="#CC268BB9" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Button.Background>
-                                            <StackPanel>
-                                                <Label HorizontalContentAlignment="Center" FontSize="17" Margin="0,5,0,5" Foreground="Black">Klausur Mathe</Label>
-                                                <Label HorizontalContentAlignment="Center" FontSize="17" Foreground="Black">12.01.2018</Label>
-                                            </StackPanel>
-                                        </Button>
-                                        -->
+
                                     </UniformGrid>
                                 </StackPanel>
                                 <!-- Bearbeiten der Termine mittels der Button -->
@@ -58,13 +33,6 @@
                                             <ImageBrush ImageSource="../Images/Kreuz.png"/>
                                         </Button.Background>
                                     </Button>
-                                    <!--
-                                    <Button x:Name="buttonHinzufügenTermin"  Width="35" Height="35" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="buttonHinzufügen" Margin="0,10,0,0">
-                                        <Button.Background>
-                                            <ImageBrush ImageSource="../Images/Kreuz.png"/>
-                                        </Button.Background>
-                                    </Button>
-                                    -->
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -86,24 +54,13 @@
                         </StackPanel>
                     </StackPanel>
                     
-                    <Frame x:Name="frame_informationsausgabe" Width="390" Margin="10,0,0,0" NavigationUIVisibility="Hidden" />
-
-
-
-                    <!--<StackPanel x:Name="stack_informationsausgabe" Width="390" Margin="10,0,0,0" >
-                        --><!-- Inhalte der Ereignis--><!--
-                        <Label FontSize="23" Margin="0,5,0,10" FontWeight="Bold"> Informationen des Termins:</Label>
-
-                        --><!-- Informationen eintragen--><!--
-                        
-
-                    </StackPanel>-->
+                    <Frame x:Name="frame_informationsausgabe" Width="370" Margin="10,0,0,0" NavigationUIVisibility="Hidden" />
 
                 </StackPanel>
             </StackPanel>
             <!-- Feste Breite da die Namen nicht länger werden als 130px-->
             <ScrollViewer>
-                <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" Width="200">
+                <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" Width="230">
                     <TextBlock Padding="5">
                         <Label x:Name="lbl_Schülerliste" FontSize="23" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" HorizontalContentAlignment="Center" FontWeight="Bold" >Schülerliste</Label>
                     </TextBlock>
