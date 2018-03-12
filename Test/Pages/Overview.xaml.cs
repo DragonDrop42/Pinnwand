@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Test.Pages
+namespace Pinnwand.Pages
 {
     /// <summary>
     /// Interaction logic for Overview.xaml

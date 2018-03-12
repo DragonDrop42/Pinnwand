@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ClientClassLib
 {
@@ -28,6 +29,8 @@ namespace ClientClassLib
 
         GlobalMethods.ErrorMessageCallback errorCallback;
         GlobalMethods.UpdateFormCallback updateChatCallback;
+
+        public event EventHandler ChatUpdate; 
 
         public Client(GlobalMethods.ErrorMessageCallback errorDel, GlobalMethods.UpdateFormCallback updateChatDel)
         {
@@ -73,7 +76,7 @@ namespace ClientClassLib
         //packet senden++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         public void SendPacket(Packet p)
         {
-            if (p.senderID == null)
+            if (p.SenderId == null)
             {
                 errorCallback("Dieses Packet besitzt keine gültige ID!");
                 return;
@@ -120,10 +123,9 @@ namespace ClientClassLib
                 if(response != null){
                     return response;
                 }
-                else{
-                    return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
-                }
-			}     
+
+                return new Packet("Zeitüberschreitung oder Packet nicht gefunden. Versuchen Sie es erneut!");
+            }     
             catch(Exception exc)
             {
                 //throw new Exception("Fehler: WaitForPacket >>" + exc.Message);
@@ -145,7 +147,7 @@ namespace ClientClassLib
                 return null;
             }
 
-            if (currentPacket.packetType == send_waitPacket.packetType)
+            if (currentPacket.PacketType == send_waitPacket.PacketType)
             {
                 Packet tmp = currentPacket.Copy();
                 currentPacket = null;
@@ -159,21 +161,23 @@ namespace ClientClassLib
         private void PacketManager(Packet packet)
         {
             //kein Client Event
-            if (packet.packetType == PacketType.Register_ID)
+            if (packet.PacketType == PacketType.RegisterId)
             {
                 ID = packet.Data["id"].ToString();
                 //errorCallback("id: " + ID);
                 return;
             }
-            else if (packet.packetType == PacketType.SystemError)
+
+            if (packet.PacketType == PacketType.SystemError)
             {
                 errorCallback(packet.MessageString);
                 return;
             }
-            else if (packet.packetType == PacketType.UpdateChat)
+
+            if (packet.PacketType == PacketType.UpdateChat)
             {
                 //Ereignis auslösen
-                updateChatCallback(packet);
+                OnChatUpdate();
                 return;
             }
             //----------------
@@ -203,7 +207,7 @@ namespace ClientClassLib
             if (GlobalMethods.check_email(dataRegister["email"].ToString()) && (dataRegister["passwort"] = GlobalMethods.passwordToHash(dataRegister["passwort"].ToString())) != null)
             {
                 //Packet senden
-                Packet sendP = new Packet(PacketType.Schüler_Registraition, dataRegister, id);
+                Packet sendP = new Packet(PacketType.SchülerRegistraition, dataRegister, id);
                 //Auf Antwort warten
                 return WaitForPacketResponseHandler(sendP); 
             }
@@ -222,7 +226,7 @@ namespace ClientClassLib
                 //Packet senden
                 if (dataRegister["titel"] == null) dataRegister["titel"] = "";
                 dataRegister["lehrerPasswort"] = GlobalMethods.passwordToHash((string)dataRegister["lehrerPasswort"]);
-                Packet sendP = new Packet(PacketType.Lehrer_Registraition, dataRegister, id);
+                Packet sendP = new Packet(PacketType.LehrerRegistraition, dataRegister, id);
                 //Auf Antwort warten
                 return WaitForPacketResponseHandler(sendP); 
             }
@@ -240,7 +244,7 @@ namespace ClientClassLib
             if (GlobalMethods.check_email(dataLogin["email"].ToString()) == true && (dataLogin["passwort"] = GlobalMethods.passwordToHash(dataLogin["passwort"].ToString())) != null)
             {
                 //Packet senden
-                Packet sendP = (schüler ? new Packet(PacketType.Schüler_Login, dataLogin, id) : new Packet(PacketType.Lehrer_Login, dataLogin, id));
+                Packet sendP = (schüler ? new Packet(PacketType.SchülerLogin, dataLogin, id) : new Packet(PacketType.LehrerLogin, dataLogin, id));
                 //auf response warten
                 return WaitForPacketResponseHandler(sendP);
             }
@@ -322,6 +326,12 @@ namespace ClientClassLib
             {
                 return id;
             }
+        }
+
+        protected virtual void OnChatUpdate()
+        {
+            var handler = ChatUpdate;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 

@@ -1,4 +1,4 @@
-﻿<mui:ModernWindow x:Class="Test.MainWindow"
+﻿<mui:ModernWindow x:Class="Pinnwand.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
@@ -7,6 +7,6 @@
 
     
     <mui:ModernWindow.TitleLinks>
-        <mui:Link DisplayName="Einstellungen" Source="/Pages/SettingsPage.xaml" />
+        <mui:Link x:Name="cmd_einstellungen" DisplayName="Einstellungen" Source="/Pages/SettingsPage.xaml" />
     </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>

@@ -41,7 +41,7 @@ namespace ServerData
             Packet p = (Packet)serializer.Deserialize(ms);
 
             ms.Close();
-            return (p);
+            return p;
         }
 
         public static string GetIPAddress()

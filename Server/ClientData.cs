@@ -48,7 +48,7 @@ namespace Server
             ListDictionary list = new ListDictionary();
             list.Add("id", id);
 
-            Packet p = new Packet(PacketType.Register_ID, list, "server");
+            Packet p = new Packet(PacketType.RegisterId, list, "server");
             ClientHandler.SendSinglePacket(this, p);
 
             //ClientHandler.Ausgabe("Debug", id);

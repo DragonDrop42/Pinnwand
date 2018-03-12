@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 
-namespace Test.Pages.ExtraPage
+namespace Pinnwand.Pages.ExtraPage
 {
     class Termin : Button
     {

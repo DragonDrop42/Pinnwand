@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Test.Pages.Settings.About"
+﻿<UserControl x:Class="Pinnwand.Pages.Settings.About"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,8 +8,8 @@
     <Grid>
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="ABOUT" Style="{StaticResource Heading2}" />
-                <TextBlock Text="TODO: provide information about the software" Margin="0,0,0,8" TextWrapping="Wrap" />
+                <TextBlock Text="Über" Style="{StaticResource Heading2}" />
+                <TextBlock Text="Diese Software wurde im Rahmen des IS unterrichts der TIG15 am BSZ-et entwickelt." Margin="0,0,0,8" TextWrapping="Wrap" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

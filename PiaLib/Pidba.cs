@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using System.Data.Common;
 
 namespace PiaLib
 {
@@ -59,10 +60,8 @@ namespace PiaLib
                     {
                         throw new Exception("Schüler nicht gefunden");
                     }
-                    else
-                    {
-                        return new DatenbankArgs(data);
-                    }
+
+                    return new DatenbankArgs(data);
                 }
                 catch (Exception ex) { return new DatenbankArgs(ex.Message); };
             }
@@ -80,10 +79,8 @@ namespace PiaLib
                         dataout.ImportRow(data.Rows[data.Rows.Count - 1]);
                         return new DatenbankArgs(dataout);
                     }
-                    else
-                    {
-                        throw new Exception("Email bereits registriert");
-                    }
+
+                    throw new Exception("Email bereits registriert");
                 }
                 catch (Exception ex)
                 {
@@ -100,18 +97,31 @@ namespace PiaLib
                     {
                         throw new Exception(user.Error);
                     }
-                    else
+
+                    string c = (string)user.Data.Rows[0]["S_Passwort"];
+                    if (c == Passwort)
                     {
-                        string c = (string)user.Data.Rows[0]["S_Passwort"];
-                        if (c == Passwort)
-                        {
-                            return new DatenbankArgs(user.Data);
-                        }
-                        else
-                        {
-                            throw new Exception("Passwort Falsch");
-                        }
+                        return new DatenbankArgs(user.Data);
                     }
+
+                    throw new Exception("Passwort Falsch");
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs getKlasse(string Email)
+            {
+                try
+                {
+                    DatenbankArgs user = getby(Email, "S_Email");
+                    if (user.Success == false)
+                    {
+                        throw new Exception(user.Error);
+                    }
+                    return new klasse().getNameByID((int)user.Data.Rows[0]["Kl_ID"]);
                 }
                 catch (Exception ex)
                 {
@@ -157,7 +167,8 @@ namespace PiaLib
                     {
                         return new DatenbankArgs(data.Data);
                     }
-                    else { return data; }
+
+                    return data;
                 }
                 catch (Exception ex)
                 {
@@ -203,10 +214,8 @@ namespace PiaLib
                     {
                         throw new Exception("Lehrer nicht gefunden");
                     }
-                    else
-                    {
-                        return new DatenbankArgs(data);
-                    }
+
+                    return new DatenbankArgs(data);
                 }
                 catch (Exception ex) { return new DatenbankArgs(ex.Message); };
 
@@ -224,10 +233,8 @@ namespace PiaLib
                         dataout.ImportRow(data.Rows[data.Rows.Count - 1]);
                         return new DatenbankArgs(dataout);
                     }
-                    else
-                    {
-                        throw new Exception("Email bereits registriert");
-                    }
+
+                    throw new Exception("Email bereits registriert");
                 }
                 catch (Exception ex)
                 {
@@ -254,17 +261,13 @@ namespace PiaLib
                     {
                         throw new Exception(user.Error);
                     }
-                    else
+
+                    if ((string)(user.Data.Rows[0]["L_Passwort"]) == Passwort)
                     {
-                        if ((string)(user.Data.Rows[0]["L_Passwort"]) == Passwort)
-                        {
-                            return new DatenbankArgs(user.Data);
-                        }
-                        else
-                        {
-                            throw new Exception("Passwort Falsch");
-                        }
+                        return new DatenbankArgs(user.Data);
                     }
+
+                    throw new Exception("Passwort Falsch");
                 }
                 catch (Exception ex)
                 {
@@ -277,6 +280,18 @@ namespace PiaLib
                 try
                 {
                     return new DatenbankArgs(kta.GetDataBy(L_ID));
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs getAll()
+            {
+                try
+                {
+                    return new DatenbankArgs(lta.GetData());
                 }
                 catch (Exception ex)
                 {
@@ -443,6 +458,21 @@ namespace PiaLib
         public class klasse
         {
             KlasseTableAdapter klta = new KlasseTableAdapter();
+            SchülerTableAdapter sta = new SchülerTableAdapter();
+
+            public DatenbankArgs getNameByID(int id)
+            {
+                DataTable data = klta.GetData();
+                DataTable Dataout = new PinnwandDataSet.KlasseDataTable();
+                foreach (DataRow row in data.Rows)
+                {
+                    if ((int)row["Kl_ID"] == id)
+                    {
+                        Dataout.Rows.Add(row.ItemArray);
+                    }
+                }
+                return new DatenbankArgs(Dataout);
+            }
 
             public int getIDByName(string Name)
             {
@@ -470,6 +500,30 @@ namespace PiaLib
                     return new DatenbankArgs(ex.Message);
                 }
 
+            }
+
+            public DatenbankArgs getSchüler(int Kl_ID)
+            {
+                try
+                {
+                    DataTable dataout = new PinnwandDataSet.SchülerDataTable();
+                    foreach (DataRow row in sta.GetData().Rows)
+                    {
+                        if (row["Kl_ID"].GetType() != typeof(DBNull))
+                        {
+                            int kl_id = Convert.ToInt32(row["Kl_ID"]);
+                            if (kl_id == Kl_ID)
+                            {
+                                dataout.Rows.Add(row.ItemArray);
+                            }
+                        }
+                    }
+                    return new DatenbankArgs(dataout);
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
             }
         }
     }
