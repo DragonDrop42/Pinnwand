@@ -17,6 +17,8 @@ using FirstFloor.ModernUI.Windows.Controls;
 using ServerData;
 using System.Globalization;
 using Pinnwand.Pages.ExtraPage;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace Pinnwand.Pages
 {
@@ -32,8 +34,9 @@ namespace Pinnwand.Pages
         private int K_ID;
         private Button letzterAktiverButton;
         private bool hasRights;
-        
-        
+
+        public static object Instance { get; private set; }
+
         public Home()
         {
             InitializeComponent();
@@ -46,7 +49,7 @@ namespace Pinnwand.Pages
             Packet SchülerPacket;
             if (kurs != "all")
             {
-                ((MainWindow) Application.Current.MainWindow).client.ChatUpdate += (sender, args) => reload_Chat();
+                ((MainWindow) Application.Current.MainWindow).client.ChatUpdate += (sender, args) => InvokeIfNecessary(args); ;
                 lbl_Schülerliste.Content = "Schülerliste " + kurs;
                 SchülerPacket = client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
@@ -116,10 +119,25 @@ namespace Pinnwand.Pages
                 MessageBox.Show(EreignissPacket.MessageString);
             }
         }
-
-        public void reload_Chat()
+        //syncronise Threads
+        public void InvokeIfNecessary(Packet packet)
         {
-            Packet ChatPacket = client.SendAndWaitForResponse(PacketType.GetChat);
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                reload_Chat(packet);
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke(
+                  DispatcherPriority.Background,
+                  new Action(() => {
+                      reload_Chat(packet);
+                  }));
+            }
+        }
+
+        public void reload_Chat(Packet ChatPacket)
+        {
             if (ChatPacket.Success)
             {
                 lbl_chatAusgabe.Content = "";
@@ -158,7 +176,7 @@ namespace Pinnwand.Pages
                     Packet kidp = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                     K_ID = Math.Abs(Convert.ToInt32(
                         ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
-                    reload_Chat();
+                    reload_Chat(client.SendAndWaitForResponse(PacketType.GetChat));
                 }
 
             if (!lgf.IsVisible)
