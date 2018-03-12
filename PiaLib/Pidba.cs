@@ -459,6 +459,36 @@ namespace PiaLib
         {
             KlasseTableAdapter klta = new KlasseTableAdapter();
             SchülerTableAdapter sta = new SchülerTableAdapter();
+            EreignisseTableAdapter eta = new EreignisseTableAdapter();
+            
+            public DatenbankArgs deleteOld()
+            {
+                try
+                {
+                    DataTable data = eta.GetData();
+                    foreach (DataRow row in data.Rows)
+                    {
+                        if (((DateTime) row["E_Ablaufdatum"]).Date < DateTime.Today)
+                        {
+                            // Delete From Ereignisse Where 'E_ID' == ?
+                        }
+                    }
+
+                    data = klta.GetData();
+                    foreach (DataRow row in data.Rows)
+                    {
+                        if (((DateTime) row["Kl_Abschluss"]).Date < DateTime.Today)
+                        {
+                            // Delete From Klasse Where 'Kl_ID' == ?
+                        }
+                    }
+                    return new DatenbankArgs();
+                }
+                catch (Exception e)
+                {
+                    return new DatenbankArgs(e.Message);
+                }
+            }
 
             public DatenbankArgs getNameByID(int id)
             {

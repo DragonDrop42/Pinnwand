@@ -12,3 +12,5 @@
 *.o
 *.so
 *.accdb
+*.dll
+*.pdb

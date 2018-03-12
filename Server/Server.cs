@@ -23,6 +23,7 @@ namespace Server
         //server setup+++++++++++
         static int port = 4444;
         static string ip = PacketHandler.GetIPAddress();
+        static PinnwandDBAdapter DbAdapter = new PinnwandDBAdapter();
 
         static string lehrerPasswort = GlobalMethods.passwordToHash("teachersPassword");
         //-----------------------
@@ -32,6 +33,8 @@ namespace Server
         {
             //Server starten
             ClientHandler.StartServer(ip, port);    //Server starten
+            Console.WriteLine("Deleting old Data");
+            DbAdapter.Klasse.deleteOld();
         }
 
 
