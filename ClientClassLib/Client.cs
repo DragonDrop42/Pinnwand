@@ -30,7 +30,7 @@ namespace ClientClassLib
         GlobalMethods.ErrorMessageCallback errorCallback;
         GlobalMethods.UpdateFormCallback updateChatCallback;
 
-        public event EventHandler ChatUpdate; 
+        public event EventHandler<Packet> ChatUpdate; 
 
         public Client(GlobalMethods.ErrorMessageCallback errorDel, GlobalMethods.UpdateFormCallback updateChatDel)
         {
@@ -177,7 +177,7 @@ namespace ClientClassLib
             if (packet.PacketType == PacketType.UpdateChat)
             {
                 //Ereignis auslösen
-                OnChatUpdate();
+                OnChatUpdate(packet);
                 return;
             }
             //----------------
@@ -328,10 +328,10 @@ namespace ClientClassLib
             }
         }
 
-        protected virtual void OnChatUpdate()
+        protected virtual void OnChatUpdate(Packet p)
         {
             var handler = ChatUpdate;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null) handler(this, p);
         }
     }
 
