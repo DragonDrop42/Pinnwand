@@ -13,9 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FirstFloor.ModernUI.Windows.Controls;
-using Test.Pages.Settings;
+using Pinnwand.Pages.Settings;
 
-namespace Test.Pages
+namespace Pinnwand.Pages
 {
     /// <summary>
     /// Interaction logic for SettingsPage.xaml

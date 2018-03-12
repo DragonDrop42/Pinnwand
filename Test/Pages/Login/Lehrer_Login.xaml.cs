@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using FirstFloor.ModernUI.Windows.Controls;
 using ServerData;
 
-namespace Test.Pages.Login
+namespace Pinnwand.Pages.Login
 {
     /// <summary>
     /// Interaction logic for Schüler_Login.xaml
@@ -29,7 +29,7 @@ namespace Test.Pages.Login
             InitializeComponent();
             Loaded += (sender, args) =>
             {
-                mw = UIHelper.FindVisualParent<Test.Login>(this).mw;
+                mw = UIHelper.FindVisualParent<Pinnwand.Login>(this).mw;
                 cmd_LehrerLogin.Click += CmdLehrerLoginOnClick;
             };
         }
@@ -47,9 +47,9 @@ namespace Test.Pages.Login
                 if (loginResponse.Success)
                 {
                     mw.LoginFrm.Closing -= mw.LoginFrmOnClosing; 
-                    mw.LoginFrm.Close();
                     mw.IsEnabled = true;
                     mw.hasRights = true;
+                    mw.LoginFrm.Close();
                 }
                 else
                 {

@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Test
+namespace Pinnwand
 {
     public static class UIHelper
     {  

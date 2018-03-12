@@ -18,11 +18,11 @@ namespace ServerData
         Default,
 
         //Authentication++++++++++++++++++
-        Register_ID,                        // (✔)
-        Schüler_Login,                      // (✔)
-        Schüler_Registraition,              // (✔)
-        Lehrer_Login,                       // (✔)
-        Lehrer_Registraition,               // (✔)
+        RegisterId,                        // (✔)
+        SchülerLogin,                      // (✔)
+        SchülerRegistraition,              // (✔)
+        LehrerLogin,                       // (✔)
+        LehrerRegistraition,               // (✔)
         Klassenwahl,                        // (✔)
         //--------------------------------
 
@@ -34,7 +34,7 @@ namespace ServerData
         KursUpdate,                         // (✔)
         SendChatNachricht,                  // (✔)
         GetChat,                            // (✔)
-        getKlasse,                          // (✔)
+        GetKlasse,                          // (✔)
         GetEreignisse,                      // (✔)
         SendEreigniss,                      // (✔)
         //--------------------------------
@@ -44,6 +44,8 @@ namespace ServerData
         UpdateSchülerInKlasse,
         KlasseErstellen,                    // (✔)
         KlasseLöschen,
+        CreateKurs,
+        GetLehrer,
         //--------------------------------
         //SystemError
         SystemError,
@@ -56,44 +58,44 @@ namespace ServerData
     [Serializable]
     public class Packet
     {
-        public PacketType packetType;   //klassifizierung
+        public PacketType PacketType;   //klassifizierung
 
         public ListDictionary Data;
         public bool Success;
         public string MessageString;
 
-        public string senderID;
+        public string SenderId;
 
         //WaitPacket
         public Packet(PacketType type)
         {
-            packetType = type;
+            PacketType = type;
         }
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //standard Client Packet
         public Packet(PacketType type, ListDictionary data, string id)
         {
-            packetType = type;
+            PacketType = type;
             Data = data;
             Success = true;
             MessageString = "";
-            senderID = id;
+            SenderId = id;
         }
         //dateTAble als Daten
         public Packet(PacketType type, DataTable data, string id)
         {
-            packetType = type;
+            PacketType = type;
             Data = PacketHandler.ConvertTableToList(data);
             Success = true;
             MessageString = "";
-            senderID = id;
+            SenderId = id;
         }
 
         //client id
         public Packet(PacketType type, string id)
         {
-            packetType = type;
-            senderID = id;
+            PacketType = type;
+            SenderId = id;
         }
 
         //---------------------------------------------------------------------------Server
@@ -101,7 +103,7 @@ namespace ServerData
         //Server default packet
         public Packet(PacketType type, DataTable data, bool success, string message)
         {
-            packetType = type;
+            PacketType = type;
             Data = PacketHandler.ConvertTableToList(data);
             Success = success;
             MessageString = message;
@@ -110,21 +112,18 @@ namespace ServerData
         //Messages++++++++++++++++++++
         public Packet(string error)
         {
-            packetType = PacketType.SystemError;
-            senderID = "server";
+            PacketType = PacketType.SystemError;
+            SenderId = "server";
             MessageString = error;
         }
 
-
-
-
         public Packet Copy()
         {
-            Packet p = new Packet(packetType);
+            Packet p = new Packet(PacketType);
             p.Data = Data;
             p.Success = Success;
             p.MessageString = MessageString;
-            p.senderID = senderID;
+            p.SenderId = SenderId;
 
             return p;
         }

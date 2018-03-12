@@ -19,11 +19,11 @@ using ClientClassLib;
 using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Navigation;
 using ServerData;
-using Test.Pages;
-using Test.Pages.Settings;
+using Pinnwand.Pages;
+using Pinnwand.Pages.Settings;
 using NavigationEventArgs = FirstFloor.ModernUI.Windows.Navigation.NavigationEventArgs;
 
-namespace Test
+namespace Pinnwand
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -34,15 +34,17 @@ namespace Test
         public Login LoginFrm;
         public bool hasRights = false;
         public Kursliste _kursliste;
+        public GlobalMethods.UpdateFormCallback UpdateFormCallback;
+        public GlobalMethods.ErrorMessageCallback ErrorCallback;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            GlobalMethods.ErrorMessageCallback ErrorCallback = Fehler_Ausgabe;
-            GlobalMethods.UpdateFormCallback UpdateFormCallback = UpdateChat;
+            ErrorCallback += Fehler_Ausgabe;
 
             client = new Client(ErrorCallback, UpdateFormCallback);
+            
 
             client.Connect(PacketHandler.GetIPAddress(), 4444); //Connect to Server on IP and POrt 4444
 
@@ -80,6 +82,7 @@ namespace Test
         public void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             Close();
+            
         }
 
         public void Reload_Kurse()

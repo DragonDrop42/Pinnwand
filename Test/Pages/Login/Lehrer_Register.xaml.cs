@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ServerData;
 
-namespace Test.Pages.Login
+namespace Pinnwand.Pages.Login
 {
     /// <summary>
     /// Interaction logic for Schüler_Login.xaml
@@ -31,7 +31,7 @@ namespace Test.Pages.Login
 
             Loaded += (sender, args) =>
             {
-                mw = UIHelper.FindVisualParent<Test.Login>(this).mw;
+                mw = UIHelper.FindVisualParent<Pinnwand.Login>(this).mw;
                 cmd_AbsendenRegistrierungLehrer.Click += CmdAbsendenRegistrierungLehrerOnClick;
             };
         }

@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ServerData;
 
-namespace Test.Pages.ExtraPage
+namespace Pinnwand.Pages.ExtraPage
 {
     /// <summary>
     /// Interaction logic for TerminErstellen.xaml

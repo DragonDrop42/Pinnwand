@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using ClientClassLib;
 using ServerData;
 
-namespace Test.Pages.Settings
+namespace Pinnwand.Pages.Settings
 {
     /// <summary>
     /// Interaction logic for KursAuswahl.xaml
@@ -25,9 +25,13 @@ namespace Test.Pages.Settings
     public partial class Kurswahl : UserControl
     {
         private ListDictionary Kurse;
+        private MainWindow mw;
+        private ListDictionary Lehrer;
+        private ListDictionary Klassen;
         
         public Kurswahl()
         {
+            mw = (MainWindow)Application.Current.MainWindow;
             InitializeComponent();
             Loaded += OnLoaded;
         }
@@ -38,13 +42,98 @@ namespace Test.Pages.Settings
             {
                  Lehrerptions.Children.Clear();   
             }
-            
-            cmd_refresh.Click += Cmd_Refresh_Click;
+            reload_kurse();
             cmd_save.Click += cmd_save_Click;
+            cb_klassen.DropDownOpened += (o, a) =>
+            {
+                Packet klassen = mw.client.SendAndWaitForResponse(PacketType.Klassenwahl);
+                if (klassen.Success)
+                {
+                    Klassen = klassen.Data;
+                    List<string> lst_data = (List<string>) klassen.Data["Kl_Name"];
+                    List<string> ids = (List<string>) klassen.Data["Kl_ID"];
+                    cb_klassen.Items.Clear();
+
+                    for (var i = 0; i < lst_data.Count; i++)
+                    {
+                        cb_klassen.Items.Add(lst_data[i]+"#"+Math.Abs(Convert.ToInt32(ids[i])));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Klassen konnten nicht geladen werden:\n" + klassen.MessageString);
+                }
+            };
+            cb_lehrer.DropDownOpened += (o, a) => { 
+                Packet lehrer = mw.client.SendAndWaitForResponse(PacketType.GetLehrer);
+                if (lehrer.Success)
+                {
+                    Lehrer = lehrer.Data;
+                    List<string> lst_data = (List<string>) lehrer.Data["L_Name"];
+                    List<string> ids = (List<string>) lehrer.Data["L_ID"];
+                    cb_lehrer.Items.Clear();
+
+                    for (var i = 0; i < lst_data.Count; i++)
+                    {
+                        cb_lehrer.Items.Add(lst_data[i]+"#"+ids[i]);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Klassen konnten nicht geladen werden:\n" + lehrer.MessageString);
+                }};
+            cmd_addKlasse.Click += (o, a) =>
+            {
+                Packet KlasseErstellen = mw.client.SendAndWaitForResponse(PacketType.KlasseErstellen, new ListDictionary
+                {
+                    {"Kl_Name", txt_Klassenname.Text},
+                    {"Kl_Abschlussdatum", dp_Abschlussdatum.SelectedDate}
+                });
+                MessageBox.Show(KlasseErstellen.Success
+                    ? "Klasse Erfolgreich hinzugefügt!"
+                    : KlasseErstellen.MessageString);
+            };
+            cmd_addKurs.Click += (o, a) =>
+            {
+                Packet KursErstellen = mw.client.SendAndWaitForResponse(PacketType.CreateKurs, new ListDictionary
+                {
+                    {"K_Name", txt_Kursname.Text},
+                    {"L_ID", Convert.ToInt32(cb_lehrer.SelectedValue.ToString().Split('#').Last())},
+                    {"Kl_ID", Convert.ToInt32(cb_klassen.SelectedValue.ToString().Split('#').Last())}
+                });
+                MessageBox.Show(KursErstellen.Success
+                    ? "Kurs Erfolgreich hinzugefügt!"
+                    : KursErstellen.MessageString);
+                reload_kurse();
+            };
         }
+
+        private void reload_kurse()
+        {
+            try
+            {
+                Packet kurse = mw.client.SendAndWaitForResponse(PacketType.GetAlleKurse);
+                Packet getKurse = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
+                if (kurse.Success && getKurse.Success)
+                {
+                    UpdateKurse(kurse.Data,getKurse.Data);
+                }
+                else
+                {
+                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
         private void cmd_save_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = UIHelper.FindVisualParent<MainWindow>(this);
             try
             {
                 List<string> k = GetChecked();
@@ -61,27 +150,6 @@ namespace Test.Pages.Settings
             catch (Exception ex)
             {
                 lbl_Kurswahl_Error.Text = ex.Message;
-            }
-        }
-        private void Cmd_Refresh_Click(object sender, RoutedEventArgs routedEventArgs)
-        {
-            Client client = UIHelper.FindVisualParent<MainWindow>(this).client;
-            try
-            {
-                Packet kurse = client.SendAndWaitForResponse(PacketType.GetAlleKurse);
-                Packet getKurse = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
-                if (kurse.Success && getKurse.Success)
-                {
-                    UpdateKurse(kurse.Data,getKurse.Data);
-                }
-                else
-                {
-                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
         }
 

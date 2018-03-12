@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Test
+namespace Pinnwand
 {
     /// <summary>
     /// Interaction logic for Schüler.xaml

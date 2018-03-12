@@ -16,9 +16,9 @@ using System.Windows.Shapes;
 using FirstFloor.ModernUI.Windows.Controls;
 using ServerData;
 using System.Globalization;
-using Test.Pages.ExtraPage;
+using Pinnwand.Pages.ExtraPage;
 
-namespace Test.Pages
+namespace Pinnwand.Pages
 {
     /// <summary>
     /// Interaction logic for Home.xaml
@@ -44,8 +44,9 @@ namespace Test.Pages
         public void reload_Liste()
         {
             Packet SchülerPacket;
-            if (kurs != "All")
+            if (kurs != "all")
             {
+                ((MainWindow) Application.Current.MainWindow).client.ChatUpdate += (sender, args) => reload_Chat();
                 lbl_Schülerliste.Content = "Schülerliste " + kurs;
                 SchülerPacket = client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
@@ -57,16 +58,22 @@ namespace Test.Pages
             }
             else
             {
-                Packet Klassenpacket = client.SendAndWaitForResponse(PacketType.getKlasse);
-                lbl_Schülerliste.Content = "Schülerliste " + ((List<string>) Klassenpacket.Data["K_Name"])[0];
+                Packet Klassenpacket = client.SendAndWaitForResponse(PacketType.GetKlasse);
+                if (Klassenpacket.Success)
+                {
+                    lbl_Schülerliste.Content = "Schülerliste " + ((List<string>) Klassenpacket.Data["Kl_Name"])[0];
+                }
+                else
+                {
+                    MessageBox.Show(Klassenpacket.MessageString);
+                }
                 SchülerPacket = client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKlasse,
                     new ListDictionary
                     {
-                        {"Kl_ID", Math.Abs(Convert.ToInt32(((List<string>)Klassenpacket.Data["KL_ID"])[0]))}
+                        {"Kl_ID", Math.Abs(Convert.ToInt32(((List<string>)Klassenpacket.Data["Kl_ID"])[0]))}
                     }
                 );
-                
             }
 
             if (SchülerPacket.Success)
@@ -91,13 +98,13 @@ namespace Test.Pages
                 for (int i = 0; i < ((List<string>)EreignissPacket.Data["K_ID"]).Count; i++)
                 {
                     string t = ((List<string>) EreignissPacket.Data["K_ID"])[i];
-                    if ( ((List<string>) EreignissPacket.Data["K_ID"])[i] == K_ID.ToString() || kurs == "all" )
+                    if (((List<string>) EreignissPacket.Data["K_ID"])[i] == K_ID.ToString() || kurs == "all")
                     {
                         string E_Art = ((List<string>) EreignissPacket.Data["E_Art"])[i];
                         DateTime E_Fälligkeitsdatum =
                             Convert.ToDateTime(((List<string>) EreignissPacket.Data["E_Fälligkeitsdatum"])[i]);
                         string E_Inhalt = ((List<string>) EreignissPacket.Data["E_Beschreibung"])[i];
-                        string E_Autor = ((List<string>)EreignissPacket.Data["E_Autor"])[i];
+                        string E_Autor = ((List<string>) EreignissPacket.Data["E_Autor"])[i];
 
                         ereignisseErstellen(E_Art, E_Fälligkeitsdatum, E_Inhalt, E_Autor);
                     }
@@ -126,22 +133,24 @@ namespace Test.Pages
             }
             else
             {
-                MessageBox.Show(ChatPacket.MessageString);
+                Console.WriteLine(ChatPacket.MessageString);
             }
         }
         
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (!UIHelper.FindVisualParent<MainWindow>(this).LoginFrm.IsVisible)
-            {
+            
                 KListe = UIHelper.FindVisualChildByName<ModernTab>(Application.Current.MainWindow, "mt_Kurse");
                 client = UIHelper.FindVisualParent<MainWindow>(this).client;
                 hasRights = UIHelper.FindVisualParent<MainWindow>(this).hasRights;
+                Pinnwand.Login lgf = ((MainWindow) Application.Current.MainWindow).LoginFrm;
+                lgf.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
                 kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
 
                 if (kurs == "Pages/Home.xaml")
                 {
                     stack_Chat.Children.Clear();
+                    idontevencareanymore.Children.Clear();
                     kurs = "all";
                 }
                 else
@@ -152,9 +161,9 @@ namespace Test.Pages
                     reload_Chat();
                 }
 
-                reload_Liste();
-                reload_Ereignisse();
-            }
+            if (lgf.IsVisible || hasRights) return;
+            reload_Liste();
+            reload_Ereignisse();
         }
 
         private void txt_chatEingabe_GotFocus(object sender, RoutedEventArgs e) //leeren des Placeholders in der Leiste
@@ -218,17 +227,17 @@ namespace Test.Pages
             LinearGradientBrush gradientBrush = new LinearGradientBrush();
             switch (zahl)
             {
-                case 1:             
+                case 1:
                     gradientBrush.StartPoint = new Point(0.5, 0);
                     gradientBrush.EndPoint = new Point(0.5, 1);
                     gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 178, 178, 178), 0));
-                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 38, 139, 185), 1));           
+                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(255, 38, 139, 185), 1));
                     break;
                 case 2:
                     gradientBrush.StartPoint = new Point(0.5, 0);
                     gradientBrush.EndPoint = new Point(0.5, 1);
                     gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(200, 178, 178, 178), 0));
-                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(200, 38, 139, 185), 1)); 
+                    gradientBrush.GradientStops.Add(new GradientStop(Color.FromArgb(200, 38, 139, 185), 1));
                     break;
             }
 

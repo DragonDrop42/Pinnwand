@@ -46,7 +46,7 @@ namespace Server
                 Thread.Sleep(100);
                 //----------------
 
-                ClientData client = ClientHandler.GetClientByID(p.senderID);
+                ClientData client = ClientHandler.GetClientByID(p.SenderId);
                 if (client == null)
                 {
                     return;
@@ -67,7 +67,8 @@ namespace Server
                 }
 
                 //Angemeldet: (gesicherter Bereich)
-                switch (p.packetType)
+                Console.WriteLine("received " + p.PacketType);
+                switch (p.PacketType)
                 {
                     case PacketType.Default:
                         //zum Testen
@@ -110,8 +111,14 @@ namespace Server
                     case PacketType.KlasseErstellen:
                         KlasseErstellen(client, p);
                         break;
-                    case PacketType.getKlasse:
+                    case PacketType.GetKlasse:
                         getKlasse(client);
+                        break;
+                    case PacketType.CreateKurs:
+                        CreateKurs(client, p);
+                        break;
+                    case PacketType.GetLehrer:
+                        GetLehrer(client);
                         break;
                     default:
                         ClientHandler.Send_Error_Message_to_Client(client, "Unerwartetes Packet!!!");
@@ -124,10 +131,40 @@ namespace Server
             }
         }
 
+        private static void GetLehrer(ClientData client)
+        {
+            DatenbankArgs args = client.db_Manager.Lehrer.getAll();
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("GetLehrer", args.Error);
+            }
+
+            Packet response = new Packet(PacketType.GetLehrer, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void CreateKurs(ClientData client, Packet p)
+        {
+            Packet response;
+            if (client.hasRights)
+            {
+                DatenbankArgs args = client.db_Manager.Kurse.add(
+                    (string)p.Data["K_Name"],
+                    (int)p.Data["L_ID"],
+                    (int)p.Data["Kl_ID"]);
+                response = new Packet(PacketType.CreateKurs, args.Data, args.Success, args.Error);
+            }
+            else
+            {
+                response = new Packet(PacketType.CreateKurs, new DataTable() , false , "Nicht genügend Rechte");
+            }
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
         private static void GetSchülerInKlasse(ClientData client, Packet packet)
         {
             DatenbankArgs args = client.db_Manager.Klasse.getSchüler(
-                (int)packet.Data["Kl_ID"]
+                Convert.ToInt32(packet.Data["Kl_ID"])
                 );
             if (!args.Success)
             {
@@ -143,14 +180,14 @@ namespace Server
             DatenbankArgs args;
             if (client.hasRights)
             {
-                args = client.db_Manager.Schüler.getby(client.email, "L_Email");
+                args = client.db_Manager.Lehrer.getby(client.email, "L_Email");
             }
             else
             {
                 args = client.db_Manager.Schüler.getKlasse(client.email);
             }
 
-            Packet response = new Packet(PacketType.getKlasse,args.Data,args.Success,args.Error);
+            Packet response = new Packet(PacketType.GetKlasse,args.Data,args.Success,args.Error);
             ClientHandler.SendSinglePacket(client, response);
         }
 
@@ -168,11 +205,11 @@ namespace Server
                 DatenbankArgs args = client.db_Manager.Klasse.add(
                     (string)p.Data["Kl_Name"],
                     (DateTime)p.Data["Kl_Abschlussdatum"]);
-                response = new Packet(PacketType.GetEreignisse, args.Data, args.Success, args.Error);
+                response = new Packet(PacketType.KlasseErstellen, args.Data, args.Success, args.Error);
             }
             else
             {
-                response = new Packet(PacketType.SendEreigniss, new DataTable() , false , "Nicht genügend Rechte");
+                response = new Packet(PacketType.KlasseErstellen, new DataTable() , false , "Nicht genügend Rechte");
             }
             ClientHandler.SendSinglePacket(client, response);
         }
@@ -253,6 +290,7 @@ namespace Server
                 ClientHandler.Ausgabe("getChat", "null");
             }
 
+            Console.WriteLine(client.email);
             Packet response = new Packet(PacketType.GetChat, args.Data, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
         }
@@ -419,9 +457,9 @@ namespace Server
         {
             Packet response = null;
 
-            switch (p.packetType)
+            switch (p.PacketType)
             {
-                case PacketType.Schüler_Login:
+                case PacketType.SchülerLogin:
                     //DB-----   Try Login
                     ClientHandler.Ausgabe("Auth", "Email: " + p.Data["email"] + " Passwort: " + p.Data["passwort"] + " try to login");
 
@@ -440,10 +478,10 @@ namespace Server
                     {
                         ClientHandler.Ausgabe("Auth", p.Data["email"] + " Login fehlgeschlagen!");
                     }
-                    response = new Packet(PacketType.Schüler_Login, args.Data, args.Success, args.Error);
+                    response = new Packet(PacketType.SchülerLogin, args.Data, args.Success, args.Error);
                     //------
                     break;
-                case PacketType.Lehrer_Login:
+                case PacketType.LehrerLogin:
                     //DB-----   Try Login
                     ClientHandler.Ausgabe("Auth", "Email: " + p.Data["email"] + " Passwort: " + p.Data["passwort"] + " try to login");
 
@@ -462,11 +500,11 @@ namespace Server
                     {
                         ClientHandler.Ausgabe("Auth", p.Data["email"] + " Login fehlgeschlagen!");
                     }
-                    response = new Packet(PacketType.Lehrer_Login, args.Data, args.Success, args.Error);
+                    response = new Packet(PacketType.LehrerLogin, args.Data, args.Success, args.Error);
                     //------
                     break;
 
-                case PacketType.Schüler_Registraition: //Register Schüler
+                case PacketType.SchülerRegistraition: //Register Schüler
 
                     args = client.db_Manager.Schüler.add(p.Data["name"].ToString(), p.Data["vname"].ToString(), p.Data["phone"].ToString(), p.Data["email"].ToString(), p.Data["klasse"].ToString(), p.Data["passwort"].ToString());
                     if (args.Success)
@@ -477,10 +515,10 @@ namespace Server
                     {
                         ClientHandler.Ausgabe("Auth", p.Data["email"] + " Registrierung fehlgeschlagen!");
                     }
-                    response = new Packet(PacketType.Schüler_Registraition, args.Data, args.Success, args.Error);
+                    response = new Packet(PacketType.SchülerRegistraition, args.Data, args.Success, args.Error);
                     break;
                     
-                case PacketType.Lehrer_Registraition: //Register Lehrer
+                case PacketType.LehrerRegistraition: //Register Lehrer
 
                     if ((string)p.Data["lehrerPasswort"] != lehrerPasswort)
                     {
@@ -498,7 +536,7 @@ namespace Server
                     {
                         ClientHandler.Ausgabe("Auth", p.Data["email"] + " Registrierung fehlgeschlagen!");
                     }
-                    response = new Packet(PacketType.Lehrer_Registraition, args.Data, args.Success, args.Error);
+                    response = new Packet(PacketType.LehrerRegistraition, args.Data, args.Success, args.Error);
                     break;
 
                 case PacketType.Klassenwahl:

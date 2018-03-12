@@ -286,6 +286,18 @@ namespace PiaLib
                     return new DatenbankArgs(ex.Message);
                 }
             }
+
+            public DatenbankArgs getAll()
+            {
+                try
+                {
+                    return new DatenbankArgs(lta.GetData());
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
         }
 
         public class kurse
@@ -451,12 +463,12 @@ namespace PiaLib
             public DatenbankArgs getNameByID(int id)
             {
                 DataTable data = klta.GetData();
-                DataTable Dataout = new DataTable();
+                DataTable Dataout = new PinnwandDataSet.KlasseDataTable();
                 foreach (DataRow row in data.Rows)
                 {
                     if ((int)row["Kl_ID"] == id)
                     {
-                        Dataout.Rows.Add(row);
+                        Dataout.Rows.Add(row.ItemArray);
                     }
                 }
                 return new DatenbankArgs(Dataout);
@@ -494,12 +506,16 @@ namespace PiaLib
             {
                 try
                 {
-                    DataTable dataout = new DataTable();
+                    DataTable dataout = new PinnwandDataSet.SchülerDataTable();
                     foreach (DataRow row in sta.GetData().Rows)
                     {
-                        if ((int) row["KL_ID"] == Kl_ID)
+                        if (row["Kl_ID"].GetType() != typeof(DBNull))
                         {
-                            dataout.Rows.Add(row);
+                            int kl_id = Convert.ToInt32(row["Kl_ID"]);
+                            if (kl_id == Kl_ID)
+                            {
+                                dataout.Rows.Add(row.ItemArray);
+                            }
                         }
                     }
                     return new DatenbankArgs(dataout);

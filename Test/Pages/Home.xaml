@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Test.Pages.Home"
+﻿<UserControl x:Class="Pinnwand.Pages.Home"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -52,7 +52,7 @@
                                     </UniformGrid>
                                 </StackPanel>
                                 <!-- Bearbeiten der Termine mittels der Button -->
-                                <StackPanel Width="50" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <StackPanel x:Name="idontevencareanymore" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top">
                                     <Button x:Name="terminHinzufügen" Width="35" Height="35" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="terminHinzufügen_Click">
                                         <Button.Background>
                                             <ImageBrush ImageSource="../Images/Kreuz.png"/>

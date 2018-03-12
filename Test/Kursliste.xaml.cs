@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using FirstFloor.ModernUI.Presentation;
 using ServerData;
 
-namespace Test
+namespace Pinnwand
 {
     /// <summary>
     /// Interaction logic for Kursliste.xaml
