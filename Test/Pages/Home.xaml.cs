@@ -158,6 +158,7 @@ namespace Pinnwand.Pages
         
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            
                 KListe = UIHelper.FindVisualChildByName<ModernTab>(Application.Current.MainWindow, "mt_Kurse");
                 client = UIHelper.FindVisualParent<MainWindow>(this).client;
                 hasRights = UIHelper.FindVisualParent<MainWindow>(this).hasRights;
@@ -178,7 +179,7 @@ namespace Pinnwand.Pages
                         ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
                     reload_Chat(client.SendAndWaitForResponse(PacketType.GetChat));
                 }
-
+            
             if (!lgf.IsVisible)
             {
                 reload_Liste();

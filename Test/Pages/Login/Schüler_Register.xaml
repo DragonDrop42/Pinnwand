@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="368" Margin="-25,0,0,0" >
+             d:DesignHeight="300" d:DesignWidth="380" Margin="-25,0,0,0" >
     <Grid Style="{StaticResource ContentRoot}">
         <StackPanel MinWidth="200">
             
@@ -22,8 +22,8 @@
                 <TextBox Width="250" x:Name="txt_Telefonnummer"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Label Width="90" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="0,0,10,0">Klasse*</Label>
-                <ComboBox Width="250" x:Name="cbB_Klasse"></ComboBox>
+                <Label Width="90" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="0,0,10,0" >Klasse*</Label>
+                <ComboBox Width="250" x:Name="cbB_Klasse" MaxDropDownHeight="100"></ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <Label Width="90" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="0,0,10,0">E-Mail*</Label>
