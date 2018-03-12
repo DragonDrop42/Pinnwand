@@ -82,7 +82,6 @@ namespace Pinnwand
         public void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             Close();
-            
         }
 
         public void Reload_Kurse()
