@@ -58,6 +58,7 @@ namespace Pinnwand.Pages
             }
             else
             {
+                if(hasRights) return;
                 Packet Klassenpacket = client.SendAndWaitForResponse(PacketType.GetKlasse);
                 if (Klassenpacket.Success)
                 {
@@ -160,10 +161,12 @@ namespace Pinnwand.Pages
                         ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
                     reload_Chat();
                 }
-
-            if (lgf.IsVisible || hasRights) return;
-            reload_Liste();
-            reload_Ereignisse();
+            
+            if (!lgf.IsVisible)
+            {
+                reload_Liste();
+                reload_Ereignisse();
+            }
         }
 
         private void txt_chatEingabe_GotFocus(object sender, RoutedEventArgs e) //leeren des Placeholders in der Leiste
