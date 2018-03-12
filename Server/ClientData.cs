@@ -58,7 +58,8 @@ namespace Server
 
         public void SetAutorKürzel()
         {
-            autor += vname.Length < 3 ? vname.Substring(0, vname.Length) : vname.Substring(0, 3);
+            autor = "";
+            autor += vname.Length < 2 ? vname.Substring(0, vname.Length) : vname.Substring(0, 2);
             autor += "." + name;
         }
     }
