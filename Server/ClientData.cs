@@ -26,7 +26,8 @@ namespace Server
         public string email;
         public string vname = "";
         public string name = "";
-        public bool hasRights;
+        public string autor = "";
+        public bool hasRights = false;
 
         public ClientData(Socket clientSocket)
         {
@@ -55,11 +56,10 @@ namespace Server
         }
 
 
-        public void SetAutorKürzel(string vname, string name)
+        public void SetAutorKürzel()
         {
-            string kürzel = "";
-            kürzel += vname.Length < 3 ? vname.Substring(0, vname.Length) : vname.Substring(0, 3);
-            kürzel += "." + name;
+            autor += vname.Length < 3 ? vname.Substring(0, vname.Length) : vname.Substring(0, 3);
+            autor += "." + name;
         }
     }
 }

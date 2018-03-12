@@ -220,7 +220,7 @@ namespace Server
                 (int)p.Data["K_ID"],
                 (string)p.Data["E_Art"],
                 (DateTime)p.Data["E_Fälligkeitsdatum"],
-                client.name, //(string)p.Data["E_Autor"],
+                client.autor, //(string)p.Data["E_Autor"],
                 (string)p.Data["E_Beschreibung"]);
             if (!args.Success)
             {
@@ -228,7 +228,7 @@ namespace Server
             }
             else
             {
-                Console.WriteLine((string)p.Data["E_Autor"] + ": " + (string)p.Data["E_Beschreibung"]);
+                Console.WriteLine(client.autor + ": " + (string)p.Data["E_Beschreibung"]);
             }
             Packet response = new Packet(PacketType.SendEreigniss, args.Data, args.Success, args.Error);
             ClientHandler.SendSinglePacket(client, response);
@@ -250,7 +250,7 @@ namespace Server
         private static void SendChatNachricht(ClientData client, Packet p)
         {
             DatenbankArgs args = client.db_Manager.Kurse.sendChat(
-                client.name,           //(string)p.Data["C_Sendername"],
+                client.autor,           //(string)p.Data["C_Sendername"],
                 (string)p.Data["C_Inhalt"],
                 (int)p.Data["K_ID"]);
             if (!args.Success)
@@ -259,7 +259,7 @@ namespace Server
             }
             else
             {
-                Console.WriteLine(client.name + ": "+(string)p.Data["C_Inhalt"]);
+                Console.WriteLine(client.autor + ": "+(string)p.Data["C_Inhalt"]);
                 //An alle eingelogten Clients senden
                 //UpdateAll();
             }
@@ -472,6 +472,7 @@ namespace Server
                         client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
                         client.name = (string)args.Data.Rows[0]["S_Name"];
                         client.vname = (string)args.Data.Rows[0]["S_Vorname"];
+                        client.SetAutorKürzel();
                         ClientHandler.Ausgabe("Auth", client.vname + "." + client.name + "." + client.email + " (Schüler) eingeloggt");
                     }
                     else
@@ -493,6 +494,7 @@ namespace Server
                         client.email = p.Data["email"].ToString();  //email als Erkennungsmerkmal setzen
                         client.name = (string)args.Data.Rows[0]["L_Name"];
                         client.vname = (string)args.Data.Rows[0]["L_Vorname"];
+                        client.SetAutorKürzel();
                         client.hasRights = true;
                         ClientHandler.Ausgabe("Auth", client.vname + "." + client.name + "." + client.email + " (Lehrer) eingeloggt");
                     }
