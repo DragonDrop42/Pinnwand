@@ -103,9 +103,12 @@ namespace Pinnwand.Pages.Settings
                     {"L_ID", Convert.ToInt32(cb_lehrer.SelectedValue.ToString().Split('#').Last())},
                     {"Kl_ID", Convert.ToInt32(cb_klassen.SelectedValue.ToString().Split('#').Last())}
                 });
-                MessageBox.Show(KursErstellen.Success
+                mw.Fehler_Ausgabe(KursErstellen.Success
                     ? "Kurs Erfolgreich hinzugefügt!"
                     : KursErstellen.MessageString);
+                lbl_bestätigung.Content = KursErstellen.Success
+                    ? "Kurs Erfolgreich hinzugefügt!"
+                    : KursErstellen.MessageString;
                 reload_kurse();
             };
         }
