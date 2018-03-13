@@ -5480,8 +5480,10 @@ namespace PiaLib.PinnwandDataSetTableAdapters {
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT        K_ID, K_Name, Kl_ID, L_ID\r\nFROM            Kurs\r\nWHERE        (L_ID" +
-                " = ?)";
+            this._commandCollection[1].CommandText = "SELECT        Kurs.K_Name, Klasse.Kl_Name\r\nFROM            ((Kurs INNER JOIN\r\n   " +
+                "                      Lehrer ON Kurs.L_ID = Lehrer.L_ID) INNER JOIN\r\n           " +
+                "              Klasse ON Kurs.Kl_ID = Klasse.Kl_ID)\r\nWHERE        (Lehrer.L_ID = " +
+                "?)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("L_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "L_ID", global::System.Data.DataRowVersion.Current, false, null));
             this._commandCollection[2] = new global::System.Data.OleDb.OleDbCommand();
