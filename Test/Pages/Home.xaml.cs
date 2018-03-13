@@ -165,7 +165,6 @@ namespace Pinnwand.Pages
                 Pinnwand.Login lgf = ((MainWindow) Application.Current.MainWindow).LoginFrm;
                 lgf.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
                 kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
-                ((MainWindow)Application.Current.MainWindow).CurrentKurs = this;
 
                 if (kurs == "Pages/Home.xaml")
                 {

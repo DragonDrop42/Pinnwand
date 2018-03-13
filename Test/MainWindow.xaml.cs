@@ -36,7 +36,6 @@ namespace Pinnwand
         public Kursliste _kursliste;
         public GlobalMethods.UpdateFormCallback UpdateFormCallback;
         public GlobalMethods.ErrorMessageCallback ErrorCallback;
-        public Home CurrentKurs;
 
         public MainWindow()
         {
@@ -71,9 +70,9 @@ namespace Pinnwand
         }
 
         //Callback Delegates+++++++++++++++++++++++++++
-        private void Fehler_Ausgabe(string s)
+        public void Fehler_Ausgabe(string s)
         {
-            Console.WriteLine(s);
+            MessageBox.Show(s);
         }
         private void UpdateChat(Packet p)
         {

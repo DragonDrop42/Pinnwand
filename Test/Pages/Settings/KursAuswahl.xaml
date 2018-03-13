@@ -5,48 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000">
+             d:DesignHeight="800" d:DesignWidth="1300">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <StackPanel MinWidth="200">
-                <TextBlock Text="Kurswahl" Style="{StaticResource Heading2}" />
-                <ListView x:Name="lv_Kurse" Height="auto" Width="auto">
-                </ListView>
-                <TextBlock x:Name="lbl_Kurswahl_Error"/>
-                <Button x:Name="cmd_save" MinWidth="100" MaxWidth="500" >Speichern</Button>
-                <StackPanel x:Name="Lehrerptions">
-                    <TextBlock Text="Klasse Hinzufügen" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
-                    <StackPanel Orientation="Horizontal">
-                        <Label Width="120" VerticalAlignment="Center" >Jahrgangsname:</Label>
-                        <TextBox x:Name="txt_Klassenname" MinWidth="200" Width="900"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Label Width="120" VerticalAlignment="Center" >Ablaufdatum:</Label>
-                        <DatePicker x:Name="dp_Abschlussdatum" MinWidth="200" Width="900"></DatePicker>
-                    </StackPanel>
-
-                    <Button x:Name="cmd_addKlasse" MinWidth="100" MaxWidth="500" Margin="0,10,0,0">Senden</Button>
-
-                    <TextBlock Text="Kurs Hinzufügen" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
-                    <StackPanel Orientation="Horizontal">
-                        <Label Width="120" VerticalAlignment="Center" >Name des Kurses:</Label>
-                        <TextBox x:Name="txt_Kursname"  Width="900"></TextBox>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Label Width="120" VerticalAlignment="Center" >Jahrgang:</Label>
-                        <ComboBox x:Name="cb_klassen" Width="900"></ComboBox>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Label Width="120" VerticalAlignment="Center" >Leher des Kurses:</Label>
-                        <ComboBox x:Name="cb_lehrer" Width="900"></ComboBox>
-                    </StackPanel>
-
-                    <Button x:Name="cmd_addKurs" MinWidth="100" MaxWidth="500" Margin="0,10,0,0">Senden</Button>
-
-
+            <StackPanel MinWidth="200" Orientation="Horizontal">
+                <StackPanel Width="500" HorizontalAlignment="Left">
+                    <TextBlock Text="Kurswahl" Style="{StaticResource Heading2}" />
+                    <ListView x:Name="lv_Kurse" Height="auto" Width="auto">
+                    </ListView>
+                    <TextBlock x:Name="lbl_Kurswahl_Error"/>
+                    <Button x:Name="cmd_save" Width="200" HorizontalAlignment="Left" Margin="0,0,30,0">Speichern</Button>
                 </StackPanel>
+                
+                <StackPanel Width="600">
+                    <StackPanel x:Name="Lehrerptions">
+                        <TextBlock Text="Klasse Hinzufügen" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Width="120" VerticalAlignment="Center" >Jahrgangsname:</Label>
+                            <TextBox x:Name="txt_Klassenname" MinWidth="200" Width="900"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <Label Width="120" VerticalAlignment="Center" >Ablaufdatum:</Label>
+                            <DatePicker x:Name="dp_Abschlussdatum" MinWidth="200" Width="900"></DatePicker>
+                        </StackPanel>
+
+                        <Button x:Name="cmd_addKlasse"  Width="200" Margin="0,10,0,0" HorizontalAlignment="Right">Senden</Button>
+
+                        
+                    </StackPanel>
+                    <StackPanel Margin="0,20,0,0">
+                        <TextBlock Text="Kurs Hinzufügen" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Width="120" VerticalAlignment="Center" >Name des Kurses:</Label>
+                            <TextBox x:Name="txt_Kursname"  Width="900"></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <Label Width="120" VerticalAlignment="Center" >Jahrgang:</Label>
+                            <ComboBox x:Name="cb_klassen" Width="900"></ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <Label Width="120" VerticalAlignment="Center" >Leher des Kurses:</Label>
+                            <ComboBox x:Name="cb_lehrer" Width="900"></ComboBox>
+                        </StackPanel>
+
+                        <Button x:Name="cmd_addKurs" Width="200" HorizontalAlignment="Right" Margin="0,10,0,0">Senden</Button>
+
+                    </StackPanel>
+                </StackPanel>
+                
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>

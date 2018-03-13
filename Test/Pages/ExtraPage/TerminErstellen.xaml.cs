@@ -27,7 +27,6 @@ namespace Pinnwand.Pages.ExtraPage
         int K_ID;
         
         private CultureInfo ci = new CultureInfo("de-DE");
-        private MainWindow mw;
 
         public TerminErstellen(ClientClassLib.Client client,int K_ID)
         {
@@ -35,7 +34,6 @@ namespace Pinnwand.Pages.ExtraPage
             datenInit();
             this.client = client;
             this.K_ID = K_ID;
-            mw = ((MainWindow)Application.Current.MainWindow);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -58,8 +56,7 @@ namespace Pinnwand.Pages.ExtraPage
             ///Senden+++++++++++++++++++++++++++++++++++++++++++++
 
             Packet args = client.SendAndWaitForResponse(PacketType.SendEreigniss, data);
-            Debug.Content = args.MessageString;
-            mw.CurrentKurs.reload_Ereignisse();
+            MessageBox.Show(args.Success + " " + args.MessageString);
         }
 
         private void datenInit()
