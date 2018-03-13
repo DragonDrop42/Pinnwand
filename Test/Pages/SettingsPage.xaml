@@ -12,6 +12,7 @@
                 <mui:Link DisplayName="Kurse" Source="/Pages/Settings/KursAuswahl.xaml" />
                 <mui:Link DisplayName="Aussehen" Source="/Pages/Settings/Appearance.xaml" />
                 <mui:Link DisplayName="Über" Source="/Pages/Settings/About.xaml" />
+                <mui:Link DisplayName="Logout" Source="/Pages/Settings/Logout.xaml" />
                 
             </mui:ModernTab.Links>
         </mui:ModernTab>

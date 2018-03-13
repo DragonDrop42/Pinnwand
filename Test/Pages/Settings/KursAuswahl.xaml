@@ -6,57 +6,89 @@
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1300">
+
     <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
-            <StackPanel MinWidth="200" Orientation="Horizontal">
-                <StackPanel Width="500" HorizontalAlignment="Left">
-                    <TextBlock Text="Kurswahl" Style="{StaticResource Heading2}" />
-                    <ListView x:Name="lv_Kurse" Height="auto" Width="auto">
-                    </ListView>
-                    <TextBlock x:Name="lbl_Kurswahl_Error"/>
-                    <Button x:Name="cmd_save" Width="200" HorizontalAlignment="Left" Margin="0,0,30,0">Speichern</Button>
-                </StackPanel>
-                
-                <StackPanel Width="600">
-                    <StackPanel x:Name="Lehrerptions">
-                        <TextBlock Text="Klasse Hinzufügen" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
-                        <StackPanel Orientation="Horizontal">
-                            <Label Width="120" VerticalAlignment="Center" >Jahrgangsname:</Label>
-                            <TextBox x:Name="txt_Klassenname" MinWidth="200" Width="900"></TextBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <Label Width="120" VerticalAlignment="Center" >Ablaufdatum:</Label>
-                            <DatePicker x:Name="dp_Abschlussdatum" MinWidth="200" Width="500"></DatePicker>
-                        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                        <Button x:Name="cmd_addKlasse"  Width="200" Margin="0,10,0,0" HorizontalAlignment="Right">Senden</Button>
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+            <TextBlock Text="Kurswahl" Style="{StaticResource Heading2}" />
 
-                        
-                    </StackPanel>
-                    <StackPanel Margin="0,20,0,0">
-                        <TextBlock Text="Kurs Hinzufügen" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
-                        <StackPanel Orientation="Horizontal">
-                            <Label Width="120" VerticalAlignment="Center" >Name des Kurses:</Label>
-                            <TextBox x:Name="txt_Kursname"  Width="900"></TextBox>
-                        </StackPanel>
+            <ListView x:Name="lv_Kurse" Height="auto" Width="auto"/>
 
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <Label Width="120" VerticalAlignment="Center" >Jahrgang:</Label>
-                            <ComboBox x:Name="cb_klassen" Width="900"></ComboBox>
-                        </StackPanel>
+            <TextBlock x:Name="lbl_Kurswahl_Error"/>
+            <Button x:Name="cmd_save" MinWidth="100" Width="150" HorizontalAlignment="Left" Margin="0,0,30,0">Speichern</Button>
+        </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <Label Width="120" VerticalAlignment="Center" >Leher des Kurses:</Label>
-                            <ComboBox x:Name="cb_lehrer" Width="900"></ComboBox>
-                        </StackPanel>
+        <StackPanel  Grid.Column="1" Grid.Row="0">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="170"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                        <Button x:Name="cmd_addKurs" Width="200" HorizontalAlignment="Right" Margin="0,10,0,0">Senden</Button>
+                <TextBlock Text="Kurs Hinzufügen" Style="{StaticResource Heading2}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
 
-                    </StackPanel>
-                </StackPanel>
-                
-                
-            </StackPanel>
-        </ScrollViewer>
+                <Label  VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" >Name des Kurses:</Label>
+                <TextBox x:Name="txt_Kursname"  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"></TextBox>
+
+                <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="3">Jahrgang:</Label>
+                <ComboBox x:Name="cb_klassen" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,10,0,0"></ComboBox>
+
+                <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="4" >Leher des Kurses:</Label>
+                <ComboBox x:Name="cb_lehrer" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,10,0,0"></ComboBox>
+
+                <Label x:Name="lbl_bestätigung" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="15" Margin="30,20,0,0"></Label>
+                <Button x:Name="cmd_addKurs" Grid.Column="3" Grid.Row="5" Margin="0,10,0,0" Content="Senden"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel x:Name="Lehrerptions"  Grid.Column="1" Grid.Row="1">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="170"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Klasse Hinzufügen" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
+
+                <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,10,0,0"  >Jahrgangsname:</Label>
+                <TextBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" x:Name="txt_Klassenname" Margin="0,10,0,0"  ></TextBox>
+
+                <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,10,0,0"  >Ablaufdatum:</Label>
+                <DatePicker Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" x:Name="dp_Abschlussdatum" Margin="0,10,0,0"  ></DatePicker>
+
+                <Button Grid.Column="2" Grid.Row="3" x:Name="cmd_addKlasse" Margin="0,10,0,0" >Senden</Button>
+            </Grid>
+         
+
+            
+        </StackPanel>
+
     </Grid>
 </UserControl>
