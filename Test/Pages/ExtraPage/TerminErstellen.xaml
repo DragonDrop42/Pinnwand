@@ -22,6 +22,7 @@
             <Label Width="110">Terminbeschreibung</Label>
             <TextBox Width="250" Height="145" Margin="5,0,0,0" x:Name="txt_terminBeschreibung"></TextBox>
         </StackPanel>
+        <Label x:Name="Debug"></Label>
         <Button Width="100" Height="35" HorizontalAlignment="Left" Margin="265,10,0,0" Click="Button_Click">Erstellen</Button>
     </StackPanel>
 </UserControl>

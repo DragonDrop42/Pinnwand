@@ -49,6 +49,7 @@ namespace Pinnwand.Pages.Login
                     mw.LoginFrm.Closing -= mw.LoginFrmOnClosing; 
                     mw.IsEnabled = true;
                     mw.hasRights = true;
+                    mw.Reload_Kurse();
                     mw.LoginFrm.Close();
                 }
                 else
