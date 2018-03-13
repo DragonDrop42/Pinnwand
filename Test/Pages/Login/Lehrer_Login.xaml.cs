@@ -49,6 +49,7 @@ namespace Pinnwand.Pages.Login
                     mw.LoginFrm.Closing -= mw.LoginFrmOnClosing; 
                     mw.IsEnabled = true;
                     mw.hasRights = true;
+                    mw.Reload_Kurse();
                     mw.LoginFrm.Close();
                 }
                 else
@@ -60,11 +61,6 @@ namespace Pinnwand.Pages.Login
             {
                 lbl_LehrerLoginError.Text = ex.Message;
             }
-        }
-
-        private void cmd_LeherPasswortReset_Click(object sender, RoutedEventArgs e)
-        {
-            mw.Fehler_Ausgabe("Bitte wenden Sie sich an den Administrator!");
         }
     }
 }
