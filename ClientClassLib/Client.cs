@@ -28,15 +28,13 @@ namespace ClientClassLib
         TCP_connection.DataManagerCallback packetCallback;
 
         GlobalMethods.ErrorMessageCallback errorCallback;
-        GlobalMethods.UpdateFormCallback updateChatCallback;
 
         public event EventHandler<Packet> ChatUpdate; 
 
-        public Client(GlobalMethods.ErrorMessageCallback errorDel, GlobalMethods.UpdateFormCallback updateChatDel)
+        public Client(GlobalMethods.ErrorMessageCallback errorDel)
         {
             packetCallback = new TCP_connection.DataManagerCallback(PacketManager); //PacketManager
 
-            updateChatCallback = updateChatDel;
             errorCallback = errorDel;
         }
     

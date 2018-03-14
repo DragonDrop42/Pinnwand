@@ -9,7 +9,7 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
                 <TextBlock Text="Über" Style="{StaticResource Heading2}" />
-                <TextBlock Text="Diese Software wurde im Rahmen des IS unterrichts der TIG15 am BSZ-et entwickelt." Margin="0,0,0,8" TextWrapping="Wrap" />
+                <TextBlock x:Name="AboutTextBlock" Margin="0,0,0,8" TextWrapping="Wrap" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

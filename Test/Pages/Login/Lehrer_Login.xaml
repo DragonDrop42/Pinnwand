@@ -18,7 +18,7 @@
             </StackPanel>
             <TextBlock x:Name="lbl_LehrerLoginError" Width="300" Height="34" Margin="10,20,0,0" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="cmd_LehrerLogin" Width="140" Margin="0,0,10,0">Login</Button>
+                <Button x:Name="cmd_LehrerLogin" Click="CmdLehrerLoginOnClick" Width="140" Margin="0,0,10,0">Login</Button>
                 <Button x:Name="cmd_LeherPasswortReset" Width="160" Click="cmd_LeherPasswortReset_Click">Passwort Vergessen?</Button>
             </StackPanel>
             <!--Das Label muss per Code erstellt werden (in ein Stackpannel rein) sonst ist die Heigt des Mainframes falsch-->

@@ -21,11 +21,9 @@ namespace Pinnwand
     /// </summary>
     public partial class Login : ModernWindow
     {
-        public MainWindow mw;
-        public Login(MainWindow mw)
+        public Login()
         {
             InitializeComponent();
-            this.mw = mw;
         }
     }
 }

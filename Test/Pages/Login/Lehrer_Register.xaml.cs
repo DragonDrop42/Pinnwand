@@ -22,18 +22,12 @@ namespace Pinnwand.Pages.Login
     /// </summary>
     public partial class Lehrer_Register : UserControl
     {
-        private MainWindow mw;
+        private MainWindow mw= (MainWindow)Application.Current.MainWindow;
         public Lehrer_Register()
         {
             InitializeComponent();
 
             comboxenFuellen();
-
-            Loaded += (sender, args) =>
-            {
-                mw = UIHelper.FindVisualParent<Pinnwand.Login>(this).mw;
-                cmd_AbsendenRegistrierungLehrer.Click += CmdAbsendenRegistrierungLehrerOnClick;
-            };
         }
 
         private void CmdAbsendenRegistrierungLehrerOnClick(object o, RoutedEventArgs routedEventArgs)

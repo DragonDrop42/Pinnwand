@@ -25,77 +25,28 @@ namespace Pinnwand.Pages.Settings
     public partial class Kurswahl : UserControl
     {
         private ListDictionary Kurse;
-        private MainWindow mw;
+        private MainWindow mw = (MainWindow)Application.Current.MainWindow;
         private ListDictionary Lehrer;
         private ListDictionary Klassen;
         
         public Kurswahl()
         {
-            mw = (MainWindow)Application.Current.MainWindow;
             InitializeComponent();
-            Loaded += OnLoaded;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (!((MainWindow)Application.Current.MainWindow).hasRights)
+            if (!mw.hasRights)
             {
-                 Lehrerptions.Children.Clear();   
+                Lehrerptions.Children.Clear();   
+                Lehreroptions2.Children.Clear();
             }
             reload_kurse();
-            cmd_save.Click += cmd_save_Click;
-            cb_klassen.DropDownOpened += (o, a) =>
-            {
-                Packet klassen = mw.client.SendAndWaitForResponse(PacketType.Klassenwahl);
-                if (klassen.Success)
-                {
-                    Klassen = klassen.Data;
-                    List<string> lst_data = (List<string>) klassen.Data["Kl_Name"];
-                    List<string> ids = (List<string>) klassen.Data["Kl_ID"];
-                    cb_klassen.Items.Clear();
+        }
 
-                    for (var i = 0; i < lst_data.Count; i++)
-                    {
-                        cb_klassen.Items.Add(lst_data[i]+"#"+Math.Abs(Convert.ToInt32(ids[i])));
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Klassen konnten nicht geladen werden:\n" + klassen.MessageString);
-                }
-            };
-            cb_lehrer.DropDownOpened += (o, a) => { 
-                Packet lehrer = mw.client.SendAndWaitForResponse(PacketType.GetLehrer);
-                if (lehrer.Success)
-                {
-                    Lehrer = lehrer.Data;
-                    List<string> lst_data = (List<string>) lehrer.Data["L_Name"];
-                    List<string> ids = (List<string>) lehrer.Data["L_ID"];
-                    cb_lehrer.Items.Clear();
-
-                    for (var i = 0; i < lst_data.Count; i++)
-                    {
-                        cb_lehrer.Items.Add(lst_data[i]+"#"+ids[i]);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Klassen konnten nicht geladen werden:\n" + lehrer.MessageString);
-                }};
-            cmd_addKlasse.Click += (o, a) =>
-            {
-                Packet KlasseErstellen = mw.client.SendAndWaitForResponse(PacketType.KlasseErstellen, new ListDictionary
-                {
-                    {"Kl_Name", txt_Klassenname.Text},
-                    {"Kl_Abschlussdatum", dp_Abschlussdatum.SelectedDate}
-                });
-                MessageBox.Show(KlasseErstellen.Success
-                    ? "Klasse Erfolgreich hinzugefügt!"
-                    : KlasseErstellen.MessageString);
-            };
-            cmd_addKurs.Click += (o, a) =>
+        private void OnCmdAddKursOnClick(object o, RoutedEventArgs a)
+        {
+            if (cb_lehrer.SelectedValue != null && cb_klassen.SelectedValue != null)
             {
                 Packet KursErstellen = mw.client.SendAndWaitForResponse(PacketType.CreateKurs, new ListDictionary
                 {
@@ -109,8 +60,67 @@ namespace Pinnwand.Pages.Settings
                 lbl_bestätigung.Content = KursErstellen.Success
                     ? "Kurs Erfolgreich hinzugefügt!"
                     : KursErstellen.MessageString;
-                reload_kurse();
-            };
+            }
+            else
+            {
+                lbl_bestätigung.Content = "Nicht alle felder wurden ausgefüllt";
+            }
+
+            reload_kurse();
+        }
+
+        private void OnCmdAddKlasseOnClick(object o, RoutedEventArgs a)
+        {
+            Packet KlasseErstellen = mw.client.SendAndWaitForResponse(PacketType.KlasseErstellen, new ListDictionary
+            {
+                {"Kl_Name", txt_Klassenname.Text},
+                {"Kl_Abschlussdatum", dp_Abschlussdatum.SelectedDate}
+            });
+            MessageBox.Show(KlasseErstellen.Success
+                ? "Klasse Erfolgreich hinzugefügt!"
+                : KlasseErstellen.MessageString);
+        }
+
+        private void OnCbLehrerOnDropDownOpened(object o, EventArgs a)
+        {
+            Packet lehrer = mw.client.SendAndWaitForResponse(PacketType.GetLehrer);
+            if (lehrer.Success)
+            {
+                Lehrer = lehrer.Data;
+                List<string> lst_data = (List<string>) lehrer.Data["L_Name"];
+                List<string> ids = (List<string>) lehrer.Data["L_ID"];
+                cb_lehrer.Items.Clear();
+
+                for (var i = 0; i < lst_data.Count; i++)
+                {
+                    cb_lehrer.Items.Add(lst_data[i] + "#" + ids[i]);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Klassen konnten nicht geladen werden:\n" + lehrer.MessageString);
+            }
+        }
+
+        private void OnCbKlassenOnDropDownOpened(object o, EventArgs a)
+        {
+            Packet klassen = mw.client.SendAndWaitForResponse(PacketType.Klassenwahl);
+            if (klassen.Success)
+            {
+                Klassen = klassen.Data;
+                List<string> lst_data = (List<string>) klassen.Data["Kl_Name"];
+                List<string> ids = (List<string>) klassen.Data["Kl_ID"];
+                cb_klassen.Items.Clear();
+
+                for (var i = 0; i < lst_data.Count; i++)
+                {
+                    cb_klassen.Items.Add(lst_data[i] + "#" + Math.Abs(Convert.ToInt32(ids[i])));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Klassen konnten nicht geladen werden:\n" + klassen.MessageString);
+            }
         }
 
         private void reload_kurse()
@@ -169,6 +179,7 @@ namespace Pinnwand.Pages.Settings
                 });
             }
         }
+        
         public List<string> GetChecked()
         {
             List<string> IDS = new List<string>();

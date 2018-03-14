@@ -21,13 +21,13 @@ namespace Pinnwand.Pages.ExtraPage
     /// <summary>
     /// Interaction logic for TerminErstellen.xaml
     /// </summary>
-    public partial class TerminErstellen : UserControl
+    public partial class TerminErstellen
     {
         private ClientClassLib.Client client;
         int K_ID;
         
         private CultureInfo ci = new CultureInfo("de-DE");
-        private MainWindow mw;
+        private MainWindow mw = (MainWindow)Application.Current.MainWindow;
 
         public TerminErstellen(ClientClassLib.Client client,int K_ID)
         {
@@ -35,25 +35,18 @@ namespace Pinnwand.Pages.ExtraPage
             datenInit();
             this.client = client;
             this.K_ID = K_ID;
-            mw = ((MainWindow)Application.Current.MainWindow);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string terminname;
-            DateTime termindatum;
-            string terminbeschreibung;
-
-            terminname = txt_terminName.Text;
-            termindatum = Convert.ToDateTime(cb_terminDatumTag.SelectedValue.ToString() + "." + cb_terminDatumMonat.SelectedValue.ToString() + "." + cb_terminDatumJahr.SelectedValue.ToString());
-            terminbeschreibung = txt_terminBeschreibung.Text;
-
             ListDictionary data = new ListDictionary{
                 {"K_ID",K_ID},
-                {"E_Art", terminname},
-                {"E_Autor",null},
-                {"E_Fälligkeitsdatum", termindatum},
-                {"E_Beschreibung", terminbeschreibung}
+                {"E_Art", txt_terminName.Text},
+                {"E_Autor",null}, //Wird im server vergeben
+                {"E_Fälligkeitsdatum", Convert.ToDateTime(cb_terminDatumTag.SelectedValue + "." + 
+                                                          cb_terminDatumMonat.SelectedValue + "." + 
+                                                          cb_terminDatumJahr.SelectedValue)},
+                {"E_Beschreibung", txt_terminBeschreibung.Text}
             };
             ///Senden+++++++++++++++++++++++++++++++++++++++++++++
 

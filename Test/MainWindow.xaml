@@ -8,5 +8,6 @@
     
     <mui:ModernWindow.TitleLinks>
         <mui:Link x:Name="cmd_einstellungen" DisplayName="Einstellungen" Source="/Pages/SettingsPage.xaml" />
+        <mui:Link x:Name="cmd_Logout" DisplayName="Logout" Source="/Pages/Settings/Logout.xaml"></mui:Link>
     </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>

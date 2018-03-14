@@ -68,16 +68,12 @@
     <Compile Include="Pages\ExtraPage\TerminInformation.xaml.cs">
       <DependentUpon>TerminInformation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Overview.xaml.cs">
-      <DependentUpon>Overview.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Settings\KursAuswahl.xaml.cs">
       <DependentUpon>KursAuswahl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings\Logout.xaml.cs">
       <DependentUpon>Logout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIHelper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -113,10 +109,6 @@
     <Page Include="Pages\Login\Lehrer_Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\Overview.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Settings\KursAuswahl.xaml">
       <SubType>Designer</SubType>

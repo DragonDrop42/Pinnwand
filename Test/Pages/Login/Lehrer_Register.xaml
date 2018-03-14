@@ -39,7 +39,8 @@
             </StackPanel>
             <Label HorizontalContentAlignment="Right" FontSize="10" Margin="0,0,0,0">*Pflichtfelder</Label>
             <TextBlock x:Name="lbl_Lehrer_Registrations_Error"></TextBlock>
-            <Button Width="150" Margin="0,15,0,0" HorizontalAlignment="Right" x:Name="cmd_AbsendenRegistrierungLehrer">Absenden</Button>
+            <Button Width="150" Margin="0,15,0,0" HorizontalAlignment="Right" x:Name="cmd_AbsendenRegistrierungLehrer" 
+                    Click="CmdAbsendenRegistrierungLehrerOnClick">Absenden</Button>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -9,8 +9,12 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="BASIC PAGE" Style="{StaticResource Heading2}" />
-                <TextBlock Text="Content goes here" />
+                <TextBlock Text="Abmelden" Style="{StaticResource Heading2}" />
+                <TextBlock Text="Wollen sie sich wirklich abmelden?" />
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="cmd_logout">Abmelden</Button>
+                    <Button x:Name="cmd_cancel">Abbrechen</Button>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -23,15 +23,11 @@ namespace Pinnwand.Pages.Login
     /// </summary>
     public partial class Lehrer_Login : UserControl
     {
-        private MainWindow mw;
+        private MainWindow mw = (MainWindow)Application.Current.MainWindow;
+
         public Lehrer_Login()
         {
             InitializeComponent();
-            Loaded += (sender, args) =>
-            {
-                mw = UIHelper.FindVisualParent<Pinnwand.Login>(this).mw;
-                cmd_LehrerLogin.Click += CmdLehrerLoginOnClick;
-            };
         }
 
         private void CmdLehrerLoginOnClick(object o, RoutedEventArgs routedEventArgs)
