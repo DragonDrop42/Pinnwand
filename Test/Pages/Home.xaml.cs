@@ -170,7 +170,7 @@ namespace Pinnwand.Pages
                 if (kurs == "Pages/Home.xaml")
                 {
                     stack_Chat.Children.Clear();
-                    idontevencareanymore.Children.Clear();
+                    //idontevencareanymore.Children.Clear();
                     kurs = "all";
                 }
                 else
