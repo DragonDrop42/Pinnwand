@@ -28,7 +28,7 @@ namespace Pinnwand.Pages.Settings
         private MainWindow mw;
         private ListDictionary Lehrer;
         private ListDictionary Klassen;
-        
+
         public Kurswahl()
         {
             mw = (MainWindow)Application.Current.MainWindow;
@@ -38,9 +38,11 @@ namespace Pinnwand.Pages.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            lv_Kurse.Height = row2.ActualHeight + 100;
             if (!((MainWindow)Application.Current.MainWindow).hasRights)
             {
-                 Lehrerptions.Children.Clear();   
+                Lehrerptions.Children.Clear();
+                Lehrerptions2.Children.Clear();
             }
             reload_kurse();
             cmd_save.Click += cmd_save_Click;
@@ -50,13 +52,13 @@ namespace Pinnwand.Pages.Settings
                 if (klassen.Success)
                 {
                     Klassen = klassen.Data;
-                    List<string> lst_data = (List<string>) klassen.Data["Kl_Name"];
-                    List<string> ids = (List<string>) klassen.Data["Kl_ID"];
+                    List<string> lst_data = (List<string>)klassen.Data["Kl_Name"];
+                    List<string> ids = (List<string>)klassen.Data["Kl_ID"];
                     cb_klassen.Items.Clear();
 
                     for (var i = 0; i < lst_data.Count; i++)
                     {
-                        cb_klassen.Items.Add(lst_data[i]+"#"+Math.Abs(Convert.ToInt32(ids[i])));
+                        cb_klassen.Items.Add(lst_data[i] + "#" + Math.Abs(Convert.ToInt32(ids[i])));
                     }
                 }
                 else
@@ -65,25 +67,27 @@ namespace Pinnwand.Pages.Settings
                         "Klassen konnten nicht geladen werden:\n" + klassen.MessageString);
                 }
             };
-            cb_lehrer.DropDownOpened += (o, a) => { 
+            cb_lehrer.DropDownOpened += (o, a) =>
+            {
                 Packet lehrer = mw.client.SendAndWaitForResponse(PacketType.GetLehrer);
                 if (lehrer.Success)
                 {
                     Lehrer = lehrer.Data;
-                    List<string> lst_data = (List<string>) lehrer.Data["L_Name"];
-                    List<string> ids = (List<string>) lehrer.Data["L_ID"];
+                    List<string> lst_data = (List<string>)lehrer.Data["L_Name"];
+                    List<string> ids = (List<string>)lehrer.Data["L_ID"];
                     cb_lehrer.Items.Clear();
 
                     for (var i = 0; i < lst_data.Count; i++)
                     {
-                        cb_lehrer.Items.Add(lst_data[i]+"#"+ids[i]);
+                        cb_lehrer.Items.Add(lst_data[i] + "#" + ids[i]);
                     }
                 }
                 else
                 {
                     MessageBox.Show(
                         "Klassen konnten nicht geladen werden:\n" + lehrer.MessageString);
-                }};
+                }
+            };
             cmd_addKlasse.Click += (o, a) =>
             {
                 Packet KlasseErstellen = mw.client.SendAndWaitForResponse(PacketType.KlasseErstellen, new ListDictionary
@@ -121,18 +125,18 @@ namespace Pinnwand.Pages.Settings
                 Packet getKurse = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 if (kurse.Success && getKurse.Success)
                 {
-                    UpdateKurse(kurse.Data,getKurse.Data);
+                    UpdateKurse(kurse.Data, getKurse.Data);
                 }
                 else
                 {
-                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
+                    throw new Exception(kurse.MessageString + " " + getKurse.MessageString);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
         private void cmd_save_Click(object sender, RoutedEventArgs e)
@@ -156,7 +160,7 @@ namespace Pinnwand.Pages.Settings
             }
         }
 
-        public void UpdateKurse(ListDictionary Kurse,ListDictionary CheckedKurse)
+        public void UpdateKurse(ListDictionary Kurse, ListDictionary CheckedKurse)
         {
             this.Kurse = Kurse;
             lv_Kurse.Items.Clear();
@@ -164,17 +168,17 @@ namespace Pinnwand.Pages.Settings
             {
                 lv_Kurse.Items.Add(new CheckBox
                 {
-                    Content = ((List<string>) Kurse["K_Name"])[i],
-                    IsChecked = ((List<string>) CheckedKurse["K_Name"]).Contains(((List<string>) Kurse["K_Name"])[i])
+                    Content = ((List<string>)Kurse["K_Name"])[i],
+                    IsChecked = ((List<string>)CheckedKurse["K_Name"]).Contains(((List<string>)Kurse["K_Name"])[i])
                 });
             }
         }
         public List<string> GetChecked()
         {
             List<string> IDS = new List<string>();
-            for (int i = 0; i < ((List<string>) Kurse["K_ID"]).Count; i++)
+            for (int i = 0; i < ((List<string>)Kurse["K_ID"]).Count; i++)
             {
-                IDS.AddRange(from CheckBox hcb in lv_Kurse.Items where (bool) hcb.IsChecked && hcb.Content == ((List<string>) Kurse["K_Name"])[i] select ((List<string>) Kurse["K_ID"])[i]);
+                IDS.AddRange(from CheckBox hcb in lv_Kurse.Items where (bool)hcb.IsChecked && hcb.Content == ((List<string>)Kurse["K_Name"])[i] select ((List<string>)Kurse["K_ID"])[i]);
             }
             return IDS;
         }
