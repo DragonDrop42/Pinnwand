@@ -71,7 +71,7 @@ namespace Pinnwand
         }
 
         //Callback Delegates+++++++++++++++++++++++++++
-        private void Fehler_Ausgabe(string s)
+        public void Fehler_Ausgabe(string s)
         {
             Console.WriteLine(s);
         }

@@ -62,5 +62,10 @@ namespace Pinnwand.Pages.Login
                 lbl_LehrerLoginError.Text = ex.Message;
             }
         }
+
+        private void cmd_LeherPasswortReset_Click(object sender, RoutedEventArgs e)
+        {
+            mw.Fehler_Ausgabe("Bitte wenden Sie sich an den Administrator!");
+        }
     }
 }
