@@ -20,9 +20,22 @@ namespace Pinnwand.Pages.Settings
     /// </summary>
     public partial class Logout : UserControl
     {
+        private MainWindow mw = (MainWindow) Application.Current.MainWindow;
+
         public Logout()
         {
             InitializeComponent();
+        }
+
+        private void Cmd_logout_OnClick(object sender, RoutedEventArgs e)
+        {
+            mw.client.Disconnect();
+            mw.Login();
+        }
+
+        private void Cmd_cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            NavigationCommands.BrowseBack.Execute(null, null);
         }
     }
 }

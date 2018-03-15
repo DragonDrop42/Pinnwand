@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{8A0ECB30-4BFE-4C2A-B446-1ED4AB41720D}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiaLib", "PiaLib\PiaLib.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientClassLib", "ClientClassLib\ClientClassLib.csproj", "{70B5D707-C1A2-4A04-8BE6-C81A4EF093C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{E89587CC-1ECE-4E09-905B-C6B2F50FA382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinnwand", "Test\Pinnwand.csproj", "{E89587CC-1ECE-4E09-905B-C6B2F50FA382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

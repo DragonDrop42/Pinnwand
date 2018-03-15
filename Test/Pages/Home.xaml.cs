@@ -30,8 +30,8 @@ namespace Pinnwand.Pages
         private ModernTab KListe;
         private string kurs;
         private ListDictionary Schüler;
-        private int K_ID;
-        private Button letzterAktiverButton;
+        public int K_ID;
+        private Termin letzterAktiverButton;
         private MainWindow mw = (MainWindow) Application.Current.MainWindow;
 
         public Home()
@@ -44,7 +44,7 @@ namespace Pinnwand.Pages
             Packet SchülerPacket;
             if (kurs != "all")
             {
-                ((MainWindow) Application.Current.MainWindow).client.ChatUpdate += (sender, args) => InvokeIfNecessary(args); ;
+                mw.client.ChatUpdate += (sender, args) => InvokeIfNecessary(args); ;
                 lbl_Schülerliste.Content = "Schülerliste " + kurs;
                 SchülerPacket = mw.client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
@@ -75,7 +75,7 @@ namespace Pinnwand.Pages
                 );
             }
 
-            if (SchülerPacket.Success)
+            if (SchülerPacket != null && SchülerPacket.Success)
             {
                 Mitschüler_box.Text = "";
                 for (int i = 0; i < ((List<string>) SchülerPacket.Data["S_ID"]).Count; i++)
@@ -84,7 +84,10 @@ namespace Pinnwand.Pages
                                            ((List<string>) SchülerPacket.Data["S_Name"])[i] + "\n";
                 }
             }
-            else { MessageBox.Show(SchülerPacket.MessageString); }
+            else
+            {
+                if (SchülerPacket != null) MessageBox.Show(SchülerPacket.MessageString);
+            }
         }
 
         public void reload_Ereignisse()
@@ -104,8 +107,9 @@ namespace Pinnwand.Pages
                             Convert.ToDateTime(((List<string>) EreignissPacket.Data["E_Fälligkeitsdatum"])[i]);
                         string E_Inhalt = ((List<string>) EreignissPacket.Data["E_Beschreibung"])[i];
                         string E_Autor = ((List<string>) EreignissPacket.Data["E_Autor"])[i];
+                        int E_ID = Convert.ToInt32(((List<string>) EreignissPacket.Data["E_ID"])[i]);
 
-                        ereignisseErstellen(E_Art, E_Fälligkeitsdatum, E_Inhalt, E_Autor);
+                        ereignisseErstellen(E_Art, E_Fälligkeitsdatum, E_Inhalt, E_Autor,E_ID);
                     }
                 }
             }
@@ -153,29 +157,32 @@ namespace Pinnwand.Pages
         
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-                kurs = mw._kursliste.mt_Kurse.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
-                mw.LoginFrm.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
-                ((MainWindow)Application.Current.MainWindow).CurrentKurs = this;
+            mw.OnClientOnBusy(this,EventArgs.Empty);
+            kurs = mw._kursliste.mt_Kurse.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
+            mw.LoginFrm.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
+            mw.CurrentKurs = this;
 
-                if (kurs == "Pages/Home.xaml")
-                {
-                    stack_Chat.Children.Clear();
-                    //idontevencareanymore.Children.Clear();
-                    kurs = "all";
-                }
-                else
-                {
-                    Packet kidp = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
-                    K_ID = Math.Abs(Convert.ToInt32(
-                        ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
-                    reload_Chat(mw.client.SendAndWaitForResponse(PacketType.GetChat));
-                }
+            if (kurs == "Pages/Home.xaml")
+            {
+                stack_Chat.Children.Clear();
+                //idontevencareanymore.Children.Clear()
+                terminHinzufügen.Visibility = Visibility.Hidden;
+                kurs = "all";
+            }
+            else
+            {
+                Packet kidp = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
+                K_ID = Math.Abs(Convert.ToInt32(
+                    ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
+                reload_Chat(mw.client.SendAndWaitForResponse(PacketType.GetChat));
+            }
             
             if (!mw.LoginFrm.IsVisible)
             {
                 reload_Liste();
                 reload_Ereignisse();
             }
+            mw.OnClientOnAvailable(this,EventArgs.Empty);
         }
 
         private void txt_chatEingabe_GotFocus(object sender, RoutedEventArgs e) //leeren des Placeholders in der Leiste
@@ -190,7 +197,6 @@ namespace Pinnwand.Pages
                 new ListDictionary
                 {
                     {"K_ID",K_ID},
-                    {"C_Sendername", "Mehritz"},
                     {"C_Inhalt", txt_chatEingabe.Text}
                 });
             if (!chatsendpacket.Success)
@@ -201,12 +207,12 @@ namespace Pinnwand.Pages
 
         private void terminHinzufügen_Click(object sender, RoutedEventArgs e)
         {
-            frame_informationsausgabe.Navigate(new TerminErstellen(mw.client, K_ID));
+            frame_informationsausgabe.Navigate(new TerminErstellen(K_ID));
         }
 
-        private void ereignisseErstellen(string Art, DateTime Datum, string Inhalt, string Autor)
+        private void ereignisseErstellen(string Art, DateTime Datum, string Inhalt, string Autor, int eId)
         {
-            Termin cmd_termin = new Termin(Art, Datum, Inhalt, Autor);
+            Termin cmd_termin = new Termin(Art, Datum, Inhalt, Autor,eId);
             cmd_termin.Click += aktiverButton;
             ug_terminÜbersicht.Children.Add(cmd_termin);
         }
@@ -223,14 +229,9 @@ namespace Pinnwand.Pages
             Termin aktiverButton = (Termin)sender;
             aktiverButton.Background = getFarbverlauf(2);
             frame_informationsausgabe.Content = null;
-            frame_informationsausgabe.Navigate( new TerminInformation(
-                aktiverButton.Art,
-                aktiverButton.Datum,
-                aktiverButton.Inhalt,
-                aktiverButton.Autor,
-                mw.hasRights));
+            frame_informationsausgabe.Navigate(new TerminInformation((Termin)sender, this));
 
-            letzterAktiverButton = (Button)sender;  // Zum speichern des letzten gedrückten Buttons
+            letzterAktiverButton = (Termin)sender;  // Zum speichern des letzten gedrückten Buttons
         }
 
         //Farben

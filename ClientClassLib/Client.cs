@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace ClientClassLib
 {
@@ -29,11 +31,15 @@ namespace ClientClassLib
 
         GlobalMethods.ErrorMessageCallback errorCallback;
 
+        public event EventHandler Busy;
+
+        public event EventHandler Available;
+
         public event EventHandler<Packet> ChatUpdate; 
 
         public Client(GlobalMethods.ErrorMessageCallback errorDel)
         {
-            packetCallback = new TCP_connection.DataManagerCallback(PacketManager); //PacketManager
+            packetCallback = PacketManager; //PacketManager
 
             errorCallback = errorDel;
         }
@@ -116,6 +122,7 @@ namespace ClientClassLib
                         break;
                     }
                     Thread.Sleep(rand.Next(1,100));
+                    errorCallback("packet not found");
                 }
 
                 if(response != null){
@@ -309,7 +316,10 @@ namespace ClientClassLib
         }
         public Packet SendAndWaitForResponse(PacketType packetType, ListDictionary data)
         {
-            return WaitForPacketResponseHandler(new Packet(packetType, data, id));
+            OnBusy();
+            Packet p = WaitForPacketResponseHandler(new Packet(packetType, data, id));
+            OnAvailable();
+            return p;
         }
         #endregion
 
@@ -330,6 +340,18 @@ namespace ClientClassLib
         {
             var handler = ChatUpdate;
             if (handler != null) handler(this, p);
+        }
+
+        protected virtual void OnBusy()
+        {
+            var handler = Busy;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnAvailable()
+        {
+            var handler = Available;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 

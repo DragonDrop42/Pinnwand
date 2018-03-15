@@ -11,14 +11,15 @@ using System.Windows;
 
 namespace Pinnwand.Pages.ExtraPage
 {
-    class Termin : Button
+    public class Termin : Button
     {
         public string Art;
         public string Inhalt;
         public DateTime Datum;
         public string Autor;
+        public int eId;
         
-        public Termin(string Art,DateTime Datum,string Inhalt,string Autor)
+        public Termin(string Art, DateTime Datum, string Inhalt, string Autor, int eId)
         {
             LinearGradientBrush gradientBrush = new LinearGradientBrush();
             gradientBrush.StartPoint = new Point(0.5, 0);
@@ -30,7 +31,8 @@ namespace Pinnwand.Pages.ExtraPage
             this.Datum = Datum;
             this.Inhalt = Inhalt;
             this.Autor = Autor;
-            
+            this.eId = eId;
+
             Width = 150;
             Height = 70;
             Background = gradientBrush;

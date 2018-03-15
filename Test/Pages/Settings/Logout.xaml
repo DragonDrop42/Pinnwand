@@ -12,8 +12,8 @@
                 <TextBlock Text="Abmelden" Style="{StaticResource Heading2}" />
                 <TextBlock Text="Wollen sie sich wirklich abmelden?" />
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="cmd_logout">Abmelden</Button>
-                    <Button x:Name="cmd_cancel">Abbrechen</Button>
+                    <Button x:Name="cmd_logout" Click="Cmd_logout_OnClick">Abmelden</Button>
+                    <Button x:Name="cmd_cancel" Click="Cmd_cancel_OnClick">Abbrechen</Button>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

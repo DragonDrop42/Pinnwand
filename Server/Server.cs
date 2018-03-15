@@ -127,6 +127,12 @@ namespace Server
                     case PacketType.GetLehrer:
                         GetLehrer(client);
                         break;
+                    case PacketType.DeleteEreignis:
+                        DeleteEreignis(client, p);
+                        break;
+                    case PacketType.EditEreigniss:
+                        EditEreigniss(client, p);
+                        break;
                     default:
                         ClientHandler.Send_Error_Message_to_Client(client, "Unerwartetes Packet!!!");
                         break;
@@ -136,6 +142,40 @@ namespace Server
             {
                 ClientHandler.Ausgabe("PacketManager", exc.Message);
             }
+        }
+
+        private static void EditEreigniss(ClientData client, Packet p)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.editEreignis(
+                (int)p.Data["K_ID"],
+                (string)p.Data["E_Art"],
+                DateTime.Now,
+                (DateTime)p.Data["E_Fälligkeitsdatum"],
+                (int)p.Data["E_ID"],
+                client.autor,
+                (string) p.Data["E_Beschreibung"]
+                );
+
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("EditEreigniss", args.Error);
+            }
+
+            Packet response = new Packet(PacketType.EditEreigniss, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
+        }
+
+        private static void DeleteEreignis(ClientData client, Packet p)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.deleteEreignis((int)p.Data["E_ID"]);
+
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("EditEreigniss", args.Error);
+            }
+
+            Packet response = new Packet(PacketType.DeleteEreignis, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
         }
 
         private static void GetLehrer(ClientData client)

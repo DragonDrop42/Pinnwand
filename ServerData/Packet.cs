@@ -38,7 +38,7 @@ namespace ServerData
         GetEreignisse,                      // (✔)
         SendEreigniss,                      // (✔)
         //--------------------------------
-        
+
         //Admin oder Lehrerpakete+++++++++
         UpdateSchülerInKurs,
         UpdateSchülerInKlasse,
@@ -46,12 +46,14 @@ namespace ServerData
         KlasseLöschen,
         CreateKurs,
         GetLehrer,
+        DeleteEreignis,
+        EditEreigniss,
         //--------------------------------
         //SystemError
         SystemError,
         //Update
         UpdateChat,
-        UpdateAll
+        UpdateAll,
     }
 
 

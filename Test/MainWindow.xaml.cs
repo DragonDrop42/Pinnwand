@@ -22,7 +22,6 @@ using FirstFloor.ModernUI.Windows.Navigation;
 using ServerData;
 using Pinnwand.Pages;
 using Pinnwand.Pages.Settings;
-using NavigationEventArgs = FirstFloor.ModernUI.Windows.Navigation.NavigationEventArgs;
 
 namespace Pinnwand
 {
@@ -45,9 +44,19 @@ namespace Pinnwand
             ErrorCallback += Fehler_Ausgabe;
 
             client = new Client(ErrorCallback);
+            
             ListDictionary config = getConfigFromTxt();
             client.Connect((string)config["ip"], Convert.ToInt32(config["port"])); //Connect to Server on IP and POrt 4444
 
+
+            client.Busy += OnClientOnBusy;
+            client.Available += OnClientOnAvailable;
+            Login();
+        }
+
+        public void Login()
+        {
+            client.Connect(PacketHandler.GetIPAddress(), 4444); //Connect to Server on IP and POrt 4444
             LoginFrm = new Login();
             LoginFrm.Show();
             LoginFrm.Closing += LoginFrmOnClosing;
@@ -55,7 +64,19 @@ namespace Pinnwand
             IsEnabled = false;
         }
 
-        private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
+        public void OnClientOnBusy(object sender, EventArgs args)
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            IsEnabled = false;
+        }
+
+        public void OnClientOnAvailable(object sender, EventArgs args)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
+            IsEnabled = true;
+        }
+
+        public void OnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             client.Disconnect();
         }

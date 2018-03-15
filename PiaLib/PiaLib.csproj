@@ -46,6 +46,7 @@
     <Compile Include="Pidba.cs" />
     <Compile Include="PinnwandDataSet.cs">
       <DependentUpon>PinnwandDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="PinnwandDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

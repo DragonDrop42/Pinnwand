@@ -23,18 +23,27 @@ namespace Pinnwand.Pages.ExtraPage
     /// </summary>
     public partial class TerminErstellen
     {
-        private ClientClassLib.Client client;
         int K_ID;
         
         private CultureInfo ci = new CultureInfo("de-DE");
         private MainWindow mw = (MainWindow)Application.Current.MainWindow;
+        private int E_ID = -1;
 
-        public TerminErstellen(ClientClassLib.Client client,int K_ID)
+        public TerminErstellen(int K_ID)
         {
             InitializeComponent();
             datenInit();
-            this.client = client;
             this.K_ID = K_ID;
+        }
+
+        public TerminErstellen(int K_ID,int E_ID, string E_Art, DateTime E_Fälligkeitsdatum,string E_Beschreibung) : this(K_ID)
+        {
+            this.E_ID = E_ID;
+            txt_terminName.Text = E_Art;
+            cb_terminDatumTag.SelectedValue = E_Fälligkeitsdatum.Day;
+            cb_terminDatumMonat.SelectedValue = E_Fälligkeitsdatum.Month;
+            cb_terminDatumJahr.SelectedValue = E_Fälligkeitsdatum.Year;
+            txt_terminBeschreibung.Text = E_Beschreibung;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -42,15 +51,25 @@ namespace Pinnwand.Pages.ExtraPage
             ListDictionary data = new ListDictionary{
                 {"K_ID",K_ID},
                 {"E_Art", txt_terminName.Text},
-                {"E_Autor",null}, //Wird im server vergeben
                 {"E_Fälligkeitsdatum", Convert.ToDateTime(cb_terminDatumTag.SelectedValue + "." + 
                                                           cb_terminDatumMonat.SelectedValue + "." + 
                                                           cb_terminDatumJahr.SelectedValue)},
-                {"E_Beschreibung", txt_terminBeschreibung.Text}
+                {"E_Beschreibung", txt_terminBeschreibung.Text},
+                {"E_ID",E_ID}
             };
             ///Senden+++++++++++++++++++++++++++++++++++++++++++++
 
-            Packet args = client.SendAndWaitForResponse(PacketType.SendEreigniss, data);
+            Packet args;
+
+            if (E_ID == -1)
+            {
+                args = mw.client.SendAndWaitForResponse(PacketType.SendEreigniss, data);
+            }
+            else
+            {
+                args = mw.client.SendAndWaitForResponse(PacketType.EditEreigniss, data);
+            }
+
             Debug.Content = args.MessageString;
             mw.CurrentKurs.reload_Ereignisse();
         }
