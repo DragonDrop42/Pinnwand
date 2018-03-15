@@ -29,11 +29,12 @@
         </Grid>
 
         <StackPanel  Margin="0,10,0,0" Orientation="Horizontal" x:Name="stack_button">
+            <Label x:Name="lbl_error"></Label>
             <StackPanel Width="195">
-                <Button HorizontalAlignment="Center" Width="120">Löschen</Button> 
+                <Button x:Name="cmd_delete" HorizontalAlignment="Center" Width="120" Click="Cmd_delete_OnClick">Löschen</Button> 
             </StackPanel>
             <StackPanel Width="195">
-                <Button HorizontalAlignment="Center" Width="120">Bearbeiten</Button>
+                <Button x:Name="cmd_edit" Click="Cmd_edit_OnClick" HorizontalAlignment="Center" Width="120">Bearbeiten</Button>
             </StackPanel>
         </StackPanel>
         

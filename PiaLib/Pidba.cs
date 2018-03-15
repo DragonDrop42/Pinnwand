@@ -453,6 +453,34 @@ namespace PiaLib
                     return new DatenbankArgs(ex.Message);
                 }
             }
+
+            public DatenbankArgs deleteEreignis(int p)
+            {
+                try
+                {
+                    eta.DeletebyE_ID(p);
+                    return new DatenbankArgs();
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs editEreignis(int K_ID, string E_Art, DateTime E_Erstelldatum,
+                DateTime E_Fälligkeitsdatum, int Original_E_ID, string E_Autor, string E_Beschreibung)
+            {
+                try
+                {
+                    eta.UpdatebyE_ID(K_ID, E_Art, E_Erstelldatum, E_Fälligkeitsdatum, E_Autor, E_Beschreibung,
+                        Original_E_ID);
+                    return new DatenbankArgs();
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
         }
 
         public class klasse

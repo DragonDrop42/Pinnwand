@@ -7,10 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="368" Margin="-25,0,0,0">
     <Grid Style="{StaticResource ContentRoot}">
-        <StackPanel MinWidth="300" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="41*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel MinWidth="300" Grid.ColumnSpan="2" >
             <StackPanel Orientation="Horizontal">
                 <Label Width="60" HorizontalContentAlignment="Right">E-Mail</Label>
-                <TextBox x:Name="txt_Email" Margin="10,0,0,10" Width="290" HorizontalAlignment="Right">wagner@</TextBox>
+                <TextBox x:Name="txt_Email" Margin="10,0,0,10" Width="290" HorizontalAlignment="Right"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Width="60" HorizontalContentAlignment="Right">Passwort</Label>
