@@ -42,6 +42,7 @@ namespace Pinnwand.Pages
         public void reload_Liste()
         {
             Packet SchülerPacket;
+            Packet lehrerPacket;
             if (kurs != "all")
             {
                 mw.client.ChatUpdate += (sender, args) => InvokeIfNecessary(args); ;
@@ -73,7 +74,12 @@ namespace Pinnwand.Pages
                         {"Kl_ID", Math.Abs(Convert.ToInt32(((List<string>)Klassenpacket.Data["Kl_ID"])[0]))}
                     }
                 );
+                
             }
+            lehrerPacket =
+                mw.client.SendAndWaitForResponse(
+                    PacketType.GetLehrerofKurs, 
+                    new ListDictionary {{"K_ID", Math.Abs(K_ID)}});
 
             if (SchülerPacket != null && SchülerPacket.Success)
             {
@@ -83,6 +89,15 @@ namespace Pinnwand.Pages
                     Mitschüler_box.Text += ((List<string>) SchülerPacket.Data["S_Vorname"])[i] + " " +
                                            ((List<string>) SchülerPacket.Data["S_Name"])[i] + "\n";
                 }
+            }
+
+            if (lehrerPacket.Success)
+            {
+                TextBoxlehrername.Text = ((List<string>) lehrerPacket.Data["L_Anrede"])[0] + " " +
+                                         ((List<string>) lehrerPacket.Data["L_Titel"])[0] + 
+                                         (((List<string>) lehrerPacket.Data["L_Titel"])[0]!="" ? " ":"") +
+                                         ((List<string>) lehrerPacket.Data["L_Vorname"])[0][0] + ". " +
+                                         ((List<string>) lehrerPacket.Data["L_Name"])[0];
             }
             else
             {
@@ -168,6 +183,8 @@ namespace Pinnwand.Pages
                 //idontevencareanymore.Children.Clear()
                 terminHinzufügen.Visibility = Visibility.Hidden;
                 kurs = "all";
+                lbl_lehrename.Content = "";
+                TextBoxlehrername.Text = "";
             }
             else
             {
