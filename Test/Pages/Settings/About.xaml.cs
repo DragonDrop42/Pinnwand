@@ -23,6 +23,17 @@ namespace Pinnwand.Pages.Settings
         public About()
         {
             InitializeComponent();
+            AboutTextBlock.Text = "Diese Software wurde im Rahmen des IS unterrichts der TIG15 am BSZ-et entwickelt.\n " +
+                                  "Dieses Programm ist lediglich eine Übung und nicht für den einsatz in einer echten Schule gedacht.\n " +
+                                  "Wir sind keine Sicherheitsexperten und garantieren unter keinen Umständen für die Sicherheit ihrer daten. \n " +
+                                  "\n " +
+                                  "Unser Team: \n " +
+                                  "Arndt Wagner - Design, Teamleitung\n " +
+                                  "Fritjof Kulawik - Dokumentation\n " +
+                                  "Maximillian Klose - Doku\n " +
+                                  "Kevin Tuchel - Datenbankentwurf\n " +
+                                  "Moritz Queißer - Programmierung\n " +
+                                  "Peter Wacker - Programmierung\n ";
         }
     }
 }

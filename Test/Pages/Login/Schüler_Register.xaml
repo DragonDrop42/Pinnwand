@@ -23,7 +23,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <Label Width="90" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="0,0,10,0" >Klasse*</Label>
-                <ComboBox Width="250" x:Name="cbB_Klasse" MaxDropDownHeight="100"></ComboBox>
+                <ComboBox Width="250" x:Name="cbB_Klasse" MaxDropDownHeight="100" DropDownOpened="CbB_Klasse_DropDownOpened"></ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <Label Width="90" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="0,0,10,0">E-Mail*</Label>
@@ -37,7 +37,7 @@
             <StackPanel x:Name="stack_FehlerRegistrierung">
                 <TextBlock x:Name="lbl_Schüler_Registrations_Error"></TextBlock>
             </StackPanel>
-            <Button Width="150" Margin="0,15,10,0" HorizontalAlignment="Right" x:Name="cmd_AbsendenRegistrierungSchueler"> Absenden</Button>
+            <Button Width="150" Margin="0,15,10,0" HorizontalAlignment="Right" x:Name="cmd_AbsendenRegistrierungSchueler" Click="cmd_SchülerRegi_Click"> Absenden</Button>
         </StackPanel>
     </Grid>
 </UserControl>

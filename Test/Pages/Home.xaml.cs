@@ -30,18 +30,13 @@ namespace Pinnwand.Pages
         private ModernTab KListe;
         private string kurs;
         private ListDictionary Schüler;
-        private ClientClassLib.Client client;
         private int K_ID;
         private Button letzterAktiverButton;
-        private bool hasRights;
-
-        public static object Instance { get; private set; }
+        private MainWindow mw = (MainWindow) Application.Current.MainWindow;
 
         public Home()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
-            //kurs = KListe.mt_Kurse.SelectedSource.Query.;
         }
 
         public void reload_Liste()
@@ -51,7 +46,7 @@ namespace Pinnwand.Pages
             {
                 ((MainWindow) Application.Current.MainWindow).client.ChatUpdate += (sender, args) => InvokeIfNecessary(args); ;
                 lbl_Schülerliste.Content = "Schülerliste " + kurs;
-                SchülerPacket = client.SendAndWaitForResponse(
+                SchülerPacket = mw.client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKurs,
                     new ListDictionary
                     {
@@ -61,8 +56,8 @@ namespace Pinnwand.Pages
             }
             else
             {
-                if(hasRights) return;
-                Packet Klassenpacket = client.SendAndWaitForResponse(PacketType.GetKlasse);
+                if(mw.hasRights) return;
+                Packet Klassenpacket = mw.client.SendAndWaitForResponse(PacketType.GetKlasse);
                 if (Klassenpacket.Success)
                 {
                     lbl_Schülerliste.Content = "Schülerliste " + ((List<string>) Klassenpacket.Data["Kl_Name"])[0];
@@ -71,7 +66,7 @@ namespace Pinnwand.Pages
                 {
                     MessageBox.Show(Klassenpacket.MessageString);
                 }
-                SchülerPacket = client.SendAndWaitForResponse(
+                SchülerPacket = mw.client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKlasse,
                     new ListDictionary
                     {
@@ -94,7 +89,7 @@ namespace Pinnwand.Pages
 
         public void reload_Ereignisse()
         {
-            Packet EreignissPacket = client.SendAndWaitForResponse(PacketType.GetEreignisse);
+            Packet EreignissPacket = mw.client.SendAndWaitForResponse(PacketType.GetEreignisse);
                 
             if (EreignissPacket.Success)
             {
@@ -158,13 +153,8 @@ namespace Pinnwand.Pages
         
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            
-                KListe = UIHelper.FindVisualChildByName<ModernTab>(Application.Current.MainWindow, "mt_Kurse");
-                client = UIHelper.FindVisualParent<MainWindow>(this).client;
-                hasRights = UIHelper.FindVisualParent<MainWindow>(this).hasRights;
-                Pinnwand.Login lgf = ((MainWindow) Application.Current.MainWindow).LoginFrm;
-                lgf.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
-                kurs = KListe.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
+                kurs = mw._kursliste.mt_Kurse.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
+                mw.LoginFrm.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
                 ((MainWindow)Application.Current.MainWindow).CurrentKurs = this;
 
                 if (kurs == "Pages/Home.xaml")
@@ -175,13 +165,13 @@ namespace Pinnwand.Pages
                 }
                 else
                 {
-                    Packet kidp = client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
+                    Packet kidp = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                     K_ID = Math.Abs(Convert.ToInt32(
                         ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
-                    reload_Chat(client.SendAndWaitForResponse(PacketType.GetChat));
+                    reload_Chat(mw.client.SendAndWaitForResponse(PacketType.GetChat));
                 }
             
-            if (!lgf.IsVisible)
+            if (!mw.LoginFrm.IsVisible)
             {
                 reload_Liste();
                 reload_Ereignisse();
@@ -196,7 +186,7 @@ namespace Pinnwand.Pages
         private void cmd_senden_Click(object sender, RoutedEventArgs e) // Ausführen wenn der klick auf senden ausgeführt wird
         {
             //lbl_chatAusgabe.Content += txt_chatEingabe.Text + "\n";
-            Packet chatsendpacket = client.SendAndWaitForResponse(PacketType.SendChatNachricht,
+            Packet chatsendpacket = mw.client.SendAndWaitForResponse(PacketType.SendChatNachricht,
                 new ListDictionary
                 {
                     {"K_ID",K_ID},
@@ -211,7 +201,7 @@ namespace Pinnwand.Pages
 
         private void terminHinzufügen_Click(object sender, RoutedEventArgs e)
         {
-            frame_informationsausgabe.Navigate(new TerminErstellen(client, K_ID));
+            frame_informationsausgabe.Navigate(new TerminErstellen(mw.client, K_ID));
         }
 
         private void ereignisseErstellen(string Art, DateTime Datum, string Inhalt, string Autor)
@@ -238,7 +228,7 @@ namespace Pinnwand.Pages
                 aktiverButton.Datum,
                 aktiverButton.Inhalt,
                 aktiverButton.Autor,
-                hasRights));
+                mw.hasRights));
 
             letzterAktiverButton = (Button)sender;  // Zum speichern des letzten gedrückten Buttons
         }

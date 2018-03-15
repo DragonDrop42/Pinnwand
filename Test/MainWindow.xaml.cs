@@ -34,7 +34,6 @@ namespace Pinnwand
         public Login LoginFrm;
         public bool hasRights = false;
         public Kursliste _kursliste;
-        public GlobalMethods.UpdateFormCallback UpdateFormCallback;
         public GlobalMethods.ErrorMessageCallback ErrorCallback;
         public Home CurrentKurs;
 
@@ -44,24 +43,14 @@ namespace Pinnwand
 
             ErrorCallback += Fehler_Ausgabe;
 
-            client = new Client(ErrorCallback, UpdateFormCallback);
-            
-
+            client = new Client(ErrorCallback);
+    
             client.Connect(PacketHandler.GetIPAddress(), 4444); //Connect to Server on IP and POrt 4444
 
-            LoginFrm = new Login(this);
+            LoginFrm = new Login();
             LoginFrm.Show();
             LoginFrm.Closing += LoginFrmOnClosing;
             Closing += OnClosing;
-            Loaded += (sender, args) =>
-            {
-                if (_kursliste == null)
-                {
-                    _kursliste = UIHelper.FindVisualChildByName<Kursliste>(this, "pg_kursliste");
-                    return;
-                };
-                Console.WriteLine(_kursliste.ToString());
-            };
             IsEnabled = false;
         }
 
@@ -74,10 +63,6 @@ namespace Pinnwand
         public void Fehler_Ausgabe(string s)
         {
             Console.WriteLine(s);
-        }
-        private void UpdateChat(Packet p)
-        {
-            //Chat im aktiven Fenster neu laden ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         }
 
         public void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
