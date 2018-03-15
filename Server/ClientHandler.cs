@@ -158,13 +158,13 @@ namespace Server
         private static void Ausgabe(string text)
         {
             Console.WriteLine("Server::>" + text);
-            Console.Write("Server::> ");
+            //Console.Write("Server::> ");
         }
         //Ausgabe mit Verweis auf Herkunft
         public static void Ausgabe(string parent, string text)
         {
-            Console.WriteLine("\n" + parent + "::> " + text);
-            Console.Write("Server::> ");
+            Console.WriteLine( parent + "::> " + text);
+            //Console.Write("Server::> ");
         }
 
         //Server Console

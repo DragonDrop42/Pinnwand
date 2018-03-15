@@ -61,7 +61,7 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel x:Name="Lehrerptions2"  Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+        <StackPanel x:Name="Lehreroptions2"  Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
 
             <Grid>
                 <Grid.ColumnDefinitions>
