@@ -40,23 +40,21 @@ namespace Pinnwand
         public MainWindow()
         {
             InitializeComponent();
+            OpenClient();
+        }
 
+        public void OpenClient()
+        {
             ErrorCallback += Fehler_Ausgabe;
 
-            client = new Client(ErrorCallback);
-            
-            ListDictionary config = getConfigFromTxt();
-            client.Connect((string)config["ip"], Convert.ToInt32(config["port"])); //Connect to Server on IP and POrt 4444
+            client = new Client(ErrorCallback); //neuer Client
 
+            ListDictionary config = getConfigFromTxt(); //text datei laden
+            client.Connect((string)config["ip"], Convert.ToInt32(config["port"])); //Connect to Server on IP and POrt 4444
 
             client.Busy += OnClientOnBusy;
             client.Available += OnClientOnAvailable;
-            Login();
-        }
 
-        public void Login()
-        {
-            client.Connect(PacketHandler.GetIPAddress(), 4444); //Connect to Server on IP and POrt 4444
             LoginFrm = new Login();
             LoginFrm.Show();
             LoginFrm.Closing += LoginFrmOnClosing;
