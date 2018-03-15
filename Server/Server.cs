@@ -33,8 +33,12 @@ namespace Server
         {
             //Server starten
             ClientHandler.StartServer(ip, port);    //Server starten
-            Console.WriteLine("Deleting old Data");
+            //config
+            ClientHandler.Ausgabe("Config", "IP: " + ip);
+            ClientHandler.Ausgabe("Config", "PORT: " + port);
+            //alte datensätze löschen
             DbAdapter.Klasse.deleteOld();
+            ClientHandler.Ausgabe("DB", "alte datensätze wurden gelöscht. \n");
         }
 
 
@@ -70,7 +74,7 @@ namespace Server
                 }
 
                 //Angemeldet: (gesicherter Bereich)
-                Console.WriteLine("received " + p.PacketType);
+                //Console.WriteLine("received " + p.PacketType);
                 switch (p.PacketType)
                 {
                     case PacketType.Default:
@@ -323,7 +327,7 @@ namespace Server
                     {
                         int id = (int) args.Data.Rows[0][0];
 
-                        ClientHandler.Ausgabe("GetKurse", "Lehrer ID: " + args.Data.Rows[0][0]);
+                        //ClientHandler.Ausgabe("GetKurse", "Lehrer ID: " + args.Data.Rows[0][0]);
                         args = client.db_Manager.Lehrer.getKurse(id);
                     }
 
@@ -338,7 +342,7 @@ namespace Server
                     {
                         int id = (int) args.Data.Rows[0][0];
 
-                        ClientHandler.Ausgabe("GetKurse", "Schueler ID: " + args.Data.Rows[0][0]);
+                        //ClientHandler.Ausgabe("GetKurse", "Schueler ID: " + args.Data.Rows[0][0]);
                         args = client.db_Manager.Schüler.getKurse(id);
                     }
 
@@ -386,7 +390,7 @@ namespace Server
                     {
                         int id = (int) args.Data.Rows[0][0];
 
-                        ClientHandler.Ausgabe("KursUpdate", "Schueler ID: " + args.Data.Rows[0][0]);
+                        //ClientHandler.Ausgabe("KursUpdate", "Schueler ID: " + args.Data.Rows[0][0]);
                         args = client.db_Manager.Schüler.updateKurse(id, (List<string>) packet.Data["K_ID"]);
                     }
 
@@ -439,7 +443,7 @@ namespace Server
                     {
                         int id = (int) args.Data.Rows[0][5];
 
-                        ClientHandler.Ausgabe("Kurswahl", "Schueler ID: " + args.Data.Rows[0][0]);
+                        //ClientHandler.Ausgabe("Kurswahl", "Schueler ID: " + args.Data.Rows[0][0]);
                         args = client.db_Manager.Kurse.getByKlasse(id);
                     }
                 }
