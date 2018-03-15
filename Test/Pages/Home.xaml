@@ -6,73 +6,75 @@
              mc:Ignorable="d" 
              d:DesignHeight="750" Loaded="OnLoaded">
     <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Top" MinWidth="900" Width="auto" x:Name="stack_MainStack">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Width="{Binding ElementName=stack_MainStack,Path=ActualWidth}" >
-                        <StackPanel>
-                            <StackPanel.Background>
-                                <ImageBrush ImageSource="../Images/Pinnwand-textur-2.jpg"/>
-                            </StackPanel.Background>
-                            <StackPanel Orientation="Horizontal">
-                                <Label FontWeight="Bold" FontSize="30" Width="{Binding ElementName=stack_MainStack,Path=ActualWidth}" HorizontalContentAlignment="Center" Foreground="#FFDBEFFF">
-                                    Aktuelle Termine
-                                </Label>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" MaxWidth="{Binding ElementName=stack_MainStack,Path=ActualWidth}">
-                
-                                <StackPanel Width="930" >
-                                    <UniformGrid  Height="390" x:Name="ug_terminÜbersicht">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="390"/>
+                <ColumnDefinition Width="220"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="200*"/>
+            </Grid.RowDefinitions>
 
-                                    </UniformGrid>
-                                </StackPanel>
-                                <!-- Bearbeiten der Termine mittels der Button -->
-                                <StackPanel x:Name="idontevencareanymore" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                    <Button x:Name="terminHinzufügen" Width="35" Height="35" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="terminHinzufügen_Click">
-                                        <Button.Background>
-                                            <ImageBrush ImageSource="../Images/Kreuz.png"/>
-                                        </Button.Background>
-                                    </Button>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
 
-                    <!-- Daten einfügen-->
-                </StackPanel>
-                <StackPanel x:Name="stack_chatUndInfoBereich" Height="300" Orientation="Horizontal" VerticalAlignment="Bottom">
-                    <StackPanel x:Name="stack_Chat" Width="600" Margin="0,10,0,0">
-                        <StackPanel>
-                            <Label x:Name="lbl_chatAusgabe" Height="240" Margin="0,0,0,20" Background="{x:Null}" BorderBrush="#FF3E3E3E" BorderThickness="1" >
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+                <Grid.Background>
+                    <ImageBrush ImageSource="../Images/Pinnwand-textur-2.jpg"/>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                            </Label>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="txt_chatEingabe" GotFocus="txt_chatEingabe_GotFocus" Width="510" >Eingabe für Chat</TextBox>
-                                <Button Width="80" Margin="10,0,0,0" x:Name="cmd_senden" Click="cmd_senden_Click">Senden</Button>
-                            </StackPanel>
+                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" FontWeight="Bold" FontSize="30"  HorizontalContentAlignment="Center" Foreground="#FFDBEFFF">
+                    Aktuelle Termine
+                </Label>
 
-                        </StackPanel>
-                    </StackPanel>
-                    
-                    <Frame x:Name="frame_informationsausgabe" Width="370" Margin="10,0,0,0" NavigationUIVisibility="Hidden" />
+                <UniformGrid Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Height="390" x:Name="ug_terminÜbersicht">
 
-                </StackPanel>
-            </StackPanel>
-            <!-- Feste Breite da die Namen nicht länger werden als 130px-->
-            <ScrollViewer>
-                <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right" Width="230">
+                </UniformGrid>
+
+                <Button Grid.Column="0" Grid.Row="1" Width="35" Height="35" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="terminHinzufügen" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="terminHinzufügen_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/Kreuz.png"/>
+                    </Button.Background>
+                </Button>
+
+            </Grid>
+
+            <Grid x:Name="stack_Chat" Margin="0,10,0,0" Grid.Column="0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" x:Name="lbl_chatAusgabe" Height="240" Margin="0,0,0,20" Background="{x:Null}" BorderBrush="#FF3E3E3E" BorderThickness="1" />
+
+                <TextBox Grid.Column="0" Grid.Row="1"  x:Name="txt_chatEingabe" GotFocus="txt_chatEingabe_GotFocus" Width="510" >Eingabe für Chat</TextBox>
+                <Button Grid.Column="1" Grid.Row="1" Margin="10,0,0,0" x:Name="cmd_senden" Click="cmd_senden_Click">Senden</Button>
+
+            </Grid>
+
+            <Frame Grid.Column="1" Grid.Row="1" x:Name="frame_informationsausgabe" Margin="10,0,0,0" NavigationUIVisibility="Hidden" />
+
+            <ScrollViewer Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
+                <StackPanel x:Name="stack_Mitschüler" Orientation="Vertical" HorizontalAlignment="Right">
                     <TextBlock Padding="5">
                         <Label x:Name="lbl_Schülerliste" FontSize="23" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" HorizontalContentAlignment="Center" FontWeight="Bold" >Schülerliste</Label>
                     </TextBlock>
                     <TextBox x:Name="Mitschüler_box" HorizontalContentAlignment="Center" Padding="5" Text="Arndt-Christian Wagner" FontSize="16" Width="{Binding ElementName=stack_Mitschüler,Path=ActualWidth}" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsEnabled="False"/>
-
                     <!-- Füllen mit den Schülerdaten-->
-
                 </StackPanel>
             </ScrollViewer>
-
-        </StackPanel>
-
-
+        </Grid>
     </StackPanel>
 </UserControl>

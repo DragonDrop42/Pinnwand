@@ -28,7 +28,7 @@ namespace Pinnwand.Pages.Settings
         private MainWindow mw = (MainWindow)Application.Current.MainWindow;
         private ListDictionary Lehrer;
         private ListDictionary Klassen;
-        
+
         public Kurswahl()
         {
             InitializeComponent();
@@ -36,6 +36,7 @@ namespace Pinnwand.Pages.Settings
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+          lv_Kurse.Height = row2.ActualHeight + 100;
             if (!mw.hasRights)
             {
                 Lehrerptions.Children.Clear();   
@@ -131,18 +132,18 @@ namespace Pinnwand.Pages.Settings
                 Packet getKurse = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
                 if (kurse.Success && getKurse.Success)
                 {
-                    UpdateKurse(kurse.Data,getKurse.Data);
+                    UpdateKurse(kurse.Data, getKurse.Data);
                 }
                 else
                 {
-                    throw new Exception (kurse.MessageString+" "+getKurse.MessageString);
+                    throw new Exception(kurse.MessageString + " " + getKurse.MessageString);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
         private void cmd_save_Click(object sender, RoutedEventArgs e)
@@ -166,7 +167,7 @@ namespace Pinnwand.Pages.Settings
             }
         }
 
-        public void UpdateKurse(ListDictionary Kurse,ListDictionary CheckedKurse)
+        public void UpdateKurse(ListDictionary Kurse, ListDictionary CheckedKurse)
         {
             this.Kurse = Kurse;
             lv_Kurse.Items.Clear();
@@ -174,8 +175,8 @@ namespace Pinnwand.Pages.Settings
             {
                 lv_Kurse.Items.Add(new CheckBox
                 {
-                    Content = ((List<string>) Kurse["K_Name"])[i],
-                    IsChecked = ((List<string>) CheckedKurse["K_Name"]).Contains(((List<string>) Kurse["K_Name"])[i])
+                    Content = ((List<string>)Kurse["K_Name"])[i],
+                    IsChecked = ((List<string>)CheckedKurse["K_Name"]).Contains(((List<string>)Kurse["K_Name"])[i])
                 });
             }
         }
@@ -183,9 +184,9 @@ namespace Pinnwand.Pages.Settings
         public List<string> GetChecked()
         {
             List<string> IDS = new List<string>();
-            for (int i = 0; i < ((List<string>) Kurse["K_ID"]).Count; i++)
+            for (int i = 0; i < ((List<string>)Kurse["K_ID"]).Count; i++)
             {
-                IDS.AddRange(from CheckBox hcb in lv_Kurse.Items where (bool) hcb.IsChecked && hcb.Content == ((List<string>) Kurse["K_Name"])[i] select ((List<string>) Kurse["K_ID"])[i]);
+                IDS.AddRange(from CheckBox hcb in lv_Kurse.Items where (bool)hcb.IsChecked && hcb.Content == ((List<string>)Kurse["K_Name"])[i] select ((List<string>)Kurse["K_ID"])[i]);
             }
             return IDS;
         }
