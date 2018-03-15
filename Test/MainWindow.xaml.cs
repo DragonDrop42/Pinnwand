@@ -1,5 +1,6 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,10 @@ namespace Pinnwand
             ErrorCallback += Fehler_Ausgabe;
 
             client = new Client(ErrorCallback);
+            
+            ListDictionary config = getConfigFromTxt();
+            client.Connect((string)config["ip"], Convert.ToInt32(config["port"])); //Connect to Server on IP and POrt 4444
+
 
             client.Busy += OnClientOnBusy;
             client.Available += OnClientOnAvailable;
@@ -93,6 +98,28 @@ namespace Pinnwand
             {
                 _kursliste.Reload_Kurse();
             }
+        }
+
+        private ListDictionary getConfigFromTxt()
+        {
+            string standard = "IP: " + PacketHandler.GetIPAddress() + "\n" + "PORT: 4444";
+
+            ListDictionary config = new ListDictionary();
+
+            if (!File.Exists("config.con"))
+            {
+                //File.Create("config.con");
+                StreamWriter sw = new StreamWriter("config.con", false, Encoding.ASCII);
+                sw.WriteLine(standard);
+                sw.Dispose();
+                //File.WriteAllText("config.con", standard);
+            }
+
+            string[] txt = File.ReadAllLines("config.con");
+
+            config.Add("ip", txt[0].Split(' ')[1]);
+            config.Add("port", txt[1].Split(' ')[1]);
+            return config;
         }
     }
 }
