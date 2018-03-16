@@ -37,6 +37,8 @@ namespace ServerData
         GetKlasse,                          // (✔)
         GetEreignisse,                      // (✔)
         SendEreigniss,                      // (✔)
+        GetLehrerofKurs,
+        
         //--------------------------------
 
         //Admin oder Lehrerpakete+++++++++

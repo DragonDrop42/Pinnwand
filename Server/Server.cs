@@ -133,6 +133,9 @@ namespace Server
                     case PacketType.EditEreigniss:
                         EditEreigniss(client, p);
                         break;
+                    case PacketType.GetLehrerofKurs:
+                        GetLehrerofKurs(client, p);
+                        break;
                     default:
                         ClientHandler.Send_Error_Message_to_Client(client, "Unerwartetes Packet!!!");
                         break;
@@ -142,6 +145,18 @@ namespace Server
             {
                 ClientHandler.Ausgabe("PacketManager", exc.Message);
             }
+        }
+
+        private static void GetLehrerofKurs(ClientData client, Packet packet)
+        {
+            DatenbankArgs args = client.db_Manager.Kurse.getLehrer((int)packet.Data["K_ID"]);
+            if (!args.Success)
+            {
+                ClientHandler.Ausgabe("GetLehrerofKurs", args.Error);
+            }
+
+            Packet response = new Packet(PacketType.GetLehrerofKurs, args.Data, args.Success, args.Error);
+            ClientHandler.SendSinglePacket(client, response);
         }
 
         private static void EditEreigniss(ClientData client, Packet p)

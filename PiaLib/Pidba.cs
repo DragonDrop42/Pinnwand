@@ -307,19 +307,19 @@ namespace PiaLib
             Verbund_Kurs_SchülerTableAdapter vksta = new Verbund_Kurs_SchülerTableAdapter();
             EreignisseTableAdapter eta = new EreignisseTableAdapter();
 
-            //public int getIDBy(string Search_String, string Field)
-            //{
-            //    DataTable data = kta.GetData();
+            public int getIDBy(string Search_String, string Field)
+            {
+                DataTable data = kta.GetData();
 
-            //    foreach (DataRow row in data.Rows)
-            //    {
-            //        if (row[Field].ToString() == Search_String)
-            //        {
-            //            return (int)row["K_ID"];
-            //        }
-            //    }
-            //    return 0;
-            //}
+                foreach (DataRow row in data.Rows)
+                {
+                    if (row[Field].ToString() == Search_String)
+                    {
+                        return (int)row["K_ID"];
+                    }
+                }
+                return 0;
+            }
 
             public DatenbankArgs getByKlasse(int Kl_ID)
             {
@@ -475,6 +475,26 @@ namespace PiaLib
                     eta.UpdatebyE_ID(K_ID, E_Art, E_Erstelldatum, E_Fälligkeitsdatum, E_Autor, E_Beschreibung,
                         Original_E_ID);
                     return new DatenbankArgs();
+                }
+                catch (Exception ex)
+                {
+                    return new DatenbankArgs(ex.Message);
+                }
+            }
+
+            public DatenbankArgs getLehrer(int K_ID)
+            {
+                try
+                {
+                    int id = 0;
+                    foreach (PinnwandDataSet.KursRow row in kta.GetData())
+                    {
+                        if ((int)row["K_ID"] == K_ID)
+                        {
+                            return new lehrer().getby(row["L_ID"].ToString(),"L_ID");
+                        }
+                    }
+                    throw new Exception("Kein Lehrer vorhanden");
                 }
                 catch (Exception ex)
                 {
