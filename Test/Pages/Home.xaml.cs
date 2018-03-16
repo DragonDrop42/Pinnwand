@@ -65,7 +65,7 @@ namespace Pinnwand.Pages
                 }
                 else
                 {
-                    MessageBox.Show(Klassenpacket.MessageString);
+                    mw.Fehler_Ausgabe(Klassenpacket.MessageString);
                 }
                 SchülerPacket = mw.client.SendAndWaitForResponse(
                     PacketType.GetSchülerInKlasse,
@@ -101,7 +101,7 @@ namespace Pinnwand.Pages
             }
             else
             {
-                if (SchülerPacket != null) MessageBox.Show(SchülerPacket.MessageString);
+                if (SchülerPacket != null) mw.Fehler_Ausgabe(SchülerPacket.MessageString);
             }
         }
 
@@ -130,7 +130,7 @@ namespace Pinnwand.Pages
             }
             else
             {
-                MessageBox.Show(EreignissPacket.MessageString);
+                mw.Fehler_Ausgabe(EreignissPacket.MessageString);
             }
         }
         //syncronise Threads
@@ -166,7 +166,7 @@ namespace Pinnwand.Pages
             }
             else
             {
-                Console.WriteLine(ChatPacket.MessageString);
+                mw.Fehler_Ausgabe(ChatPacket.MessageString);
             }
         }
         
@@ -220,7 +220,7 @@ namespace Pinnwand.Pages
                 });
             if (!chatsendpacket.Success)
             {
-                MessageBox.Show("Senden Fehlgeschlagen: " + chatsendpacket.MessageString);
+                mw.Fehler_Ausgabe("Senden Fehlgeschlagen: " + chatsendpacket.MessageString);
             }
         }
 

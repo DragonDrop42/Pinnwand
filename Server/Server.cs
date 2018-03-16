@@ -38,7 +38,7 @@ namespace Server
             ClientHandler.Ausgabe("Config", "PORT: " + port);
             //alte datensätze löschen
             DbAdapter.Klasse.deleteOld();
-            ClientHandler.Ausgabe("DB", "alte datensätze wurden gelöscht. \n");
+            ClientHandler.Ausgabe("DB", "delete old Data. \n");
         }
 
 

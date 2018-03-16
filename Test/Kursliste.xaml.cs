@@ -60,7 +60,7 @@ namespace Pinnwand
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Load Kurs fehler " + ex.Message);
             }
         }
     }
