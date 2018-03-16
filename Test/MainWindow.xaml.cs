@@ -83,6 +83,7 @@ namespace Pinnwand
         public void Fehler_Ausgabe(string s)
         {
             Console.WriteLine(s);
+            //MessageBox.Show(s);
         }
 
         public void LoginFrmOnClosing(object sender, CancelEventArgs cancelEventArgs)
