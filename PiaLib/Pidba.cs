@@ -518,6 +518,7 @@ namespace PiaLib
                     {
                         if (((DateTime) row["E_Ablaufdatum"]).Date < DateTime.Today)
                         {
+                            eta.DeletebyE_ID((int)row["E_ID"]);
                             // Delete From Ereignisse Where 'E_ID' == ?
                         }
                     }
@@ -527,6 +528,7 @@ namespace PiaLib
                     {
                         if (((DateTime) row["Kl_Abschluss"]).Date < DateTime.Today)
                         {
+                            klta.DeletebyKl_ID((int)row["kl_ID"]);
                             // Delete From Klasse Where 'Kl_ID' == ?
                         }
                     }
