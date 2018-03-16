@@ -100,6 +100,7 @@ namespace ClientClassLib
                 masterS.Shutdown(SocketShutdown.Both);
                 masterS.Disconnect(true);
                 masterS.Close();
+                masterS.Dispose();
             }
             catch
             {

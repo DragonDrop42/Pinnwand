@@ -172,34 +172,36 @@ namespace Pinnwand.Pages
         
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            mw.OnClientOnBusy(this,EventArgs.Empty);
-            kurs = mw._kursliste.mt_Kurse.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
-            mw.LoginFrm.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
-            mw.CurrentKurs = this;
 
-            if (kurs == "Pages/Home.xaml")
+            try
             {
-                stack_Chat.Children.Clear();
-                //idontevencareanymore.Children.Clear()
-                terminHinzufügen.Visibility = Visibility.Hidden;
-                kurs = "all";
-                lbl_lehrename.Content = "";
-                TextBoxlehrername.Text = "";
+                mw.OnClientOnBusy(this, EventArgs.Empty);
+                kurs = mw._kursliste.mt_Kurse.SelectedSource.OriginalString.Split(Char.Parse("=")).Last();
+                mw.LoginFrm.Closed += (o, args) => { OnLoaded(o, new RoutedEventArgs()); };
+                mw.CurrentKurs = this;
+
+                if (kurs == "Pages/Home.xaml")
+                {
+                    stack_Chat.Children.Clear();
+                    terminHinzufügen.Visibility = Visibility.Hidden;
+                    kurs = "all";
+                }
+                else
+                {
+                    Packet kidp = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
+                    K_ID = Math.Abs(Convert.ToInt32(
+                        ((List<string>)kidp.Data["K_ID"])[((List<string>)kidp.Data["K_Name"]).IndexOf(kurs)]));
+                    reload_Chat(mw.client.SendAndWaitForResponse(PacketType.GetChat));
+                }
+
+                if (!mw.LoginFrm.IsVisible)
+                {
+                    reload_Liste();
+                    reload_Ereignisse();
+                }
+                mw.OnClientOnAvailable(this, EventArgs.Empty);
             }
-            else
-            {
-                Packet kidp = mw.client.SendAndWaitForResponse(PacketType.GetGewählteKurse);
-                K_ID = Math.Abs(Convert.ToInt32(
-                    ((List<string>) kidp.Data["K_ID"])[((List<string>) kidp.Data["K_Name"]).IndexOf(kurs)]));
-                reload_Chat(mw.client.SendAndWaitForResponse(PacketType.GetChat));
-            }
-            
-            if (!mw.LoginFrm.IsVisible)
-            {
-                reload_Liste();
-                reload_Ereignisse();
-            }
-            mw.OnClientOnAvailable(this,EventArgs.Empty);
+            catch { }
         }
 
         private void txt_chatEingabe_GotFocus(object sender, RoutedEventArgs e) //leeren des Placeholders in der Leiste

@@ -25,7 +25,7 @@ namespace Server
         static string ip = PacketHandler.GetIPAddress();
         static PinnwandDBAdapter DbAdapter = new PinnwandDBAdapter();
 
-        static string lehrerPasswort = GlobalMethods.passwordToHash("teachersPassword");
+        static string lehrerPasswort = GlobalMethods.passwordToHash("bszet1718");
         //-----------------------
 
         //Start Server

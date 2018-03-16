@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +31,9 @@ namespace Pinnwand.Pages.Settings
         private void Cmd_logout_OnClick(object sender, RoutedEventArgs e)
         {
             mw.client.Disconnect();
-            mw.Login();
+            //NavigationCommands.BrowseBack.Execute(null, null);
+            Thread.Sleep(100);
+            mw.OpenClient();
         }
 
         private void Cmd_cancel_OnClick(object sender, RoutedEventArgs e)
